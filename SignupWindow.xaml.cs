@@ -10,28 +10,31 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace TuteefyWPF
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SignupWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SignupWindow : Window
     {
-        public MainWindow()
+        public SignupWindow()
         {
             InitializeComponent();
-            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            SignupWindow signupWindow = new SignupWindow();
-            signupWindow.Show();
+            MessageBox.Show("Signup Successful!");
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
             this.Close();
-            
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
