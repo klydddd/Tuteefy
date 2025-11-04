@@ -15,7 +15,7 @@
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="LightGray"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Padding" Value="0,5"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -42,7 +42,7 @@
                             </Border>
 
                             <!-- Placeholder Text -->
-                            
+
                         </Grid>
 
                         <!-- ✨Triggers for focus, glow, and placeholder visibility -->
@@ -108,7 +108,104 @@
             </Setter>
         </Style>
 
+        <!-- 🔹 Rounded PasswordBox Style with Placeholder -->
+        <Style x:Key="RoundedPlaceholderPasswordBox" TargetType="PasswordBox">
+            <!-- Base visual styling -->
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="0,5"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Grid>
+                            <!-- Outer Border (rounded) -->
+                            <Border
+                        x:Name="Border"
+                        CornerRadius="10"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
 
+                                <!-- Default shadow (off) -->
+                                <Border.Effect>
+                                    <DropShadowEffect Color="White"
+                                              BlurRadius="40"
+                                              ShadowDepth="0"
+                                              Opacity="0.3"/>
+                                </Border.Effect>
+
+                                <!-- Password content host -->
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                      Margin="10,5,10,5"
+                                      Focusable="False"/>
+                            </Border>
+                        </Grid>
+
+                        <!-- ✨Triggers for focus and glow -->
+                        <ControlTemplate.Triggers>
+
+                            <!-- Smooth glow when focused -->
+                            <EventTrigger RoutedEvent="GotFocus">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                    Storyboard.TargetName="Border"
+                                    Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                    To="0.8"
+                                    Duration="0:0:0.25">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+
+                                        <!-- Slight border color highlight -->
+                                        <ColorAnimation
+                                    Storyboard.TargetName="Border"
+                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                    To="#FF7B68EE"
+                                    Duration="0:0:0.25">
+                                            <ColorAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+
+                            <!-- Fade glow out when unfocused -->
+                            <EventTrigger RoutedEvent="LostFocus">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                    Storyboard.TargetName="Border"
+                                    Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                    To="0"
+                                    Duration="0:0:0.25">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+
+                                        <ColorAnimation
+                                    Storyboard.TargetName="Border"
+                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                    To="LightGray"
+                                    Duration="0:0:0.25">
+                                            <ColorAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
     </Window.Resources>
 
@@ -171,7 +268,7 @@
 
 
         <!-- Background -->
-        <Rectangle RadiusX="20" RadiusY="20" Margin="0,38,258,0" SnapsToDevicePixels="True" ClipToBounds="True" HorizontalAlignment="Right" Width="463">
+        <Rectangle Margin="0,38,258,0" SnapsToDevicePixels="True" ClipToBounds="True" HorizontalAlignment="Right" Width="463">
             <Rectangle.Fill>
                 <LinearGradientBrush>
                     <GradientStop Color="Violet" Offset="0"/>
@@ -563,15 +660,15 @@
         <Label Content="password" HorizontalAlignment="Left" Margin="472,344,0,0" VerticalAlignment="Top"
             IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="12" Width="97"
             VerticalContentAlignment="Center"/>
-        <TextBox
-            Style="{StaticResource RoundedPlaceholderTextBox}"
-            Tag="password"  
+
+        <PasswordBox
+            Style="{StaticResource RoundedPlaceholderPasswordBox}"
+            Tag="password"
             Width="330"
             Height="45"
             Margin="472,370,0,0"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            TextWrapping="Wrap" Grid.ColumnSpan="2"/>
+            VerticalAlignment="Top" Grid.ColumnSpan="2"/>
 
         <Button Content="LOG IN"
         HorizontalAlignment="Left"
@@ -582,7 +679,7 @@
         Width="330"
         Foreground="White"
         FontWeight="Bold"
-        Cursor="Hand">
+        Cursor="Hand" Click="Button_Click_1">
 
             <Button.Template>
                 <ControlTemplate TargetType="Button">
@@ -806,6 +903,7 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
+        
 
 
 
