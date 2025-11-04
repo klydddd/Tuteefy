@@ -9,7 +9,7 @@
       Title="StudentPage">
 
     <Grid Background="LightBlue">
-        <TextBlock Text="This is MyPage!"
+        <TextBlock Text="This is Student Page!"
                    FontSize="24"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
