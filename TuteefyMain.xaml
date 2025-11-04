@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TuteefyWPF"
         mc:Ignorable="d"
-        Title="TuteefyMain" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen"
+        Title="TuteefyMain" Height="900" Width="1600">
     <Grid>
-        
+        <Frame Source="StudentPage.xaml" NavigationUIVisibility="Hidden" Margin="280,140,0,0"/>
+        <StackPanel Margin="0,0,1320,0" Background="Violet"/>
     </Grid>
 </Window>

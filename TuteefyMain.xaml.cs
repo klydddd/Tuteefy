@@ -22,6 +22,7 @@ namespace TuteefyWPF
         public TuteefyMain()
         {
             InitializeComponent();
+            //StudentPage.Navigate(new StudentPage());
         }
     }
 }
