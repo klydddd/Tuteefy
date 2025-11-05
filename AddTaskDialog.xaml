@@ -1,15 +1,15 @@
-﻿<Application x:Class="TuteefyWPF.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:TuteefyWPF"
-             StartupUri="LoginWindow.xaml">
-    <Application.Resources>
-        <DropShadowEffect x:Key="ShadowEffect"
-                      Color="#888"
-                      BlurRadius="10"
-                      ShadowDepth="2"
-                      Opacity="0.4"/>
+﻿<Window x:Class="TuteefyWPF.AddTaskDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterOwner"
+        Width="450" Height="200"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize">
 
+    <Window.Resources>
         <Style x:Key="RoundedPlaceholderTextBox" TargetType="TextBox">
             <!-- Base visual styling -->
             <Setter Property="Background" Value="White"/>
@@ -107,6 +107,53 @@
                 </Setter.Value>
             </Setter>
         </Style>
-    </Application.Resources>
+    </Window.Resources>
 
-</Application>
+    <Grid>
+        <!-- Background blur and card -->
+        <Border CornerRadius="15"
+                Background="White"
+                Padding="20"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Width="350"
+                Height="150"
+                Effect="{DynamicResource ShadowEffect}">
+            <StackPanel>
+                <TextBlock x:Name="DialogTitle"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Foreground="#5E35B1"
+                           Text="Add a Task"
+                           Margin="0,0,0,10"/>
+                <TextBox
+                    x:Name="TaskInput"
+                    Style="{StaticResource RoundedPlaceholderTextBox}"
+                    Tag="username"  
+                    Width="310"
+                    Height="35"
+                    TextWrapping="Wrap"/>
+
+
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+                    <Button Content="Cancel"
+                            Width="70"
+                            Margin="0,0,10,0"
+                            Background="#EDE7F6"
+                            Foreground="#5E35B1"
+                            BorderBrush="Transparent"
+                            Cursor="Hand"
+                            Click="Cancel_Click"/>
+                    <Button Content="Add"
+                            Width="70"
+                            Background="#7C4DFF"
+                            Foreground="White"
+                            BorderBrush="Transparent"
+                            Cursor="Hand"
+                            Click="Add_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

@@ -6,9 +6,193 @@
         xmlns:local="clr-namespace:TuteefyWPF"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
+        Background="#0f0f0f"
         Title="TuteefyMain" Height="900" Width="1600">
+
+    <Window.Resources>
+        <Style x:Key="RoundedTabRadioButton" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid>
+                            <!-- Left active highlight bar -->
+                            <Border x:Name="LeftHighlight"
+                            Width="3"
+                            HorizontalAlignment="Left"
+                            CornerRadius="0"
+                            Background="Transparent"/>
+
+                            <!-- Main clickable area -->
+                            <Border x:Name="MainBackground"
+                            CornerRadius="10"
+                            Background="Transparent"
+                            SnapsToDevicePixels="True"
+                            Height="{TemplateBinding Height}"
+                            Width="{TemplateBinding Width}">
+                                <ContentPresenter HorizontalAlignment="Left"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True"
+                                          Margin="40,0,0,0"/>
+                            </Border>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <!-- Smooth hover highlight -->
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="MainBackground"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#302E1A47"
+                                                Duration="0:0:0.2"
+                                                FillBehavior="HoldEnd"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="MainBackground"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="Transparent"
+                                                Duration="0:0:0.3"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+
+                            <!-- Checked (active tab) -->
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="LeftHighlight" Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="Yellow" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Foreground" Value="Yellow"/>
+                            </Trigger>
+
+                            <!-- Unchecked (default) -->
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="LeftHighlight" Property="Background" Value="Transparent"/>
+                                <Setter TargetName="MainBackground" Property="Background" Value="Transparent"/>
+                            </Trigger>
+
+                            <!-- Disabled -->
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="Gray"/>
+                                <Setter TargetName="MainBackground" Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
     <Grid>
-        <Frame Source="StudentPage.xaml" NavigationUIVisibility="Hidden" Margin="280,140,0,0"/>
-        <StackPanel Margin="0,0,1320,0" Background="Violet"/>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" SpreadMethod="Pad">
+                <LinearGradientBrush.RelativeTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                        <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                        <RotateTransform Angle="6.116" CenterX="0.5" CenterY="0.5"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </LinearGradientBrush.RelativeTransform>
+                <LinearGradientBrush.Transform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-66.371"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </LinearGradientBrush.Transform>
+                <GradientStop Color="#9600ff" Offset="0"/>
+                <GradientStop Color="#AEBAF8" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <Rectangle Margin="320,15,15,15" RadiusY="15" RadiusX="15" Opacity="0.3" StrokeThickness="4">
+            <Rectangle.Stroke>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFC3C3C3"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Stroke>
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" SpreadMethod="Pad">
+                    <GradientStop Color="AliceBlue" Offset="0"/>
+                    <GradientStop Color="white" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+            <Rectangle.Effect>
+                <DropShadowEffect Color="#FF866EA5"
+                          BlurRadius="55"
+                          ShadowDepth="61"
+                          Opacity="0.72" Direction="317"/>
+            </Rectangle.Effect>
+
+        </Rectangle>
+        <Label x:Name="PageTitle" Content="Home" IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="54" HorizontalContentAlignment="Left" Margin="378,62,852,718" />
+
+        <StackPanel Margin="0,0,1280,0">
+            <Label Content="tuteefy" HorizontalAlignment="Left" Margin="0,62,0,0" VerticalAlignment="Top" IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="54" Width="319" HorizontalContentAlignment="Center"/>
+            <RadioButton 
+             x:Name="HomeTab"
+                Style="{StaticResource RoundedTabRadioButton}"
+             Content="Home"
+             Height="50"
+             GroupName="Tabs"
+             Margin="0,10,0,0"
+             IsChecked="True"
+             />
+
+            <RadioButton Style="{StaticResource RoundedTabRadioButton}"
+             x:Name="StudentTab"
+             Content="Students"
+             Height="50"
+             Margin="0,10,0,0"
+             GroupName="Tabs"
+             />
+
+            <RadioButton Style="{StaticResource RoundedTabRadioButton}"
+             x:Name="LessonsTab"
+             Content="Lessons"
+             Height="50"
+             Margin="0,10,0,0"
+             GroupName="Tabs"
+             />
+
+            <RadioButton Style="{StaticResource RoundedTabRadioButton}"
+             x:Name="QuizzesTab"
+             Content="Quizzes"
+             Height="50"
+             Margin="0,10,0,0"
+             GroupName="Tabs"
+             />
+            <RadioButton Style="{StaticResource RoundedTabRadioButton}"
+                x:Name="QuizzesTab_Copy"
+                Content="Log out"
+                Height="50"
+                GroupName="Tabs"
+                Margin="0,400,0,0" Checked="QuizzesTab_Copy_Checked" 
+             />
+
+
+
+        </StackPanel>
+
+        <Frame x:Name="MainFrame" Source="Pages/HomePage.xaml" Margin="340,171,35,36" NavigationUIVisibility="Hidden"/>
+
     </Grid>
 </Window>

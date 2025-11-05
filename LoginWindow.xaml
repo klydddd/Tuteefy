@@ -271,8 +271,9 @@
         <Rectangle Margin="0,38,258,0" SnapsToDevicePixels="True" ClipToBounds="True" HorizontalAlignment="Right" Width="463">
             <Rectangle.Fill>
                 <LinearGradientBrush>
-                    <GradientStop Color="Violet" Offset="0"/>
-                    <GradientStop Color="Salmon" Offset="1"/>
+                    <GradientStop Color="#9600ff" Offset="0"/>
+                    <GradientStop Color="#AEBAF8" Offset="1"/>
+
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
@@ -288,8 +289,9 @@
             </Rectangle.RenderTransform>
             <Rectangle.Fill>
                 <LinearGradientBrush>
-                    <GradientStop Color="Violet" Offset="0"/>
-                    <GradientStop Color="Salmon" Offset="1"/>
+                    <GradientStop Color="#9600ff" Offset="0"/>
+                    <GradientStop Color="#AEBAF8" Offset="1"/>
+
                 </LinearGradientBrush>
             </Rectangle.Fill>
             <Rectangle.Effect>
@@ -360,8 +362,9 @@
             </Rectangle.RenderTransform>
             <Rectangle.Fill>
                 <LinearGradientBrush>
-                    <GradientStop Color="Violet" Offset="0"/>
-                    <GradientStop Color="Salmon" Offset="1"/>
+                    <GradientStop Color="#9600ff" Offset="0"/>
+                    <GradientStop Color="#AEBAF8" Offset="1"/>
+
                 </LinearGradientBrush>
             </Rectangle.Fill>
             <Rectangle.Effect>
@@ -432,8 +435,9 @@
             </Rectangle.RenderTransform>
             <Rectangle.Fill>
                 <LinearGradientBrush>
-                    <GradientStop Color="Violet" Offset="0"/>
-                    <GradientStop Color="Salmon" Offset="1"/>
+                    <GradientStop Color="#9600ff" Offset="0"/>
+                    <GradientStop Color="#AEBAF8" Offset="1"/>
+
                 </LinearGradientBrush>
             </Rectangle.Fill>
             <Rectangle.Effect>
@@ -504,8 +508,9 @@
             </Rectangle.RenderTransform>
             <Rectangle.Fill>
                 <LinearGradientBrush>
-                    <GradientStop Color="Violet" Offset="0"/>
-                    <GradientStop Color="Salmon" Offset="1"/>
+                    <GradientStop Color="#9600ff" Offset="0"/>
+                    <GradientStop Color="#AEBAF8" Offset="1"/>
+
                 </LinearGradientBrush>
             </Rectangle.Fill>
             <Rectangle.Effect>
@@ -576,8 +581,9 @@
             </Rectangle.RenderTransform>
             <Rectangle.Fill>
                 <LinearGradientBrush>
-                    <GradientStop Color="Violet" Offset="0"/>
-                    <GradientStop Color="Salmon" Offset="1"/>
+                    <GradientStop Color="#9600ff" Offset="0"/>
+                    <GradientStop Color="#AEBAF8" Offset="1"/>
+
                 </LinearGradientBrush>
             </Rectangle.Fill>
             <Rectangle.Effect>
@@ -695,8 +701,8 @@
 
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                <GradientStop Color="Violet" Offset="0"/>
-                                <GradientStop Color="Salmon" Offset="1"/>
+                                <GradientStop Color="#9600ff" Offset="0"/>
+                                <GradientStop Color="#AEBAF8" Offset="1"/>
                             </LinearGradientBrush>
                         </Border.Background>
 

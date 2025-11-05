@@ -217,8 +217,8 @@
         <Rectangle Margin="0,45,-939,0" Canvas.Left="0">
             <Rectangle.Fill>
                 <LinearGradientBrush>
-                    <GradientStop Color="Violet" Offset="0"/>
-                    <GradientStop Color="Salmon" Offset="1"/>
+                    <GradientStop Color="#9600ff" Offset="0"/>
+                    <GradientStop Color="#AEBAF8" Offset="1"/>
                 </LinearGradientBrush>
             </Rectangle.Fill>
 
@@ -246,12 +246,13 @@
         <Rectangle Fill="White" Opacity="0.2" RadiusX="20" RadiusY="20" Margin="220,76,220,38" StrokeThickness="3">
             <Rectangle.Stroke>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="pink" Offset="1"/>
-                    <GradientStop Color="Violet" Offset="0"/>
+                       <GradientStop Color="#9600ff" Offset="0"/>
+                       <GradientStop Color="#AEBAF8" Offset="1"/>
+
                 </LinearGradientBrush>
             </Rectangle.Stroke>
             <Rectangle.Effect>
-                <DropShadowEffect Color="DarkViolet" BlurRadius="15" ShadowDepth="40" Opacity="0.4" RenderingBias="Quality"/>
+                <DropShadowEffect Color="#9600ff" BlurRadius="15" ShadowDepth="40" Opacity="0.4" RenderingBias="Quality"/>
             </Rectangle.Effect>
 
         </Rectangle>
@@ -399,7 +400,8 @@
 
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0.5,0.5" EndPoint="1,0" SpreadMethod="Reflect">
-                                <GradientStop Color="Violet" Offset="1"/>
+                                <GradientStop Color="#9600ff" Offset="0"/>
+
                             </LinearGradientBrush>
                         </Border.Background>
 
