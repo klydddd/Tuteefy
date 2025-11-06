@@ -6,69 +6,65 @@
       xmlns:local="clr-namespace:TuteefyWPF"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
+      Background="Transparent"
       Title="StudentPage">
 
     <Page.Resources>
-        <PathGeometry x:Key="Icon.ToDo">M20,8 L9,19 L4,14 L5.4,12.6 L9,16.2 L18.6,6.6 L20,8 M18,2 L6,2 C4.9,2 4,2.9 4,4 L4,20 C4,21.1 4.9,22 6,22 L18,22 C19.1,22 20,21.1 20,20 L20,4 C20,2.9 19.1,2 18,2 Z</PathGeometry>
-        <PathGeometry x:Key="Icon.Performance">M10,20 L14,20 L14,4 L10,4 L10,20 Z M4,20 L8,20 L8,12 L4,12 L4,20 Z M16,20 L20,20 L20,9 L16,9 L16,20 Z</PathGeometry>
-        <PathGeometry x:Key="Icon.Lessons">M5,13.18 L5,17.18 L12,21 L19,17.18 L19,13.18 L12,17 L5,13.18 Z M12,3 L1,9 L12,15 L23,9 L12,3 Z</PathGeometry>
-
-        <Style x:Key="CardHeader" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="18"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Margin" Value="10,0,0,10"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-
-        <Style x:Key="CardIcon" TargetType="Path">
-            <Setter Property="Fill" Value="White"/>
-            <Setter Property="Width" Value="18"/>
-            <Setter Property="Height" Value="18"/>
-            <Setter Property="Stretch" Value="Uniform"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-
-        <Style x:Key="MagicalCard" TargetType="Border">
-            <Setter Property="Background" Value="#2A2A2A"/>
-            <Setter Property="CornerRadius" Value="8"/>
-            <Setter Property="Padding" Value="15"/>
-            <Setter Property="RenderTransform">
-                <Setter.Value>
-                    <TranslateTransform Y="0" />
-                </Setter.Value>
-            </Setter>
+        <!-- Modern Card Style -->
+        <Style x:Key="ModernCard" TargetType="Border">
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Padding" Value="20"/>
             <Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect ShadowDepth="2" Opacity="0.3" BlurRadius="10" Color="Black"/>
+                    <DropShadowEffect Color="#9600ff" BlurRadius="15" ShadowDepth="5" Opacity="0.2"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <TranslateTransform Y="0"/>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
                 <EventTrigger RoutedEvent="MouseEnter">
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                             To="-5" Duration="0:0:0.3"/>
-                            <DoubleAnimation Storyboard.TargetProperty="Effect.(DropShadowEffect.BlurRadius)"
-                                             To="20" Duration="0:0:0.3"/>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" To="-5" Duration="0:0:0.3"/>
+                            <DoubleAnimation Storyboard.TargetProperty="Effect.(DropShadowEffect.BlurRadius)" To="25" Duration="0:0:0.3"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
                 <EventTrigger RoutedEvent="MouseLeave">
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)"
-                                             To="0" Duration="0:0:0.3"/>
-                            <DoubleAnimation Storyboard.TargetProperty="Effect.(DropShadowEffect.BlurRadius)"
-                                             To="10" Duration="0:0:0.3"/>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(TranslateTransform.Y)" To="0" Duration="0:0:0.3"/>
+                            <DoubleAnimation Storyboard.TargetProperty="Effect.(DropShadowEffect.BlurRadius)" To="15" Duration="0:0:0.3"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
             </Style.Triggers>
         </Style>
 
+        <!-- Card Header -->
+        <Style x:Key="CardHeader" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#1E1E1E"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="10,0,0,10"/>
+        </Style>
+
+        <!-- Icon Style -->
+        <Style x:Key="CardIcon" TargetType="Path">
+            <Setter Property="Fill" Value="#9600ff"/>
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Stretch" Value="Uniform"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Buttons -->
         <Style x:Key="AccentButton" TargetType="Button">
-            <Setter Property="Background" Value="HotPink"/>
+            <Setter Property="Background" Value="#9600ff"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -76,23 +72,18 @@
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect ShadowDepth="2" BlurRadius="5" Opacity="0.5" Color="HotPink"/>
+                    <DropShadowEffect Color="#9600ff" BlurRadius="10" ShadowDepth="3" Opacity="0.4"/>
                 </Setter.Value>
             </Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="5">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#FFB6C1"/>
-                                <Setter Property="Effect">
-                                    <Setter.Value>
-                                        <DropShadowEffect ShadowDepth="0" BlurRadius="15" Opacity="1" Color="HotPink"/>
-                                    </Setter.Value>
-                                </Setter>
+                                <Setter Property="Background" Value="#AEBAF8"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -100,346 +91,104 @@
             </Setter>
         </Style>
 
-        <Style x:Key="DangerButton" TargetType="Button">
-            <Setter Property="Background" Value="PaleVioletRed"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="10,5"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect ShadowDepth="2" BlurRadius="5" Opacity="0.5" Color="PaleVioletRed"/>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="5">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#DB7093"/>
-                                <Setter Property="Effect">
-                                    <Setter.Value>
-                                        <DropShadowEffect ShadowDepth="0" BlurRadius="15" Opacity="1" Color="PaleVioletRed"/>
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+        <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource AccentButton}">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#9600ff"/>
         </Style>
 
+        <!-- TextBox -->
         <Style TargetType="TextBox">
-            <Setter Property="Background" Value="#333"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Background" Value="#f5f5f5"/>
+            <Setter Property="Foreground" Value="#1E1E1E"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
-                        <Border x:Name="border" 
-                                Background="{TemplateBinding Background}" 
-                                BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="{TemplateBinding BorderThickness}" 
-                                CornerRadius="5">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10">
                             <ScrollViewer x:Name="PART_ContentHost"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="border" Property="BorderBrush" Value="HotPink"/>
+                                <Setter Property="Background" Value="#AEBAF8"/>
+                                <Setter Property="Foreground" Value="#1E1E1E"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
-
-        <Style TargetType="ListBox">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-        </Style>
-        <Style TargetType="ListBoxItem">
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="Margin" Value="0,2"/>
-            <Setter Property="Foreground" Value="#CCCCCC"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListBoxItem">
-                        <Border x:Name="border" Padding="{TemplateBinding Padding}" Background="Transparent" CornerRadius="3">
-                            <ContentPresenter />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#444"/>
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#55FF69B4"/>
-                                <Setter Property="Foreground" Value="White"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="DataGridColumnHeader">
-            <Setter Property="Background" Value="HotPink"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="BorderThickness" Value="0,0,1,0"/>
-            <Setter Property="BorderBrush" Value="#333"/>
-            <Setter Property="Padding" Value="5"/>
-        </Style>
-        <Style TargetType="DataGridRow">
-            <Setter Property="Background" Value="#2A2A2A"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#444"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style TargetType="DataGridCell">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="5"/>
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="#55FF69B4"/>
-                </Trigger>
-            </Style.Triggers>
         </Style>
 
     </Page.Resources>
 
-    <Page.Triggers>
-        <EventTrigger RoutedEvent="Loaded">
-            <BeginStoryboard>
-                <Storyboard>
-                    <DoubleAnimation Storyboard.TargetName="welcomeHeader" Storyboard.TargetProperty="Opacity"
-                                     From="0.0" To="1.0" Duration="0:0:0.8" BeginTime="0:0:0.0" />
-                    <DoubleAnimation Storyboard.TargetName="welcomeHeader" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                                     From="-20"  To="0"   Duration="0:0:0.8" BeginTime="0:0:0.0" />
-                    <DoubleAnimation Storyboard.TargetName="toDoCard" Storyboard.TargetProperty="Opacity"
-                                     From="0.0" To="1.0" Duration="0:0:0.8" BeginTime="0:0:0.2" />
-                    <DoubleAnimation Storyboard.TargetName="toDoCard" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                     From="-20"  To="0"   Duration="0:0:0.8" BeginTime="0:0:0.2" />
-                    <DoubleAnimation Storyboard.TargetName="scoresCard" Storyboard.TargetProperty="Opacity"
-                                     From="0.0" To="1.0" Duration="0:0:0.8" BeginTime="0:0:0.2" />
-                    <DoubleAnimation Storyboard.TargetName="scoresCard" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                     From="20"  To="0"   Duration="0:0:0.8" BeginTime="0:0:0.2" />
-                    <DoubleAnimation Storyboard.TargetName="lessonsCard" Storyboard.TargetProperty="Opacity"
-                                     From="0.0" To="1.0" Duration="0:0:0.8" BeginTime="0:0:0.4" />
-                    <DoubleAnimation Storyboard.TargetName="lessonsCard" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                                     From="20"  To="0"   Duration="0:0:0.8" BeginTime="0:0:0.4" />
-                    <DoubleAnimation Storyboard.TargetName="notesCard" Storyboard.TargetProperty="Opacity"
-                                     From="0.0" To="1.0" Duration="0:0:0.8" BeginTime="0:0:0.4" />
-                    <DoubleAnimation Storyboard.TargetName="notesCard" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                                     From="20"  To="0"   Duration="0:0:0.8" BeginTime="0:0:0.4" />
+    <Grid>
+        <!-- Header -->
+        <TextBlock Text="Welcome, [Student Name]!" 
+                   FontSize="28" FontWeight="Bold" 
+                   Foreground="White" 
+                   Margin="50,30,0,0"/>
 
-                    <DoubleAnimation Storyboard.TargetName="notesCard" 
-                                     Storyboard.TargetProperty="Effect.(DropShadowEffect.BlurRadius)"
-                                     From="10" To="25" Duration="0:0:2"
-                                     BeginTime="0:0:1"
-                                     AutoReverse="True"
-                                     RepeatBehavior="Forever" />
-                    <ColorAnimation Storyboard.TargetName="notesCard" 
-                                     Storyboard.TargetProperty="Effect.(DropShadowEffect.Color)"
-                                     To="HotPink" Duration="0:0:2"
-                                     BeginTime="0:0:1"
-                                     AutoReverse="True"
-                                     RepeatBehavior="Forever" />
-
-                </Storyboard>
-            </BeginStoryboard>
-        </EventTrigger>
-    </Page.Triggers>
-
-    <Grid Background="#1E1E1E">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <Grid x:Name="welcomeHeader"
-              Grid.Row="0"
-              HorizontalAlignment="Left" VerticalAlignment="Top" 
-              Margin="60,25,0,0" Opacity="0">
-            <Grid.RenderTransform>
-                <TranslateTransform Y="0" />
-            </Grid.RenderTransform>
-            <TextBlock x:Name="welcomeText" Text="Welcome, [Student Name]!"
-                       FontSize="24" Foreground="White" 
-                       FontFamily="Segoe UI Semibold"/>
-        </Grid>
-
-        <Grid Grid.Row="1" Margin="0,15,0,0">
+        <!-- Main Grid -->
+        <Grid Margin="40,90,40,40">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.2*" />
-                <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Border x:Name="toDoCard" 
-                        Opacity="0"
-                        Style="{StaticResource MagicalCard}"
-                        Grid.Column="0"
-                        Margin="60,0,25,25">
-                    <Border.RenderTransform>
-                        <TranslateTransform X="0" Y="0" />
-                    </Border.RenderTransform>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <StackPanel Grid.Row="0" Orientation="Horizontal">
-                            <Path Data="{StaticResource Icon.ToDo}" Style="{StaticResource CardIcon}"/>
-                            <TextBlock Text="To-Do List" Style="{StaticResource CardHeader}"/>
-                        </StackPanel>
-
-                        <ListBox Grid.Row="1" Margin="0,0,0,10" 
-                                 d:ItemsSource="{d:SampleData ItemCount=5}"/>
-
-                        <Grid Grid.Row="2" Margin="0,10,0,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-
-                            <Grid>
-                                <TextBlock Text="Enter a new task..." 
-                                           Foreground="#777" 
-                                           Padding="5"
-                                           Margin="5,0,0,0"
-                                           VerticalAlignment="Center"
-                                           IsHitTestVisible="False">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=taskTextBox}" Value="">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                                <TextBox x:Name="taskTextBox" 
-                                         TextWrapping="Wrap" 
-                                         Margin="0,0,10,0" 
-                                         VerticalAlignment="Center" />
-                            </Grid>
-
-                            <Button Grid.Column="1" x:Name="btnTaskAdd" Content="Add" Width="68" Style="{StaticResource AccentButton}" Margin="0,0,5,0" />
-                            <Button Grid.Column="2" Content="Remove" Width="68" Style="{StaticResource DangerButton}"/>
-                        </Grid>
-                    </Grid>
-                </Border>
-
-                <Border x:Name="scoresCard" 
-                        Opacity="0"
-                        Style="{StaticResource MagicalCard}"
-                        Grid.Column="1"
-                        Margin="25,0,60,25">
-                    <Border.RenderTransform>
-                        <TranslateTransform X="0" Y="0" />
-                    </Border.RenderTransform>
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Path Data="{StaticResource Icon.Performance}" Style="{StaticResource CardIcon}"/>
-                            <TextBlock Text="View Performance" Style="{StaticResource CardHeader}"/>
-                        </StackPanel>
-
+            <!-- To-Do Card -->
+            <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource ModernCard}" Margin="0,0,15,15">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <Path Style="{StaticResource CardIcon}"/>
+                        <TextBlock Text="To-Do List" Style="{StaticResource CardHeader}"/>
                     </StackPanel>
-                </Border>
-            </Grid>
+                    <ListBox Height="150" Background="Transparent" Foreground="#1E1E1E"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Right">
+                        <TextBox Width="150" Height="30" />
+                        <Button Content="Add" Width="70" Height="30" Style="{StaticResource AccentButton}" Margin="5,0,0,0"/>
+                        <Button Content="Remove" Width="70" Height="30" Style="{StaticResource DangerButton}" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
 
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+            <!-- Scores Card -->
+            <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource ModernCard}" Margin="15,0,0,15">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <Path Style="{StaticResource CardIcon}"/>
+                        <TextBlock Text="View Performance" Style="{StaticResource CardHeader}"/>
+                    </StackPanel>
+                    <TextBlock Text="Performance metrics will appear here..." Foreground="#1E1E1E" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Border>
 
-                <Border x:Name="lessonsCard" 
-                        Opacity="0"
-                        Style="{StaticResource MagicalCard}"
-                        Grid.Column="0"
-                        Margin="60,25,25,60">
-                    <Border.RenderTransform>
-                        <TranslateTransform X="0" Y="0" />
-                    </Border.RenderTransform>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
+            <!-- Lessons Card -->
+            <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource ModernCard}" Margin="0,15,15,0">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <Path Style="{StaticResource CardIcon}"/>
+                        <TextBlock Text="Review Lessons" Style="{StaticResource CardHeader}"/>
+                    </StackPanel>
+                    <DataGrid AutoGenerateColumns="True" CanUserAddRows="False" Background="Transparent" Foreground="#1E1E1E"/>
+                </StackPanel>
+            </Border>
 
-                        <StackPanel Grid.Row="0" Orientation="Horizontal">
-                            <Path Data="{StaticResource Icon.Lessons}" Style="{StaticResource CardIcon}"/>
-                            <TextBlock Text="Review Lessons" Style="{StaticResource CardHeader}"/>
-                        </StackPanel>
+            <!-- Notebook Card -->
+            <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource ModernCard}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="15,15,0,0">
+                <StackPanel HorizontalAlignment="Center">
+                    <Border Width="100" Height="100" CornerRadius="50">
+                        <Border.Background>
+                            <ImageBrush ImageSource="/baby beel.jpg" Stretch="UniformToFill"/>
+                        </Border.Background>
+                    </Border>
+                    <Button Content="Go To Notebook" Width="140" Height="38" Margin="0,20,0,0" Style="{StaticResource AccentButton}"/>
+                </StackPanel>
+            </Border>
 
-                        <DataGrid Grid.Row="1" Margin="0,0,0,10" 
-                                  d:ItemsSource="{d:SampleData ItemCount=5}"
-                                  AutoGenerateColumns="True" CanUserAddRows="False"/>
-                    </Grid>
-                </Border>
-
-                <Border x:Name="notesCard" 
-                        Opacity="0"
-                        Background="#2A2A2A"
-                        Width="200" Height="200"
-                        CornerRadius="8" 
-                        Padding="15"
-                        Grid.Column="1"
-                        Margin="25,25,60,60"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Top">
-                    <Border.Effect>
-                        <DropShadowEffect ShadowDepth="2" Opacity="0.3" BlurRadius="10" Color="Black"/>
-                    </Border.Effect>
-                    <Border.RenderTransform>
-                        <TranslateTransform X="0" Y="0" />
-                    </Border.RenderTransform>
-                    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <Border Grid.Row="0" 
-                                Width="100" Height="100" 
-                                CornerRadius="50"
-                                Margin="0,0,0,10">
-                            <Border.Background>
-                                <ImageBrush ImageSource="/baby beel.jpg" Stretch="UniformToFill"/>
-                            </Border.Background>
-                        </Border>
-
-                        <Button Grid.Row="2" 
-                                x:Name="btnNotebookNavi" 
-                                Content="Go To Notebook" 
-                                Width="120"
-                                Style="{StaticResource AccentButton}"
-                                Margin="0,10,0,0"
-                                HorizontalAlignment="Center" VerticalAlignment="Top" Height="38" />
-                    </Grid>
-                </Border>
-            </Grid>
         </Grid>
     </Grid>
 </Page>
