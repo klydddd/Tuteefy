@@ -4,19 +4,23 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TuteefyWPF"
-
       mc:Ignorable="d" 
       d:DesignHeight="693" d:DesignWidth="1224"
       Title="StudentCards">
 
     <Grid>
-        <WrapPanel x:Name="StudentCardsPanel"
-           Orientation="Horizontal"
-           Margin="20"
-           HorizontalAlignment="Left"
-           VerticalAlignment="Top"/>
-
-
-
+        <ScrollViewer x:Name="CardScrollViewer"
+                      VerticalScrollBarVisibility="Hidden"
+                      HorizontalScrollBarVisibility="Disabled"
+                      CanContentScroll="True"
+                      PanningMode="VerticalOnly"
+                      Margin="10"
+                      PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+            <WrapPanel x:Name="StudentCardsPanel"
+                       Orientation="Horizontal"
+                       Margin="10"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top" />
+        </ScrollViewer>
     </Grid>
 </Page>

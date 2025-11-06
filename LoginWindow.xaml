@@ -1,9 +1,11 @@
 ﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="TuteefyWPF.MainWindow"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:av="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="TuteefyWPF.MainWindow"
         Title="Tuteefy" Height="650" Width="850"
-        Background="#0f0f0f"
+        Background="#f0f0f0"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         ResizeMode="NoResize">
@@ -277,10 +279,10 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle Margin="0,0,0,612" Fill="#FF0F0F0F" Grid.ColumnSpan="2"/>
+        <Rectangle Margin="0,0,0,612" Fill="#f0f0f0" Grid.ColumnSpan="2"/>
 
         <Label Content="tuteefy" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top"
-               IsEnabled="False" FontWeight="Bold" Foreground="White"/>
+               IsEnabled="False" FontWeight="Bold" Foreground="#9600ff"/>
 
         <!-- Floating Rectangles -->
         <Rectangle x:Name="Rect1" RadiusX="20" RadiusY="20" Margin="44,86,0,41" HorizontalAlignment="Left" Width="338">
@@ -647,12 +649,12 @@
             </Rectangle.Triggers>
 
         </Rectangle>
-        <Rectangle Fill="#0f0f0f" Margin="0,38,0,0" SnapsToDevicePixels="True" ClipToBounds="True" HorizontalAlignment="Right" Width="425" Grid.ColumnSpan="2"/>
+        <Rectangle Fill="#f0f0f0" Margin="0,38,0,0" SnapsToDevicePixels="True" ClipToBounds="True" HorizontalAlignment="Right" Width="425" Grid.ColumnSpan="2"/>
 
         <Label Content="tuteefy" HorizontalAlignment="Left" Margin="529,148,0,0" VerticalAlignment="Top"
-            IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="54" Width="216" Grid.ColumnSpan="2" HorizontalContentAlignment="Center"/>
-        <Label Content="username" HorizontalAlignment="Left" Margin="472,268,0,0" VerticalAlignment="Top"
-            IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="12" Width="97"
+            IsEnabled="False" FontWeight="Bold" Foreground="#9600ff" FontSize="54" Width="216" Grid.ColumnSpan="2" HorizontalContentAlignment="Center"/>
+        <Label Content="Username" HorizontalAlignment="Left" Margin="472,268,0,0" VerticalAlignment="Top"
+            IsEnabled="False" FontWeight="Bold" Foreground="#9600ff" FontSize="12" Width="97"
             VerticalContentAlignment="Center"/>
         <TextBox
             Style="{StaticResource RoundedPlaceholderTextBox}"
@@ -663,9 +665,11 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             TextWrapping="Wrap" Grid.ColumnSpan="2"/>
-        <Label Content="password" HorizontalAlignment="Left" Margin="472,344,0,0" VerticalAlignment="Top"
-            IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="12" Width="97"
+        <Label Content="Password" HorizontalAlignment="Left" Margin="472,344,0,0" VerticalAlignment="Top"
+            IsEnabled="False" FontWeight="Bold" Foreground="#9600ff" FontSize="12" Width="97"
             VerticalContentAlignment="Center"/>
+        
+        
 
         <PasswordBox
             Style="{StaticResource RoundedPlaceholderPasswordBox}"
@@ -791,11 +795,11 @@
             </Button.Template>
         </Button>
         <Label Content="or" HorizontalAlignment="Left" Margin="620,484,0,0" VerticalAlignment="Top"
-            IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="12" Width="35"
+            IsEnabled="False" FontWeight="Bold" Foreground="#9600ff" FontSize="12" Width="35"
             VerticalContentAlignment="Center"
             HorizontalContentAlignment="Center"/>
-        <Rectangle Height="1" Fill="White" Margin="479,498,63,150"/>
-        <Rectangle Height="1" Fill="White" Margin="655,498,54,150" Grid.ColumnSpan="2"/>
+        <Rectangle Height="1" Fill="#9600ff" Margin="479,498,63,150"/>
+        <Rectangle Height="1" Fill="#9600ff" Margin="655,498,54,150" Grid.ColumnSpan="2"/>
         <Button Content="SIGN UP"
             HorizontalAlignment="Left"
             Margin="472,510,0,0"

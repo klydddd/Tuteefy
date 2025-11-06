@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TuteefyWPF
+namespace TuteefyWPF.Pages
 {
     /// <summary>
     /// Interaction logic for StudentPage.xaml

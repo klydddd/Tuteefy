@@ -29,6 +29,9 @@ namespace TuteefyWPF
             AddStudentCard("Alex Cruz", "Mathematics", "92");
             AddStudentCard("Bianca Santos", "Physics", "88");
             AddStudentCard("Carlos Lim", "English", "95");
+            AddStudentCard("Alex Cruz", "Mathematics", "92");
+            AddStudentCard("Bianca Santos", "Physics", "88");
+            AddStudentCard("Carlos Lim", "English", "95");
         }
 
         private void AddStudentCard(string name, string subject, string grade)
@@ -43,6 +46,16 @@ namespace TuteefyWPF
 
             // Add it to your WrapPanel
             StudentCardsPanel.Children.Add(card);
+        }
+
+        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (sender is ScrollViewer scrollViewer)
+            {
+                double scrollAmount = e.Delta > 0 ? -50 : 50; // adjust scroll speed
+                scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + scrollAmount);
+                e.Handled = true;
+            }
         }
     }
 }

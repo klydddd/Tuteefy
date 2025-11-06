@@ -122,11 +122,11 @@
             </LinearGradientBrush>
         </Grid.Background>
 
-        <Rectangle Margin="320,15,15,15" RadiusY="15" RadiusX="15" Opacity="0.4" StrokeThickness="5">
+        <Rectangle Margin="320,0,-111,0" RadiusY="15" RadiusX="15" Opacity="1">
             <Rectangle.Stroke>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="White"/>
-                    <GradientStop Color="AliceBlue" Offset="1"/>
+                    <GradientStop Color="White" Offset="0"/>
+                    <GradientStop Color="#f0f0f0" Offset="1"/>
                 </LinearGradientBrush>
             </Rectangle.Stroke>
             <Rectangle.Fill>
@@ -143,10 +143,10 @@
             </Rectangle.Effect>
 
         </Rectangle>
-        <Label x:Name="PageTitle" Content="Home" IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="54" HorizontalContentAlignment="Left" Margin="378,62,852,718" />
+        <Label x:Name="PageTitle" Content="Home" IsEnabled="False" FontWeight="Bold" Foreground="#9600ff" FontSize="54" HorizontalContentAlignment="Left" Margin="378,62,852,718" />
 
         <StackPanel Margin="0,0,1280,0">
-            <Label Content="tuteefy" HorizontalAlignment="Left" Margin="0,62,0,0" VerticalAlignment="Top" IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="54" Width="319" HorizontalContentAlignment="Center"/>
+            <Label Content="logo" HorizontalAlignment="Left" Margin="30,62,0,0" IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="54" Width="291" HorizontalContentAlignment="Left"/>
             <RadioButton 
              x:Name="HomeTab"
                 Style="{StaticResource RoundedTabRadioButton}"
@@ -192,7 +192,7 @@
 
         </StackPanel>
 
-        <Frame x:Name="MainFrame" Source="Pages/HomePage.xaml" Margin="340,171,35,36" NavigationUIVisibility="Hidden"/>
+        <Frame x:Name="MainFrame" Source="Pages/HomePage.xaml" Margin="340,177,19,21" NavigationUIVisibility="Hidden"/>
 
     </Grid>
 </Window>

@@ -10,7 +10,7 @@ namespace TuteefyWPF
             InitializeComponent();
 
             // Set initial page
-            MainFrame.Navigate(new StudentPage());
+            MainFrame.Navigate(new Pages.StudentPage());
 
             // Attach Checked events AFTER initialization to avoid hang
             HomeTab.Checked += (s, e) => NavigateToPage("Home");
