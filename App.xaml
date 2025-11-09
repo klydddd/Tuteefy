@@ -4,12 +4,13 @@
              xmlns:local="clr-namespace:TuteefyWPF"
              StartupUri="LoginWindow.xaml">
     <Application.Resources>
+
+        <!-- 🔹 Rounded TextBox Style with Placeholder -->
         <DropShadowEffect x:Key="ShadowEffect"
                       Color="#888"
                       BlurRadius="10"
                       ShadowDepth="2"
                       Opacity="0.4"/>
-
         <Style x:Key="RoundedPlaceholderTextBox" TargetType="TextBox">
             <!-- Base visual styling -->
             <Setter Property="Background" Value="White"/>
@@ -107,6 +108,303 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- 🔹 Reusable Animated Gradient Button Style -->
+        <Style x:Key="AnimatedGradientButton" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                CornerRadius="10"
+                                BorderThickness="0"
+                                SnapsToDevicePixels="True"
+                                RenderTransformOrigin="0.5,0.5">
+                            <Border.RenderTransform>
+                                <ScaleTransform ScaleX="1" ScaleY="1"/>
+                            </Border.RenderTransform>
+
+                            <!-- Gradient background -->
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#9600ff" Offset="0"/>
+                                    <GradientStop Color="#960fff" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+
+                            <!-- Glow effect -->
+                            <Border.Effect>
+                                <DropShadowEffect Color="#9600FF"
+                                                  BlurRadius="40"
+                                                  ShadowDepth="0"
+                                                  Opacity="0.1"/>
+                            </Border.Effect>
+
+                            <!-- Button content -->
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              RecognizesAccessKey="True"/>
+                        </Border>
+
+                        <!-- Hover, Leave, and Press Animations -->
+                        <ControlTemplate.Triggers>
+
+                            <!-- Hover in -->
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="border"
+                                                         Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                                         To="0.8"
+                                                         Duration="0:0:0.28">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+
+                                        <DoubleAnimation Storyboard.TargetName="border"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.95"
+                                                         Duration="0:0:0.28">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+
+                            <!-- Hover out -->
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="border"
+                                                         Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                                                         To="0"
+                                                         Duration="0:0:0.28">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+
+                                        <DoubleAnimation Storyboard.TargetName="border"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="1"
+                                                         Duration="0:0:0.28">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+
+                            <!-- Pressed -->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.85"/>
+                                <Setter TargetName="border" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.98" ScaleY="0.98"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Reusable Animated RadioButtons-->
+        <Style x:Key="RoundedTabRadioButton" TargetType="RadioButton">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Grid>
+                        <!-- Left active highlight bar -->
+                        <Border x:Name="LeftHighlight"
+                            Width="3"
+                            HorizontalAlignment="Left"
+                            CornerRadius="0"
+                            Background="Transparent"/>
+
+                        <!-- Main clickable area -->
+                        <Border x:Name="MainBackground"
+                            CornerRadius="10"
+                            Background="Transparent"
+                            SnapsToDevicePixels="True"
+                            Height="{TemplateBinding Height}"
+                            Width="{TemplateBinding Width}">
+                            <ContentPresenter HorizontalAlignment="Left"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True"
+                                          Margin="40,0,0,0"/>
+                        </Border>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <!-- Smooth hover highlight -->
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="MainBackground"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="#302E1A47"
+                                                Duration="0:0:0.2"
+                                                FillBehavior="HoldEnd"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="MainBackground"
+                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                To="Transparent"
+                                                Duration="0:0:0.3"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                        <!-- Checked (active tab) -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="LeftHighlight" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="Yellow" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Foreground" Value="Yellow"/>
+                        </Trigger>
+
+                        <!-- Unchecked (default) -->
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter TargetName="LeftHighlight" Property="Background" Value="Transparent"/>
+                            <Setter TargetName="MainBackground" Property="Background" Value="Transparent"/>
+                        </Trigger>
+
+                        <!-- Disabled -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="Gray"/>
+                            <Setter TargetName="MainBackground" Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        </Style>
+
+        
+        <!-- 🔹 Rounded PasswordBox Style with Placeholder -->
+        <Style x:Key="RoundedPlaceholderPasswordBox" TargetType="PasswordBox">
+            <!-- Base visual styling -->
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="0,5"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Grid>
+                            <!-- Outer Border (rounded) -->
+                            <Border
+                x:Name="Border"
+                CornerRadius="10"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                SnapsToDevicePixels="True">
+
+                                <!-- Default shadow (off) -->
+                                <Border.Effect>
+                                    <DropShadowEffect Color="White"
+                                      BlurRadius="40"
+                                      ShadowDepth="0"
+                                      Opacity="0.3"/>
+                                </Border.Effect>
+
+                                <!-- Password content host -->
+                                <ScrollViewer x:Name="PART_ContentHost"
+                              Margin="10,5,10,5"
+                              Focusable="False"/>
+                            </Border>
+                        </Grid>
+
+                        <!-- ✨Triggers for focus and glow -->
+                        <ControlTemplate.Triggers>
+
+                            <!-- Smooth glow when focused -->
+                            <EventTrigger RoutedEvent="GotFocus">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                            Storyboard.TargetName="Border"
+                            Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                            To="0.8"
+                            Duration="0:0:0.25">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+
+                                        <!-- Slight border color highlight -->
+                                        <ColorAnimation
+                            Storyboard.TargetName="Border"
+                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                            To="#FF7B68EE"
+                            Duration="0:0:0.25">
+                                            <ColorAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+
+                            <!-- Fade glow out when unfocused -->
+                            <EventTrigger RoutedEvent="LostFocus">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                            Storyboard.TargetName="Border"
+                            Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
+                            To="0"
+                            Duration="0:0:0.25">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+
+                                        <ColorAnimation
+                            Storyboard.TargetName="Border"
+                            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                            To="LightGray"
+                            Duration="0:0:0.25">
+                                            <ColorAnimation.EasingFunction>
+                                                <CubicEase EasingMode="EaseOut"/>
+                                            </ColorAnimation.EasingFunction>
+                                        </ColorAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
     </Application.Resources>
 
 </Application>

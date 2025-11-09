@@ -9,95 +9,6 @@
         Background="#0f0f0f"
         Title="TuteefyMain" Height="900" Width="1600">
 
-    <Window.Resources>
-        <Style x:Key="RoundedTabRadioButton" TargetType="RadioButton">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="RadioButton">
-                        <Grid>
-                            <!-- Left active highlight bar -->
-                            <Border x:Name="LeftHighlight"
-                            Width="3"
-                            HorizontalAlignment="Left"
-                            CornerRadius="0"
-                            Background="Transparent"/>
-
-                            <!-- Main clickable area -->
-                            <Border x:Name="MainBackground"
-                            CornerRadius="10"
-                            Background="Transparent"
-                            SnapsToDevicePixels="True"
-                            Height="{TemplateBinding Height}"
-                            Width="{TemplateBinding Width}">
-                                <ContentPresenter HorizontalAlignment="Left"
-                                          VerticalAlignment="Center"
-                                          RecognizesAccessKey="True"
-                                          Margin="40,0,0,0"/>
-                            </Border>
-                        </Grid>
-
-                        <ControlTemplate.Triggers>
-                            <!-- Smooth hover highlight -->
-                            <EventTrigger RoutedEvent="MouseEnter">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="MainBackground"
-                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="#302E1A47"
-                                                Duration="0:0:0.2"
-                                                FillBehavior="HoldEnd"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                            <EventTrigger RoutedEvent="MouseLeave">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ColorAnimation Storyboard.TargetName="MainBackground"
-                                                Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                To="Transparent"
-                                                Duration="0:0:0.3"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-
-                            <!-- Checked (active tab) -->
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="LeftHighlight" Property="Background">
-                                    <Setter.Value>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                            <GradientStop Color="Yellow" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="Foreground" Value="Yellow"/>
-                            </Trigger>
-
-                            <!-- Unchecked (default) -->
-                            <Trigger Property="IsChecked" Value="False">
-                                <Setter Property="Foreground" Value="White"/>
-                                <Setter TargetName="LeftHighlight" Property="Background" Value="Transparent"/>
-                                <Setter TargetName="MainBackground" Property="Background" Value="Transparent"/>
-                            </Trigger>
-
-                            <!-- Disabled -->
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Foreground" Value="Gray"/>
-                                <Setter TargetName="MainBackground" Property="Opacity" Value="0.5"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-    </Window.Resources>
-
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" SpreadMethod="Pad">
@@ -190,9 +101,13 @@
 
 
 
+
+
         </StackPanel>
 
         <Frame x:Name="MainFrame" Source="Pages/HomePage.xaml" Margin="340,177,19,21" NavigationUIVisibility="Hidden"/>
+
+
 
     </Grid>
 </Window>

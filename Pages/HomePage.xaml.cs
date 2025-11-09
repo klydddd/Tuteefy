@@ -24,48 +24,48 @@ namespace TuteefyWPF
             DataContext = this;
         }
 
-        private void AddTask_Click(object sender, RoutedEventArgs e)
-        {
-            var selectedDate = TaskCalendar.SelectedDate ?? DateTime.Today;
+        //private void AddTask_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var selectedDate = TaskCalendar.SelectedDate ?? DateTime.Today;
 
-            // Use a modern WPF dialog instead of InputBox
-            var dialog = new AddTaskDialog(selectedDate)
-            {
-                Owner = Window.GetWindow(this)
-            };
+        //    // Use a modern WPF dialog instead of InputBox
+        //    var dialog = new AddTaskDialog(selectedDate)
+        //    {
+        //        Owner = Window.GetWindow(this)
+        //    };
 
-            if (dialog.ShowDialog() == true)
-            {
-                string task = dialog.TaskText?.Trim();
-                if (!string.IsNullOrEmpty(task))
-                {
-                    TaskList.Items.Add($"{selectedDate:MMM dd}: {task}");
-                }
-            }
-        }
+        //    if (dialog.ShowDialog() == true)
+        //    {
+        //        string task = dialog.TaskText?.Trim();
+        //        if (!string.IsNullOrEmpty(task))
+        //        {
+        //            TaskList.Items.Add($"{selectedDate:MMM dd}: {task}");
+        //        }
+        //    }
+        //}
 
-        private void DeleteTask_Click(object sender, RoutedEventArgs e)
-        {
-            if (TaskList.SelectedItem != null)
-            {
-                var result = MessageBox.Show("Are you sure you want to delete this task?",
-                                             "Confirm Delete",
-                                             MessageBoxButton.YesNo,
-                                             MessageBoxImage.Warning);
+        //private void DeleteTask_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (TaskList.SelectedItem != null)
+        //    {
+        //        var result = MessageBox.Show("Are you sure you want to delete this task?",
+        //                                     "Confirm Delete",
+        //                                     MessageBoxButton.YesNo,
+        //                                     MessageBoxImage.Warning);
 
-                if (result == MessageBoxResult.Yes)
-                {
-                    TaskList.Items.Remove(TaskList.SelectedItem);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please select a task to delete.",
-                                "No Task Selected",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Information);
-            }
-        }
+        //        if (result == MessageBoxResult.Yes)
+        //        {
+        //            TaskList.Items.Remove(TaskList.SelectedItem);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Please select a task to delete.",
+        //                        "No Task Selected",
+        //                        MessageBoxButton.OK,
+        //                        MessageBoxImage.Information);
+        //    }
+        //}
 
     }
 }

@@ -146,6 +146,13 @@
     <Compile Include="SignupWindow.xaml.cs">
       <DependentUpon>SignupWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Calendar.xaml.cs">
+      <DependentUpon>Calendar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Converters.cs" />
+    <Compile Include="UserControls\QuizAndLessonCard.xaml.cs">
+      <DependentUpon>QuizAndLessonCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\StudentCardControl.xaml.cs">
       <DependentUpon>StudentCardControl.xaml</DependentUpon>
     </Compile>
@@ -182,6 +189,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="SignupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Calendar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\QuizAndLessonCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
