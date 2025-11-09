@@ -1,0 +1,38 @@
+﻿<Page x:Class="TuteefyWPF.Pages.LessonsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TuteefyWPF.Pages"
+      xmlns:uc="clr-namespace:TuteefyWPF.UserControls"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="LessonsPage">
+    <Grid Background="#F5F5F5">
+        <ScrollViewer x:Name="MainScrollViewer"
+                      VerticalScrollBarVisibility="Hidden" 
+                      HorizontalScrollBarVisibility="Disabled"
+                      PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+            <StackPanel Margin="20">
+                <!-- Page Title -->
+
+                <!-- Cards Container -->
+                <WrapPanel x:Name="LessonsPanel"
+                           Orientation="Horizontal"
+                           HorizontalAlignment="Left"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Fixed Create Lesson Button -->
+        <Button x:Name="CreateLessonButton"
+                Content="Create Lesson"
+                Style="{StaticResource AnimatedGradientButton}"
+                Width="140"
+                Height="45"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Margin="0,0,30,30"
+                Click="CreateLessonButton_Click"
+                Opacity="1"/>
+    </Grid>
+</Page>

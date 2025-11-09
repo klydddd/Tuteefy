@@ -32,11 +32,11 @@ namespace TuteefyWPF
                     PageTitle.Content = "Students";
                     break;
                 case "Lessons":
-                    //MainFrame.Navigate(new LessonsPage());
+                    MainFrame.Navigate(new TuteefyWPF.Pages.LessonsPage());
                     PageTitle.Content = "Lessons";
                     break;
                 case "Quizzes":
-                    //MainFrame.Navigate(new QuizzesPage());
+                    MainFrame.Navigate(new TuteefyWPF.Pages.QuizPage());
                     PageTitle.Content = "Quizzes";
                     break;
             }

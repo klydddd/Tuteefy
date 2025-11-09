@@ -20,9 +20,32 @@ namespace TuteefyWPF.UserControls
     /// </summary>
     public partial class QuizAndLessonCard : UserControl
     {
+
+        public static readonly DependencyProperty TitleProperty =
+       DependencyProperty.Register("Title", typeof(string), typeof(QuizAndLessonCard));
+
+        public static readonly DependencyProperty CodeProperty =
+            DependencyProperty.Register("Code", typeof(string), typeof(QuizAndLessonCard));
+
+        public string Title
+        {
+            get { return (string)GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
+        }
+
+        public string Code
+        {
+            get { return (string)GetValue(CodeProperty); }
+            set { SetValue(CodeProperty, value); }
+        }
         public QuizAndLessonCard()
         {
             InitializeComponent();
+        }
+
+        private void CardButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Your click handler logic here
         }
     }
 }
