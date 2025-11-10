@@ -7,7 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="693" d:DesignWidth="1632"
       Title="StudentCards">
-
     <Grid>
         <ScrollViewer x:Name="CardScrollViewer"
                       VerticalScrollBarVisibility="Hidden"
@@ -22,5 +21,17 @@
                        HorizontalAlignment="Left"
                        VerticalAlignment="Top" />
         </ScrollViewer>
+
+        <!-- Fixed Add Student Button -->
+        <Button x:Name="AddStudentButton"
+                Content="Add Student"
+                Style="{StaticResource AnimatedGradientButton}"
+                Width="140"
+                Height="45"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Margin="0,0,30,30"
+                Click="AddStudentButton_Click"
+                Opacity="1"/>
     </Grid>
 </Page>

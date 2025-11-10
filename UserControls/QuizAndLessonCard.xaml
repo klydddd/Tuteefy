@@ -55,9 +55,6 @@
                                FontSize="20"
                                TextTrimming="CharacterEllipsis"
                                MaxWidth="230"/>
-                    <Ellipse Width="12" Height="12"
-                             Margin="8,0,0,0"
-                             Fill="#9600ff"/>
                 </StackPanel>
             </StackPanel>
 
