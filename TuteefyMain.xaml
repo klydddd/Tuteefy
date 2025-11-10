@@ -7,9 +7,10 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="#0f0f0f"
-        Title="TuteefyMain" 
-        Height="900" 
-        Width="1600"
+        Title="TuteefyMain"
+        WindowState="Maximized"
+        WindowStyle="None"
+        ResizeMode="NoResize"
         MinHeight="600"
         MinWidth="1000">
 
