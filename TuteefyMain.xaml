@@ -14,9 +14,9 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1387*"/>
-            <ColumnDefinition Width="112*"/>
-            <ColumnDefinition Width="101*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" SpreadMethod="Pad">
@@ -113,7 +113,7 @@
 
         </StackPanel>
 
-        <Frame x:Name="MainFrame" Source="Pages/HomePage.xaml" Margin="325,175,19,21" NavigationUIVisibility="Hidden" Grid.ColumnSpan="3"/>
+        <Frame x:Name="MainFrame" Source="Pages/HomePage.xaml" Margin="325,175,10,21" NavigationUIVisibility="Hidden"/>
 
 
 
