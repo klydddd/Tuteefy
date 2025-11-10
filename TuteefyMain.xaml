@@ -7,17 +7,23 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Background="#0f0f0f"
-        Title="TuteefyMain"
-        WindowState="Maximized"
-        WindowStyle="None"
-        ResizeMode="NoResize">
+        Title="TuteefyMain" 
+        Height="900" 
+        Width="1600"
+        MinHeight="600"
+        MinWidth="1000">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="0*"/>
-            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="305"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Background Gradient -->
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" SpreadMethod="Pad">
                 <LinearGradientBrush.RelativeTransform>
@@ -41,81 +47,103 @@
             </LinearGradientBrush>
         </Grid.Background>
 
-        <Rectangle Margin="310,0,-63,0" RadiusY="15" RadiusX="15" Opacity="1" Grid.ColumnSpan="3">
-            <Rectangle.Stroke>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="White" Offset="0"/>
-                    <GradientStop Color="#f0f0f0" Offset="1"/>
-                </LinearGradientBrush>
-            </Rectangle.Stroke>
-            <Rectangle.Fill>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" SpreadMethod="Pad">
-                    <GradientStop Color="AliceBlue" Offset="0"/>
-                    <GradientStop Color="white" Offset="1"/>
-                </LinearGradientBrush>
-            </Rectangle.Fill>
-            <Rectangle.Effect>
-                <DropShadowEffect Color="#FF866EA5"
-                          BlurRadius="55"
-                          ShadowDepth="61"
-                          Opacity="0.72" Direction="317"/>
-            </Rectangle.Effect>
+        <!-- Left Sidebar -->
+        <Grid Grid.Column="0">
+            <StackPanel>
+                <Label Content="logo" 
+                       HorizontalAlignment="Left" 
+                       Margin="30,62,0,0" 
+                       IsEnabled="False" 
+                       FontWeight="Bold" 
+                       Foreground="White" 
+                       FontSize="54" 
+                       HorizontalContentAlignment="Left"/>
 
-        </Rectangle>
-        <Label x:Name="PageTitle" Content="Home" IsEnabled="False" FontWeight="Bold" Foreground="#9600ff" FontSize="54" HorizontalContentAlignment="Left" Margin="378,62,639,691" />
+                <RadioButton x:Name="HomeTab"
+                             Style="{StaticResource RoundedTabRadioButton}"
+                             Content="Home"
+                             Height="50"
+                             GroupName="Tabs"
+                             Margin="0,10,0,0"
+                             IsChecked="True"/>
 
-        <StackPanel Margin="0,0,1067,0">
-            <Label Content="logo" HorizontalAlignment="Left" Margin="30,62,0,0" IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="54" Width="291" HorizontalContentAlignment="Left"/>
-            <RadioButton 
-             x:Name="HomeTab"
-                Style="{StaticResource RoundedTabRadioButton}"
-             Content="Home"
-             Height="50"
-             GroupName="Tabs"
-             Margin="0,10,0,0"
-             IsChecked="True"
-             />
+                <RadioButton Style="{StaticResource RoundedTabRadioButton}"
+                             x:Name="StudentTab"
+                             Content="Students"
+                             Height="50"
+                             Margin="0,10,0,0"
+                             GroupName="Tabs"/>
 
+                <RadioButton Style="{StaticResource RoundedTabRadioButton}"
+                             x:Name="LessonsTab"
+                             Content="Lessons"
+                             Height="50"
+                             Margin="0,10,0,0"
+                             GroupName="Tabs"/>
+
+                <RadioButton Style="{StaticResource RoundedTabRadioButton}"
+                             x:Name="QuizzesTab"
+                             Content="Quizzes"
+                             Height="50"
+                             Margin="0,10,0,0"
+                             GroupName="Tabs"/>
+            </StackPanel>
+
+            <!-- Log Out Button at Bottom -->
             <RadioButton Style="{StaticResource RoundedTabRadioButton}"
-             x:Name="StudentTab"
-             Content="Students"
-             Height="50"
-             Margin="0,10,0,0"
-             GroupName="Tabs"
-             />
+                         x:Name="QuizzesTab_Copy"
+                         Content="Log out"
+                         Height="50"
+                         GroupName="Tabs"
+                         VerticalAlignment="Bottom"
+                         Margin="0,0,0,30"
+                         Checked="QuizzesTab_Copy_Checked"/>
+        </Grid>
 
-            <RadioButton Style="{StaticResource RoundedTabRadioButton}"
-             x:Name="LessonsTab"
-             Content="Lessons"
-             Height="50"
-             Margin="0,10,0,0"
-             GroupName="Tabs"
-             />
+        <!-- Main Content Area -->
+        <Grid Grid.Column="1" Margin="10,0,10,0">
+            <!-- Content Background Rectangle -->
+            <Rectangle RadiusY="15" 
+                       RadiusX="15" 
+                       Opacity="1" Margin="0,0,-25,0">
+                <Rectangle.Stroke>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="White" Offset="0"/>
+                        <GradientStop Color="#f0f0f0" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Stroke>
+                <Rectangle.Fill>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" SpreadMethod="Pad">
+                        <GradientStop Color="AliceBlue" Offset="0"/>
+                        <GradientStop Color="white" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+                <Rectangle.Effect>
+                    <DropShadowEffect Color="#FF866EA5"
+                                      BlurRadius="55"
+                                      ShadowDepth="61"
+                                      Opacity="0.72" 
+                                      Direction="317"/>
+                </Rectangle.Effect>
+            </Rectangle>
 
-            <RadioButton Style="{StaticResource RoundedTabRadioButton}"
-             x:Name="QuizzesTab"
-             Content="Quizzes"
-             Height="50"
-             Margin="0,10,0,0"
-             GroupName="Tabs"
-             />
-            <RadioButton Style="{StaticResource RoundedTabRadioButton}"
-                x:Name="QuizzesTab_Copy"
-                Content="Log out"
-                Height="50"
-                GroupName="Tabs"
-                Margin="0,400,0,0" Checked="QuizzesTab_Copy_Checked" 
-             />
+            <!-- Page Title -->
+            <Label x:Name="PageTitle" 
+                   Content="Home" 
+                   IsEnabled="False" 
+                   FontWeight="Bold" 
+                   Foreground="#9600ff" 
+                   FontSize="54" 
+                   HorizontalContentAlignment="Left" 
+                   VerticalAlignment="Top"
+                   HorizontalAlignment="Left"
+                   Margin="68,62,0,0"/>
 
-
-
-
-
-        </StackPanel>
-
-        <Frame x:Name="MainFrame" Source="Pages/HomePage.xaml" Margin="325,175,10,21" NavigationUIVisibility="Hidden"/>
-
-
-
+            <!-- Main Frame for Page Content -->
+            <Frame x:Name="MainFrame" 
+                   Source="Pages/HomePage.xaml" 
+                   Margin="15,146,15,21" 
+                   NavigationUIVisibility="Hidden"/>
+        </Grid>
     </Grid>
 </Window>
