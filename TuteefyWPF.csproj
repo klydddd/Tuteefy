@@ -140,9 +140,7 @@
     <Compile Include="AddTaskDialog.xaml.cs">
       <DependentUpon>AddTaskDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\EnrollStudent.xaml.cs">
-      <DependentUpon>EnrollStudent.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Classes\WindowHelper.cs" />
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -151,6 +149,12 @@
     </Compile>
     <Compile Include="Pages\QuizPage.xaml.cs">
       <DependentUpon>QuizPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\QuizPages\CreateQuiz.xaml.cs">
+      <DependentUpon>CreateQuiz.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\QuizPages\QuizView.xaml.cs">
+      <DependentUpon>QuizView.xaml</DependentUpon>
     </Compile>
     <Compile Include="SignupWindow.xaml.cs">
       <DependentUpon>SignupWindow.xaml</DependentUpon>
@@ -161,6 +165,9 @@
     <Compile Include="UserControls\Converters.cs" />
     <Compile Include="UserControls\QuizAndLessonCard.xaml.cs">
       <DependentUpon>QuizAndLessonCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\QuizControls\QuizQuestionCard.xaml.cs">
+      <DependentUpon>QuizQuestionCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\StudentCardControl.xaml.cs">
       <DependentUpon>StudentCardControl.xaml</DependentUpon>
@@ -176,6 +183,12 @@
     </Compile>
     <Compile Include="TuteefyMain.xaml.cs">
       <DependentUpon>TuteefyMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsFolder\AddQuizWindow.xaml.cs">
+      <DependentUpon>AddQuizWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowsFolder\AddWindow.xaml.cs">
+      <DependentUpon>AddWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="AddTaskDialog.xaml">
       <SubType>Designer</SubType>
@@ -209,6 +222,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\QuizPages\CreateQuiz.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\QuizPages\QuizView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SignupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -218,6 +239,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\QuizAndLessonCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\QuizControls\QuizQuestionCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -238,6 +263,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="TuteefyMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsFolder\AddQuizWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsFolder\AddWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
