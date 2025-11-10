@@ -24,6 +24,11 @@ namespace TuteefyWPF
             DataContext = this;
         }
 
+        private void Calendar_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         //private void AddTask_Click(object sender, RoutedEventArgs e)
         //{
         //    var selectedDate = TaskCalendar.SelectedDate ?? DateTime.Today;

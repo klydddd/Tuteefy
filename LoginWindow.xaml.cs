@@ -31,7 +31,6 @@ namespace TuteefyWPF
             SignupWindow signupWindow = new SignupWindow();
             signupWindow.Show();
             this.Close();
-            
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
