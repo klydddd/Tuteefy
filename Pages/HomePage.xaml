@@ -8,7 +8,8 @@
     xmlns:local="clr-namespace:TuteefyWPF.UserControls"
     mc:Ignorable="d"
     Title="HomePage"
-    Width="1224" Height="693">
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch">
 
     <Page.Resources>
         <DropShadowEffect x:Key="ShadowEffect" Color="#888" BlurRadius="10" ShadowDepth="2" Opacity="0.4"/>
