@@ -20,10 +20,11 @@ namespace TuteefyWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Database db;
         public MainWindow()
         {
             InitializeComponent();
-            
+            db = new Database();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

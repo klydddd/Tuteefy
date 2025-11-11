@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,13 +20,46 @@ namespace TuteefyWPF
     /// </summary>
     public partial class SignupWindow : Window
     {
+        private Database db;
         public SignupWindow()
         {
             InitializeComponent();
+            db = new Database();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            string fullName = txtFullName.Text;
+            string email = txtEmail.Text;
+            string password = txtPassword.Password;
+            string role = "Tutor";
+
+            using (SqlConnection conn = new SqlConnection(db.connectionString))
+            {
+                conn.Open();
+
+                string query = "INSERT INTO UserTable (UserRole, FullName, Email, PasswordHash)" +
+                                "VALUES (@UserRole, @FullName, @Email, @PasswordHash)" +
+                                "SELECT SCOPE_IDENTITY();" ;
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@UserRole", role);
+                cmd.Parameters.AddWithValue("@FullName", fullName);
+                cmd.Parameters.AddWithValue("@Email", email);
+                cmd.Parameters.AddWithValue("@PasswordHash", password);
+
+                int newUserID = Convert.ToInt32(cmd.ExecuteScalar());
+
+                string insertTutorQuery = @"INSERT INTO TutorTable (TutorID)" +
+                                           "VALUES (@TutorID);";
+
+                SqlCommand cmdTutor = new SqlCommand(insertTutorQuery, conn);
+                cmdTutor.Parameters.AddWithValue("@TutorID", newUserID);
+                
+                cmd.ExecuteNonQuery();
+                cmdTutor.ExecuteNonQuery();
+                conn.Close();
+            }
+
             MessageBox.Show("Signup Successful!");
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
