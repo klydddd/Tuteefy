@@ -656,7 +656,7 @@
         <Label Content="Username" HorizontalAlignment="Left" Margin="472,268,0,0" VerticalAlignment="Top"
             IsEnabled="False" FontWeight="Bold" Foreground="#9600ff" FontSize="12" Width="97"
             VerticalContentAlignment="Center"/>
-        <TextBox
+        <TextBox x:Name="txtUser"
             Style="{StaticResource RoundedPlaceholderTextBox}"
             Tag="username"  
                     Width="330"
@@ -671,7 +671,7 @@
         
         
 
-        <PasswordBox
+        <PasswordBox x:Name="txtPassword"
             Style="{StaticResource RoundedPlaceholderPasswordBox}"
             Tag="password"
             Width="330"

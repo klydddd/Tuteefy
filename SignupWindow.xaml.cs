@@ -46,17 +46,8 @@ namespace TuteefyWPF
                 cmd.Parameters.AddWithValue("@FullName", fullName);
                 cmd.Parameters.AddWithValue("@Email", email);
                 cmd.Parameters.AddWithValue("@PasswordHash", password);
-
-                int newUserID = Convert.ToInt32(cmd.ExecuteScalar());
-
-                string insertTutorQuery = @"INSERT INTO TutorTable (TutorID)" +
-                                           "VALUES (@TutorID);";
-
-                SqlCommand cmdTutor = new SqlCommand(insertTutorQuery, conn);
-                cmdTutor.Parameters.AddWithValue("@TutorID", newUserID);
                 
                 cmd.ExecuteNonQuery();
-                cmdTutor.ExecuteNonQuery();
                 conn.Close();
             }
 

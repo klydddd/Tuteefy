@@ -12,9 +12,7 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         MinHeight="600"
-        MinWidth="1000"
-        WindowStyle="None"
-        ResizeMode="NoResize">
+        MinWidth="1000">
 
     <Grid>
         <Grid.ColumnDefinitions>
