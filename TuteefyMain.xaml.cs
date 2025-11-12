@@ -57,11 +57,6 @@ namespace TuteefyWPF
         {
             //Show settings window
         }
-
-        private void MainFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
-        {
-
-        }
     }
 
 

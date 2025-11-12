@@ -27,7 +27,6 @@
                 Margin="35,16,0,0"
                Grid.Row="0" Height="63" Width="189"/>
         <TextBox
-            x:Name="QuizTitleTextBox"
             Style="{StaticResource RoundedPlaceholderTextBox}"
             Tag="username"  
             Width="730"
@@ -51,7 +50,6 @@
             Margin="35,104,0,0"
             Grid.Row="1" Height="34" Width="107"/>
         <TextBox
-            x:Name="QuizDesc"
             Style="{StaticResource RoundedPlaceholderTextBox}"
             Tag="username"  
             Width="730"

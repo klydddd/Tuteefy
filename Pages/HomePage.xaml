@@ -7,87 +7,75 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:TuteefyWPF.UserControls"
     mc:Ignorable="d"
-    Title="HomePage">
+    Title="HomePage"
+    HorizontalAlignment="Stretch"
+    VerticalAlignment="Stretch">
 
     <Page.Resources>
         <DropShadowEffect x:Key="ShadowEffect" Color="#888" BlurRadius="10" ShadowDepth="2" Opacity="0.4"/>
     </Page.Resources>
 
-    <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Hidden" 
-                      HorizontalScrollBarVisibility="Disabled"
-                      >
-            <Grid Margin="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Background="Transparent" Margin="5">
 
-                <!-- 🗓️ Calendar Panel -->
-                <Border Grid.Row="0"
-                        CornerRadius="20"
-                        Padding="20"
-                        Effect="{DynamicResource ShadowEffect}"
-                        MinHeight="350">
-                    <Border.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="White" Offset="0"/>
-                            <GradientStop Color="#f9f6ff" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Border.Background>
-                    <DockPanel>
-                        <TextBlock Text="Task Calendar"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Foreground="#5E35B1"
-                                   DockPanel.Dock="Top"
-                                   Margin="0,0,0,15"/>
-                        <local:Calendar Loaded="Calendar_Loaded"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Stretch"/>
-                    </DockPanel>
-                </Border>
+            <!-- 🗓️ Calendar Panel -->
+            <Border CornerRadius="20"
+                    Padding="20"
+                    Effect="{DynamicResource ShadowEffect}" Height="420">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="White" Offset="0"/>
+                        <GradientStop Color="#f9f6ff" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
 
-                <!-- 📈 Line Chart Panel -->
-                <Border Grid.Row="1"
-                        Margin="0,20,0,0"
-                        CornerRadius="20"
-                        Padding="20"
-                        Effect="{DynamicResource ShadowEffect}"
-                        MinHeight="250">
-                    <Border.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="White" Offset="0"/>
-                            <GradientStop Color="#f2f0ff" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Border.Background>
-                    <DockPanel>
-                        <TextBlock Text="Student Progress Overview"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Foreground="#5E35B1"
-                                   DockPanel.Dock="Top"
-                                   Margin="0,0,0,15"/>
-                        <lvc:CartesianChart DockPanel.Dock="Top"
-                                            MinHeight="150"
-                                            Margin="0,5,0,0">
-                            <lvc:CartesianChart.Series>
-                                <lvc:LineSeries Title="Progress"
-                                                Stroke="#7C4DFF"
-                                                Fill="#EDE7F6"
-                                                PointGeometrySize="8"
-                                                Values="{Binding ChartValues}" />
-                            </lvc:CartesianChart.Series>
-                            <lvc:CartesianChart.AxisX>
-                                <lvc:Axis Title="Weeks" Labels="{Binding Labels}" />
-                            </lvc:CartesianChart.AxisX>
-                            <lvc:CartesianChart.AxisY>
-                                <lvc:Axis Title="Scores" />
-                            </lvc:CartesianChart.AxisY>
-                        </lvc:CartesianChart>
-                    </DockPanel>
-                </Border>
-            </Grid>
-        </ScrollViewer>
-    </Grid>
+                <StackPanel>
+                    <TextBlock Text="Task Calendar"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="#5E35B1"
+                               Margin="0,0,0,15"/>
+                    <local:Calendar Loaded="Calendar_Loaded" />
+                </StackPanel>
+            </Border>
+
+            <!-- 📈 Line Chart Panel -->
+            <Border Margin="0,20,0,0"
+                    CornerRadius="20"
+                    Padding="20"
+                    Effect="{DynamicResource ShadowEffect}" Height="210">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="White" Offset="0"/>
+                        <GradientStop Color="#f2f0ff" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <StackPanel>
+                    <TextBlock Text="Student Progress Overview"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="#5E35B1"
+                               Margin="0,0,0,15"/>
+
+                    <lvc:CartesianChart Height="123" Margin="0,5,0,0">
+                        <lvc:CartesianChart.Series>
+                            <lvc:LineSeries Title="Progress"
+                                            Stroke="#7C4DFF"
+                                            Fill="#EDE7F6"
+                                            PointGeometrySize="8"
+                                            Values="{Binding ChartValues}" />
+                        </lvc:CartesianChart.Series>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis Title="Weeks" Labels="{Binding Labels}" />
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Scores" />
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
 </Page>
