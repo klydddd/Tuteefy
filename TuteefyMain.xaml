@@ -12,9 +12,7 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         MinHeight="600"
-        MinWidth="1000"
-        WindowStyle="None"
-        ResizeMode="NoResize">
+        MinWidth="1000">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -94,22 +92,14 @@
 
             <!-- Log Out Button at Bottom -->
             <RadioButton Style="{StaticResource RoundedTabRadioButton}"
-                         x:Name="SettingsBtn"
-                         Content="Settings"
-                         Height="50"
-                         GroupName="Tabs"
-                         VerticalAlignment="Bottom"
-                         Margin="0,0,0,80"
-                         Checked="Settings_Checked"/>
-            <RadioButton Style="{StaticResource RoundedTabRadioButton}"
-                         x:Name="LogOutBtn"
+                         x:Name="QuizzesTab_Copy"
                          Content="Log out"
                          Height="50"
                          GroupName="Tabs"
-                         VerticalAlignment="Top"
-                         Margin="0,820,0,0"
-                         Checked="LogOut_Checked"/>
-            </Grid>
+                         VerticalAlignment="Bottom"
+                         Margin="0,0,0,30"
+                         Checked="QuizzesTab_Copy_Checked"/>
+        </Grid>
 
         <!-- Main Content Area -->
         <Grid Grid.Column="1" Margin="10,0,10,0">

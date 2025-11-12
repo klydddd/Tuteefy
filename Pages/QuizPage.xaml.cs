@@ -104,15 +104,11 @@ namespace TuteefyWPF.Pages
 
         private void CreateQuizButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            // Navigate to create quiz page or open a dialog
+            MessageBox.Show("Navigate to Create Quiz page", "Create Quiz");
 
-            TuteefyWPF.Classes.WindowHelper windowHelper = new TuteefyWPF.Classes.WindowHelper();
-            var addWindow = new TuteefyWPF.WindowsFolder.AddQuizWindow();
-            TuteefyWPF.Classes.WindowHelper.ShowDimmedDialog(Window.GetWindow(this), addWindow);
             // Example navigation:
             // NavigationService?.Navigate(new CreateQuizPage());
-
-            
         }
     }
 }

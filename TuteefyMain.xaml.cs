@@ -19,8 +19,7 @@ namespace TuteefyWPF
             QuizzesTab.Checked += (s, e) => NavigateToPage("Quizzes");
         }
 
-        // In TuteefyMain.cs - change from private to public
-        public void NavigateToPage(string page)
+        private void NavigateToPage(string page)
         {
             switch (page)
             {
@@ -40,24 +39,12 @@ namespace TuteefyWPF
                     MainFrame.Navigate(new TuteefyWPF.Pages.QuizPage());
                     PageTitle.Content = "Quizzes";
                     break;
-                case "QuizView":
-                    MainFrame.Navigate(new TuteefyWPF.Pages.QuizPages.QuizView());
-                    PageTitle.Content = "Quiz View";
-                    break;
             }
         }
 
-
-        private void LogOut_Checked(object sender, RoutedEventArgs e)
+        private void QuizzesTab_Copy_Checked(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
-
-        private void Settings_Checked(object sender, RoutedEventArgs e)
-        {
-            //Show settings window
-        }
     }
-
-
 }

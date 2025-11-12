@@ -8,7 +8,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="QuizPage">
-    <Grid Background="Transparent">
+    <Grid Background="#F5F5F5">
         <ScrollViewer x:Name="MainScrollViewer"
                       VerticalScrollBarVisibility="Hidden" 
                       HorizontalScrollBarVisibility="Disabled"
