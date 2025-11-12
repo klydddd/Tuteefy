@@ -94,7 +94,7 @@
     Margin="0,355,0,0"
     HorizontalAlignment="Center"
     VerticalAlignment="Top"/>
-        <PasswordBox
+        <PasswordBox x:Name="txtConfirmPass"
             Style="{StaticResource RoundedPlaceholderPasswordBox}"
             Tag="password"
             Width="330"
@@ -106,7 +106,7 @@
         <Label Content="Confirm Password" HorizontalAlignment="Left" Margin="260,405,0,0" VerticalAlignment="Top"
             IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="14"/>
         
-        <CheckBox HorizontalAlignment="Center"
+        <CheckBox x:Name="checkPriv" HorizontalAlignment="Center"
           VerticalAlignment="Top"
           Margin="0,491,0,0"
           Width="330"

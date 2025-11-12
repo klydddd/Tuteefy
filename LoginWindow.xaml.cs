@@ -49,9 +49,7 @@ namespace TuteefyWPF
                 return;
             }
 
-            string connectionString = db.connectionString;
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(db.connectionString))
             {
                 try
                 {

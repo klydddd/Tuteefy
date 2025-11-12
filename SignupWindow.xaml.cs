@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Wpf.Ui.Controls;
 
 namespace TuteefyWPF
 {
@@ -34,6 +35,29 @@ namespace TuteefyWPF
             string password = txtPassword.Password;
             string role = "Tutor";
 
+            if (string.IsNullOrEmpty(fullName) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) ){
+                System.Windows.MessageBox.Show("Please fill in all fields.");
+                return;
+            }
+
+            if (!email.Contains("@"))
+            {
+                System.Windows.MessageBox.Show("Please enter a valid email address.");
+                return;
+            }
+
+            if (password != txtConfirmPass.Password)
+            {
+                System.Windows.MessageBox.Show("Passwords do not match.");
+                return;
+            }
+
+            if(checkPriv.IsChecked == false)
+            {
+                System.Windows.MessageBox.Show("You must agree to the terms and conditions.");
+                return;
+            }
+
             using (SqlConnection conn = new SqlConnection(db.connectionString))
             {
                 conn.Open();
@@ -51,7 +75,7 @@ namespace TuteefyWPF
                 conn.Close();
             }
 
-            MessageBox.Show("Signup Successful!");
+            System.Windows.MessageBox.Show("Signup Successful!");
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             this.Close();
