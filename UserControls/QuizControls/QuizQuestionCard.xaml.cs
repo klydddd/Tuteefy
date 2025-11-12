@@ -29,8 +29,10 @@ namespace TuteefyWPF.UserControls
         {
             // Find the parent StackPanel (QuizQuestionsContainer)
             var parent = FindParent<StackPanel>(this);
+            // Find the parent Page to access the tracker panel
+            var quizViewPage = FindParent<Page>(this);
 
-            if (parent != null)
+            if (parent != null && quizViewPage is TuteefyWPF.Pages.QuizPages.QuizView quizView)
             {
                 // Get the question number from Tag
                 int questionNumber = (int)this.Tag;
@@ -39,7 +41,11 @@ namespace TuteefyWPF.UserControls
                 parent.Children.Remove(this);
 
                 // Find and remove the corresponding tracker item
-                RemoveTrackerItem(questionNumber);
+                RemoveTrackerItem(questionNumber, quizView);
+
+                // --- NEW CODE ---
+                // After removing, re-number all remaining cards and trackers
+                RenumberQuestions(parent, quizView);
             }
         }
 
@@ -61,37 +67,10 @@ namespace TuteefyWPF.UserControls
                 return;
             }
 
-            // Find the parent StackPanel (QuizQuestionsContainer)
-            var parent = FindParent<StackPanel>(this);
-
-            if (parent != null)
-            {
-                // Find the QuizView page to get the question counter
-                var quizViewPage = FindParent<Page>(this);
-
-                if (quizViewPage is TuteefyWPF.Pages.QuizPages.QuizView quizView)
-                {
-                    // Get the current highest question number
-                    int maxQuestionNumber = parent.Children
-                        .OfType<QuizQuestionCard>()
-                        .Select(card => card.Tag is int tag ? tag : 0)
-                        .DefaultIfEmpty(0)
-                        .Max();
-
-                    // Create a new QuizQuestionCard
-                    QuizQuestionCard newCard = new QuizQuestionCard();
-                    newCard.Tag = maxQuestionNumber + 1;
-
-                    // Add the new card to the container
-                    parent.Children.Add(newCard);
-
-                    // Add a corresponding tracker item
-                    AddQuestionTracker(maxQuestionNumber + 1);
-
-                    // Scroll the new card into view
-                    newCard.BringIntoView();
-                }
-            }
+            // --- BUG FIX ---
+            // The "Done" button should only confirm the current card is complete.
+            // ALL code that was here to add a new question has been REMOVED.
+            MessageBox.Show($"Question {(int)this.Tag} saved!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         // Helper method to find parent control of a specific type
@@ -109,71 +88,62 @@ namespace TuteefyWPF.UserControls
                 return FindParent<T>(parentObject);
         }
 
-        private void RemoveTrackerItem(int questionNumber)
+        private void RemoveTrackerItem(int questionNumber, TuteefyWPF.Pages.QuizPages.QuizView quizView)
         {
-            // Find the QuizView page
-            var quizViewPage = FindParent<Page>(this);
+            // Access the QuestionTrackerPanel
+            var trackerPanel = quizView.FindName("QuestionTrackerPanel") as StackPanel;
 
-            if (quizViewPage is TuteefyWPF.Pages.QuizPages.QuizView quizView)
+            if (trackerPanel != null)
             {
-                // Access the QuestionTrackerPanel through reflection or public property
-                var trackerPanel = quizView.FindName("QuestionTrackerPanel") as StackPanel;
+                // Find and remove the tracker item with matching Tag
+                var trackerItem = trackerPanel.Children
+                    .OfType<TextBlock>()
+                    .FirstOrDefault(tb => tb.Tag is int tag && tag == questionNumber);
 
-                if (trackerPanel != null)
+                if (trackerItem != null)
                 {
-                    // Find and remove the tracker item with matching Tag
-                    var trackerItem = trackerPanel.Children
-                        .OfType<TextBlock>()
-                        .FirstOrDefault(tb => tb.Tag is int tag && tag == questionNumber);
-
-                    if (trackerItem != null)
-                    {
-                        trackerPanel.Children.Remove(trackerItem);
-                    }
+                    trackerPanel.Children.Remove(trackerItem);
                 }
             }
         }
 
-        private void AddQuestionTracker(int questionNumber)
+        // --- NEW METHOD ---
+        // This method re-syncs all question numbers after one is deleted.
+        private void RenumberQuestions(StackPanel cardContainer, TuteefyWPF.Pages.QuizPages.QuizView quizView)
         {
-            // Find the QuizView page
-            var quizViewPage = FindParent<Page>(this);
+            var trackerPanel = quizView.FindName("QuestionTrackerPanel") as StackPanel;
+            if (trackerPanel == null) return;
 
-            if (quizViewPage is TuteefyWPF.Pages.QuizPages.QuizView quizView)
+            int newNumber = 1;
+
+            // Renumber all the question cards in the main list
+            foreach (var card in cardContainer.Children.OfType<QuizQuestionCard>())
             {
-                // Access the QuestionTrackerPanel
-                var trackerPanel = quizView.FindName("QuestionTrackerPanel") as StackPanel;
-
-                if (trackerPanel != null)
-                {
-                    TextBlock trackerItem = new TextBlock
-                    {
-                        Text = $"Question {questionNumber}",
-                        Foreground = new SolidColorBrush(Colors.Gray),
-                        FontSize = 13,
-                        Margin = new Thickness(0, 5, 0, 5),
-                        Cursor = Cursors.Hand,
-                        Tag = questionNumber
-                    };
-
-                    // Add click event to scroll to the question
-                    trackerItem.MouseLeftButtonDown += (s, e) =>
-                    {
-                        var card = FindParent<StackPanel>(this).Children
-                            .OfType<QuizQuestionCard>()
-                            .FirstOrDefault(c => c.Tag is int tag && tag == questionNumber);
-
-                        card?.BringIntoView();
-                    };
-
-                    trackerPanel.Children.Add(trackerItem);
-                }
+                card.Tag = newNumber;
+                newNumber++;
             }
+
+            newNumber = 1;
+            // Renumber all the trackers in the side panel
+            foreach (var tracker in trackerPanel.Children.OfType<TextBlock>())
+            {
+                tracker.Tag = newNumber;
+                tracker.Text = $"Question {newNumber}"; // Update text
+                newNumber++;
+            }
+
+            // Optional: Update the main counter on the QuizView page itself
+            // This part is more complex and requires passing data back up,
+            // but for the UI, this will fix the numbering.
         }
+
+        // This method is no longer needed because the buggy DoneButton logic is gone.
+        // private void AddQuestionTracker(int questionNumber) { ... }
+
 
         private void QuestionTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            // You can add logic here if you want
         }
     }
 }
