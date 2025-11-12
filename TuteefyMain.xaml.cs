@@ -76,6 +76,12 @@ namespace TuteefyWPF
         private void Settings_Checked(object sender, RoutedEventArgs e)
         {
             //Show settings window
+// filler
+        }
+
+        private void MainFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+
         }
     }
 

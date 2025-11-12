@@ -14,35 +14,48 @@
         </Grid.ColumnDefinitions>
 
         <!-- First Column - Scrollable -->
-        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
-            <StackPanel>
-                <Label x:Name="QuizTitle" 
-                        Content="Quiz Title" 
+        <Grid Grid.Column="0">
+            <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="0,0,0,70">
+                <StackPanel>
+                    <Label x:Name="QuizTitle" 
+                            Content="Quiz Title" 
+                            IsEnabled="False" 
+                            FontWeight="Bold" 
+                            Foreground="#9600ff" 
+                            FontSize="40" 
+                            HorizontalContentAlignment="Left" 
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            Margin="25,25,0,0" Height="63" Width="189"/>
+                    <Label x:Name="QuizDesc" 
+                        Content="Quiz Description" 
                         IsEnabled="False" 
                         FontWeight="Bold" 
-                        Foreground="#9600ff" 
-                        FontSize="40" 
+                        Foreground="gray" 
+                        FontSize="14" 
                         HorizontalContentAlignment="Left" 
                         VerticalAlignment="Top"
                         HorizontalAlignment="Left"
-                        Margin="25,25,0,0" Height="63" Width="189"/>
-                <Label x:Name="QuizDesc" 
-                    Content="Quiz Description" 
-                    IsEnabled="False" 
-                    FontWeight="Bold" 
-                    Foreground="gray" 
-                    FontSize="14" 
-                    HorizontalContentAlignment="Left" 
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Left"
-                    Margin="25,0,0,0" Height="29" Width="119"/>
-
-                <!-- Container for Quiz Question Cards -->
-                <StackPanel x:Name="QuizQuestionsContainer" Margin="25,20,25,25">
-                    <!-- Quiz question cards will be added here dynamically -->
+                        Margin="25,0,0,0" Height="29" Width="119"/>
+                    <!-- Container for Quiz Question Cards -->
+                    <StackPanel x:Name="QuizQuestionsContainer" Margin="25,20,25,25">
+                        <!-- Quiz question cards will be added here dynamically -->
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
-        </ScrollViewer>
+            </ScrollViewer>
+
+            <!-- Add Question Button -->
+            <Button x:Name="AddQuestionButton"
+                    Content="Add Question"
+                    Style="{StaticResource AnimatedGradientButton}"
+                    Width="140"
+                    Height="45"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="0,0,30,10" Click="AddQuestionButton_Click"
+                    />
+
+        </Grid>
 
         <!-- Second Column - Question Tracker -->
         <Grid Grid.Column="1">
@@ -64,28 +77,24 @@
                 Grid.Row="0"/>
 
             <ScrollViewer Grid.Row="1"
-                          Padding="5, 0 , 0 ,0"
+                          Padding="5,0,0,0"
                           VerticalScrollBarVisibility="Auto" 
                           Margin="10,0,10,225">
                 <StackPanel x:Name="QuestionTrackerPanel">
                     <!-- Question tracker items will be added here -->
-                    <TextBlock Text="Question 1" 
-                               Foreground="Gray" 
-                               FontSize="13" 
-                               Margin="0,5,0,5"
-                               Cursor="Hand"/>
-                    <TextBlock Text="Question 2" 
-                               Foreground="Gray" 
-                               FontSize="13" 
-                               Margin="0,5,0,5"
-                               Cursor="Hand"/>
-                    <TextBlock Text="Question 3" 
-                               Foreground="Gray" 
-                               FontSize="13" 
-                               Margin="0,5,0,5"
-                               Cursor="Hand"/>
                 </StackPanel>
             </ScrollViewer>
+
+            <Button x:Name="AddQuestionButton_Copy"
+                    Grid.Row="1"
+                    Content="Finish"
+                    Style="{StaticResource AnimatedGradientButton}"
+                    Width="140"
+                    Height="45"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="0,0,50,10" Click="AddQuestionButton_Click"
+                    />
         </Grid>
     </Grid>
 </Page>
