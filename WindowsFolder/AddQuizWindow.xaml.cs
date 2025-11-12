@@ -31,7 +31,13 @@ namespace TuteefyWPF.WindowsFolder
             // Navigate to QuizView in the main window
             if (this.Owner is TuteefyMain mainWindow)
             {
-                mainWindow.NavigateToPage("QuizView");
+                // Create the QuizView page with the data
+                TuteefyWPF.Pages.QuizPages.QuizView quizViewPage = new TuteefyWPF.Pages.QuizPages.QuizView();
+                quizViewPage.QuizTitle.Content = QuizTitleTextBox.Text;
+                quizViewPage.QuizDesc.Content = QuizDesc.Text;
+
+                // Navigate to the created page instance
+                mainWindow.MainFrame.Navigate(quizViewPage);
             }
 
             this.Close();
