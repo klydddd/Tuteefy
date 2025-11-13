@@ -55,7 +55,7 @@ namespace TuteefyWPF
                     PageTitle.Content = "Lessons";
                     break;
                 case "Quizzes":
-                    MainFrame.Navigate(new TuteefyWPF.Pages.QuizPage());
+                    MainFrame.Navigate(new TuteefyWPF.Pages.QuizPage(userRole));
                     PageTitle.Content = "Quizzes";
                     break;
                 case "QuizView":

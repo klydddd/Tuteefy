@@ -38,6 +38,8 @@ namespace TuteefyWPF
             this.Close();
         }
 
+
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             username = txtUser.Text.Trim();
@@ -55,7 +57,7 @@ namespace TuteefyWPF
                 {
                     conn.Open();
 
-                    string query = "SELECT UserRole, FullName FROM UserTable WHERE Email=@username AND PasswordHash=@password";
+                    string query = "SELECT UserRole, FullName FROM UserTable WHERE UserID=@username AND PasswordHash=@password";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@username", username);
