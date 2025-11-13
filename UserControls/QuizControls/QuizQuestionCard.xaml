@@ -159,7 +159,6 @@
                         BorderThickness="0"
                         Cursor="Hand"
                         Click="DoneButton_Click">
-                    
                 </Button>
             </StackPanel>
         </Grid>
