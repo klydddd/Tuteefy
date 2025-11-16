@@ -88,7 +88,7 @@ namespace TuteefyWPF.WindowsFolder.StudentWindows
                         cmd.Parameters.AddWithValue("@Subject", student.Subject);
                         cmd.Parameters.AddWithValue("@Address", student.Address);
                         cmd.Parameters.AddWithValue("@EnrollmentDate", student.EnrollmentDate);
-                        cmd.Parameters.AddWithValue("@EnrollmentDate", student.FullName);
+                        cmd.Parameters.AddWithValue("@FullName", student.FullName);
                         cmd.ExecuteNonQuery();
                     }
 
