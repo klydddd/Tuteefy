@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace TuteefyWPF
 {
@@ -22,7 +10,7 @@ namespace TuteefyWPF
     public partial class MainWindow : Window
     {
         private Database db;
-        private String username;
+        public String username;
         private String password;
 
         public MainWindow()
@@ -62,7 +50,7 @@ namespace TuteefyWPF
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@username", username);
                     cmd.Parameters.AddWithValue("@password", password);
-
+                    
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -70,8 +58,9 @@ namespace TuteefyWPF
                         {
                             string fullname = reader["FullName"].ToString();
                             string role = reader["UserRole"].ToString();
-                            MessageBox.Show("Login successful!");
-                            TuteefyMain main = new TuteefyMain(role, fullname);
+                            
+                            MessageBox.Show("Login successful!" + username);
+                            TuteefyMain main = new TuteefyMain(role, fullname, username);
                             main.Show();
                             this.Close();
                         }
@@ -90,5 +79,5 @@ namespace TuteefyWPF
     }
 }
 
-            
-        
+
+

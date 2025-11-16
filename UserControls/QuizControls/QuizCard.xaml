@@ -1,92 +1,85 @@
-﻿<UserControl x:Class="TuteefyWPF.UserControls.QuizAndLessonCard"
+﻿<UserControl x:Class="TuteefyWPF.UserControls.QuizControls.QuizCard"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TuteefyWPF.UserControls"
              mc:Ignorable="d" 
-             Height="200">
+             Height="350" Width="290">
     <Border CornerRadius="20"
             Background="White"
-            Margin="5"
+            Margin="10,10,10,10"
             SnapsToDevicePixels="True"
             RenderTransformOrigin="0.5,0.5"
-            HorizontalAlignment="Stretch">
+            Width="270">
         <Border.RenderTransform>
             <ScaleTransform x:Name="CardScale" ScaleX="1" ScaleY="1"/>
         </Border.RenderTransform>
         <Border.Effect>
-            <DropShadowEffect Color="#9600ff" BlurRadius="20" ShadowDepth="0" Opacity="0.2"/>
+            <DropShadowEffect Color="
+#9600ff" BlurRadius="20" ShadowDepth="0" Opacity="0.2"/>
         </Border.Effect>
-
-        <Grid Margin="20">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="280"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <!-- Icon Section -->
-            <Border Grid.Column="0"
-                    CornerRadius="15"
-                    Width="260"
-                    Height="130"
-                    VerticalAlignment="Center">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!-- Icon Placeholder -->
+            <Border CornerRadius="15">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="#9600ff" Offset="0"/>
-                        <GradientStop Color="#AEBAF8" Offset="1"/>
+                        <GradientStop Color="
+#9600ff" Offset="0"/>
+                        <GradientStop Color="
+#AEBAF8" Offset="1"/>
                     </LinearGradientBrush>
                 </Border.Background>
                 <TextBlock Text="📚"
                            Foreground="AliceBlue"
-                           FontSize="50"
+                           FontSize="60"
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"/>
             </Border>
-
-            <!-- Content Section -->
-            <StackPanel Grid.Column="1" 
-                        VerticalAlignment="Center"
-                        Margin="30,0,20,0">
-                <TextBlock Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" 
-                           FontWeight="Bold" 
-                           Foreground="#9600ff"
-                           FontSize="32"
-                           TextWrapping="Wrap"
-                           Margin="0,0,0,15"/>
-
+            <!-- Quiz/Lesson Title -->
+            <StackPanel Grid.Row="1" Margin="0,10,0,0">
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center">
+                    <TextBlock Text="{Binding Title, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                               FontWeight="Bold" 
+                               Foreground="#9600ff"
+                               FontSize="20"
+                               TextTrimming="CharacterEllipsis"
+                               MaxWidth="230"/>
+                </StackPanel>
+            </StackPanel>
+            <!-- Quiz/Lesson Code -->
+            <StackPanel Grid.Row="2" 
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0,10,0,50">
                 <TextBlock Text="{Binding Code, RelativeSource={RelativeSource AncestorType=UserControl}}"
                            Foreground="Gray"
-                           FontSize="16"
-                           FontWeight="Bold"
-                           Margin="0,0,0,20"/>
-
-                <TextBlock Text="Click the button to open this lesson and start learning."
-                           Foreground="#666"
-                           FontSize="14"
-                           TextWrapping="Wrap"
-                           MaxWidth="500"
-                           HorizontalAlignment="Left"/>
+                           FontSize="12"
+                           FontWeight="Bold"/>
             </StackPanel>
-
-            <!-- Button Section -->
-            <Button Grid.Column="2"
+            <!-- Animated "OPEN" Button -->
+            <Button Grid.Row="2"
                     Content="OPEN"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Right"
-                    Height="50"
-                    Width="150"
-                    Margin="20,0,20,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Height="35"
+                    Width="120"
                     Foreground="White"
                     FontWeight="Bold"
                     Cursor="Hand"
                     Click="CardButton_Click"
-                    FontSize="16">
+                    FontSize="9">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="border"
-                                CornerRadius="12"
+                                CornerRadius="10"
                                 BorderThickness="0"
                                 SnapsToDevicePixels="True"
                                 RenderTransformOrigin="0.5,0.5">
@@ -95,15 +88,16 @@
                             </Border.RenderTransform>
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                    <GradientStop Color="#9600ff" Offset="0"/>
-                                    <GradientStop Color="#AEBAF8" Offset="1"/>
+                                    <GradientStop Color="
+#9600ff" Offset="0"/>
                                 </LinearGradientBrush>
                             </Border.Background>
                             <Border.Effect>
-                                <DropShadowEffect Color="#9600ff"
+                                <DropShadowEffect Color="
+#9600ff"
                                                   BlurRadius="20"
                                                   ShadowDepth="0"
-                                                  Opacity="0.3"/>
+                                                  Opacity="0.05"/>
                             </Border.Effect>
                             <ContentPresenter HorizontalAlignment="Center"
                                               VerticalAlignment="Center"
@@ -135,7 +129,7 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="border"
                                                          Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)"
-                                                         To="0.3" Duration="0:0:0.28">
+                                                         To="0" Duration="0:0:0.28">
                                             <DoubleAnimation.EasingFunction>
                                                 <CubicEase EasingMode="EaseOut"/>
                                             </DoubleAnimation.EasingFunction>
@@ -163,17 +157,16 @@
                 </Button.Template>
             </Button>
         </Grid>
-
         <Border.Triggers>
             <EventTrigger RoutedEvent="MouseEnter">
                 <BeginStoryboard>
                     <Storyboard>
                         <DoubleAnimation Storyboard.TargetName="CardScale" 
                                          Storyboard.TargetProperty="ScaleX"
-                                         To="1.01" Duration="0:0:0.2"/>
+                                         To="1.03" Duration="0:0:0.2"/>
                         <DoubleAnimation Storyboard.TargetName="CardScale" 
                                          Storyboard.TargetProperty="ScaleY"
-                                         To="1.01" Duration="0:0:0.2"/>
+                                         To="1.03" Duration="0:0:0.2"/>
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>

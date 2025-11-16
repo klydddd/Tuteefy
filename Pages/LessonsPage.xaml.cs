@@ -14,18 +14,25 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TuteefyWPF.UserControls;
-
+using System.Data.SqlClient;
 namespace TuteefyWPF.Pages
 {
     public partial class LessonsPage : Page
     {
         private System.Windows.Threading.DispatcherTimer scrollTimer;
+        private Database db;
+        private string CurrentTutorID;
+        
 
-        public LessonsPage()
+        public LessonsPage(string tutorID)
         {
+            CurrentTutorID = tutorID;
+
             InitializeComponent();
+            db = new Database();
             LoadLessons();
             InitializeScrollAnimation();
+            
         }
 
         private void InitializeScrollAnimation()
@@ -70,17 +77,49 @@ namespace TuteefyWPF.Pages
 
         private void LoadLessons()
         {
-            // Add sample lessons and quizzes
-            AddLessonCard("Introduction to Algebra", "MATH101");
-            AddLessonCard("Basic Chemistry", "CHEM001");
-            AddLessonCard("Physics Quiz 1", "PHY-Q01");
-            AddLessonCard("World History", "HIST201");
-            AddLessonCard("Math Final Exam", "MATH-FE");
-            AddLessonCard("English Literature", "ENG301");
-            AddLessonCard("Biology Basics", "BIO101");
-            AddLessonCard("Computer Science", "CS101");
+
+            //MessageBox.Show(CurrentTutorID);
+            
+
+            using(SqlConnection conn = new SqlConnection(db.connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    string query = "SELECT Title, Content FROM LessonsTable WHERE TutorID = @CurrentTutorID";
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+
+                    cmd.Parameters.AddWithValue("@CurrentTutorID", CurrentTutorID);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+
+                        while (reader.Read()) 
+                        {
+                            
+                            string Title = reader["Title"].ToString();
+
+                            QuizAndLessonCard card = new QuizAndLessonCard();
+
+                            card.Title = Title;
+
+                            LessonsPanel.Children.Add(card);
+                        }
+
+                    }
+
+
+                }
+                catch (Exception ex) 
+                {
+                        MessageBox.Show("Error: " + ex.Message);
+                }
+            }
         }
 
+        // Old way of adding LessonCard
         private void AddLessonCard(string title, string code)
         {
             var card = new QuizAndLessonCard
@@ -90,16 +129,6 @@ namespace TuteefyWPF.Pages
             };
 
             LessonsPanel.Children.Add(card);
-        }
-
-        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            if (sender is ScrollViewer scrollViewer)
-            {
-                double scrollAmount = e.Delta > 0 ? -50 : 50;
-                scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + scrollAmount);
-                e.Handled = true;
-            }
         }
 
         private void CreateLessonButton_Click(object sender, RoutedEventArgs e)
