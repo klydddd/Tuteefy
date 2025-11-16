@@ -36,7 +36,6 @@ namespace TuteefyWPF
             string fullName = txtFullName.Text;
             string email = txtEmail.Text;
             string password = txtPassword.Password;
-            string role = "Tutor";
 
             if (string.IsNullOrEmpty(fullName) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) ){
                 System.Windows.MessageBox.Show("Please fill in all fields.");

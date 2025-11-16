@@ -10,8 +10,8 @@ namespace TuteefyWPF
     {
         private string userRole = string.Empty;
         private string fullName = string.Empty;
-        public string CurrentTutorID = string.Empty;
-        public TuteefyMain(string role, string name, string tutorID)
+        private string CurrentTutorID = string.Empty;
+        public TuteefyMain(string tutorID, string role, string name)
         {
             InitializeComponent();
             userRole = role;
@@ -49,7 +49,7 @@ namespace TuteefyWPF
                     PageTitle.Content = "Home";
                     break;
                 case "Students":
-                    MainFrame.Navigate(new StudentCards());
+                    MainFrame.Navigate(new StudentCards(CurrentTutorID));
                     PageTitle.Content = "Students";
                     break;
                 case "Lessons":
