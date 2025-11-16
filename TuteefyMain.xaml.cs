@@ -10,11 +10,13 @@ namespace TuteefyWPF
     {
         private string userRole = string.Empty;
         private string fullName = string.Empty;
-        public TuteefyMain(string role, string name)
+        private string username = string.Empty;
+        public TuteefyMain(string user, string role, string name)
         {
             InitializeComponent();
             userRole = role;
             fullName = name;
+            username = user;
             checkRole(role);
 
             // Attach Checked events AFTER initialization to avoid hang
@@ -47,7 +49,7 @@ namespace TuteefyWPF
                     PageTitle.Content = "Home";
                     break;
                 case "Students":
-                    MainFrame.Navigate(new StudentCards());
+                    MainFrame.Navigate(new StudentCards(username));
                     PageTitle.Content = "Students";
                     break;
                 case "Lessons":

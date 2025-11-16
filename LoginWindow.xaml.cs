@@ -71,7 +71,7 @@ namespace TuteefyWPF
                             string fullname = reader["FullName"].ToString();
                             string role = reader["UserRole"].ToString();
                             MessageBox.Show("Login successful!");
-                            TuteefyMain main = new TuteefyMain(role, fullname);
+                            TuteefyMain main = new TuteefyMain(username, role, fullname);
                             main.Show();
                             this.Close();
                         }

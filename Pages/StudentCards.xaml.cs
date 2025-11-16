@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,17 +24,16 @@ namespace TuteefyWPF
     public partial class StudentCards : Page
     {
         private System.Windows.Threading.DispatcherTimer scrollTimer;
+        private string username = string.Empty;
+        private Database db = new Database();
 
-        public StudentCards()
+        public StudentCards(string user)
         {
             InitializeComponent();
             InitializeScrollAnimation();
-            AddStudentCard("Alex Cruz", "Mathematics", "92");
-            AddStudentCard("Bianca Santos", "Physics", "88");
-            AddStudentCard("Carlos Lim", "English", "95");
-            AddStudentCard("Alex Cruz", "Mathematics", "92");
-            AddStudentCard("Bianca Santos", "Physics", "88");
-            AddStudentCard("Carlos Lim", "English", "95");
+            username = user;
+
+            LoadStudents();
         }
 
         private void InitializeScrollAnimation()
@@ -76,6 +76,33 @@ namespace TuteefyWPF
             AddStudentButton.BeginAnimation(UIElement.OpacityProperty, animation);
         }
 
+        private void LoadStudents()
+        {
+            StudentCardsPanel.Children.Clear();
+
+            string query = @"SELECT FullName, Subject
+                         FROM TuteeTable
+                         WHERE TutorID = @tutorId";
+
+            using (SqlConnection conn = new SqlConnection(db.connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@tutorId", username);
+                conn.Open();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string subject = reader["Subject"].ToString();
+                        string fullName = reader["FullName"].ToString();
+
+                        AddStudentCard(fullName, subject, "100");
+                    }
+                }
+            }
+        }
+
         private void AddStudentCard(string name, string subject, string grade)
         {
             // Create a new instance of your UserControl
@@ -83,7 +110,7 @@ namespace TuteefyWPF
             {
                 StudentName = name,
                 Subject = subject,
-                TotalGrade = grade
+                TotalGrade = "100" //Temporary
             };
             // Add it to your WrapPanel
             StudentCardsPanel.Children.Add(card);
@@ -114,23 +141,14 @@ namespace TuteefyWPF
         private void AddStudentButton_Click(object sender, RoutedEventArgs e)
         {
 
-            var addWindow = new TuteefyWPF.WindowsFolder.StudentWindows.AddStudentWindow();
+            var addWindow = new TuteefyWPF.WindowsFolder.StudentWindows.AddStudentWindow(username);
             bool? result = TuteefyWPF.Classes.WindowHelper.ShowDimmedDialog(Window.GetWindow(this), addWindow);
-            
 
-            if (result == true)
-            {
-                // Add the newly enrolled student to the UI
-                var lastStudent = TuteefyWPF.WindowsFolder.StudentWindows.AddStudentWindow.Students[
-                    TuteefyWPF.WindowsFolder.StudentWindows.AddStudentWindow.Students.Count - 1
-                ];
-                AddStudentCard(lastStudent.FullName, addWindow.SubjectTxtBox.Text, "N/A");
+            StudentCardsPanel.Children.Clear();
+            LoadStudents();
             }
         }
 
 
 
     }
-
-
-}

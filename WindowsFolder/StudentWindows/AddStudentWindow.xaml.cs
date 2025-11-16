@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Data.SqlClient;
+using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace TuteefyWPF.WindowsFolder.StudentWindows
@@ -10,10 +13,13 @@ namespace TuteefyWPF.WindowsFolder.StudentWindows
         // Temporary storage for students (until database is implemented)
         public static System.Collections.Generic.List<StudentData> Students =
             new System.Collections.Generic.List<StudentData>();
+        private string username = string.Empty;
+        private Database db = new Database();
 
-        public AddStudentWindow()
+        public AddStudentWindow(string tutorUser)
         {
             InitializeComponent();
+            username = tutorUser;
         }
 
         private void EnrollStudentButton_Click(object sender, RoutedEventArgs e)
@@ -38,17 +44,71 @@ namespace TuteefyWPF.WindowsFolder.StudentWindows
             // Add to temporary storage
             Students.Add(student);
 
-            // Show success message
-            MessageBox.Show(
-                $"Student {student.FirstName} {student.LastName} has been enrolled successfully!",
-                "Success",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information
-            );
+            string GetNextTuteeID(SqlConnection conn)
+            {
+                string query = "SELECT TOP 1 TuteeID FROM TuteeTable " +
+                                "WHERE TutorID = '" + username + "' " +
+                                 "ORDER BY TuteeID DESC";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                var lastId = cmd.ExecuteScalar() as string;
 
-            // Close the window
-            this.DialogResult = true;
-            this.Close();
+                if (string.IsNullOrEmpty(lastId))
+                    return username + "-001";
+
+                int num = int.Parse(lastId.Substring(6));
+                return username + "-" + (num + 1).ToString("D3");
+            }
+
+            using (SqlConnection conn = new SqlConnection(db.connectionString))
+            {
+                conn.Open();
+
+                string tuteeID = GetNextTuteeID(conn);
+
+                try
+                {
+                    string insertUser = @"INSERT INTO UserTable (UserID, FullName, Email, PasswordHash, UserRole)
+                                    VALUES (@UserID, @FullName, @Email, @PasswordHash, 'Tutee')";
+
+                    using (SqlCommand cmd = new SqlCommand(insertUser, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@UserID", tuteeID);
+                        cmd.Parameters.AddWithValue("@FullName", student.FullName);
+                        cmd.Parameters.AddWithValue("@Email", student.Email);
+                        cmd.Parameters.AddWithValue("@PasswordHash", tuteeID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    string insertTutee = "INSERT INTO TuteeTable (TuteeID, TutorID, Subject, Address, EnrollmentDate, FullName)" +
+                                         "VALUES (@TuteeID, @TutorID, @Subject, @Address, @EnrollmentDate, @FullName)";
+                    using (SqlCommand cmd = new SqlCommand(insertTutee, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@TuteeID", tuteeID);
+                        cmd.Parameters.AddWithValue("@TutorID", username);
+                        cmd.Parameters.AddWithValue("@Subject", student.Subject);
+                        cmd.Parameters.AddWithValue("@Address", student.Address);
+                        cmd.Parameters.AddWithValue("@EnrollmentDate", student.EnrollmentDate);
+                        cmd.Parameters.AddWithValue("@EnrollmentDate", student.FullName);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Show success message
+                    MessageBox.Show(
+                        $"Student {student.FirstName} {student.LastName} has been enrolled successfully!",
+                        "Success",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information
+                    );
+
+                    // Close the window
+                    this.DialogResult = true;
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
         }
 
         private bool ValidateInputs()
