@@ -79,11 +79,11 @@ namespace TuteefyWPF.Pages
         {
             using (SqlConnection conn = new SqlConnection(db.connectionString))
             {
-                try
-                {
+                //try
+                //{
                     conn.Open();
 
-                    string query = "SELECT Title, Content FROM LessonsTable WHERE TutorID = @CurrentTutorID";
+                    string query = "SELECT Title, Content, Code FROM LessonsTable WHERE TutorID = @CurrentTutorID";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -95,21 +95,22 @@ namespace TuteefyWPF.Pages
                         {
                             string title = reader["Title"].ToString();
                             string content = reader["Content"].ToString();
-
+                            string code = reader["Code"].ToString();
                             QuizAndLessonCard card = new QuizAndLessonCard
                             {
                                 Title = title,
+                                Code = code,
                                 LessonContent = content  // Make sure this is LessonContent, not Content
                             };
 
                             LessonsPanel.Children.Add(card);
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: " + ex.Message);
-                }
+                //}
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show("Error: " + ex.Message);
+                //}
             }
         }
 
