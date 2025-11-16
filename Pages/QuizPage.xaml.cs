@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TuteefyWPF.UserControls;
+using TuteefyWPF.UserControls.QuizControls;
 
 namespace TuteefyWPF.Pages
 {
@@ -87,7 +88,7 @@ namespace TuteefyWPF.Pages
 
         private void AddQuizCard(string title, string code)
         {
-            var card = new QuizAndLessonCard
+            var card = new QuizCard
             {
                 Title = title,
                 Code = code

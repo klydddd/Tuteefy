@@ -156,7 +156,7 @@
     <Compile Include="AddTaskDialog.xaml.cs">
       <DependentUpon>AddTaskDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Database.cs" />
+    <Compile Include="Classes\Database.cs" />
     <Compile Include="Classes\WindowHelper.cs" />
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -182,6 +182,9 @@
     <Compile Include="UserControls\Converters.cs" />
     <Compile Include="UserControls\QuizAndLessonCard.xaml.cs">
       <DependentUpon>QuizAndLessonCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\QuizControls\QuizCard.xaml.cs">
+      <DependentUpon>QuizCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\QuizControls\QuizQuestionCard.xaml.cs">
       <DependentUpon>QuizQuestionCard.xaml</DependentUpon>
@@ -255,6 +258,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\QuizAndLessonCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\QuizControls\QuizCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -11,18 +11,16 @@
     <Grid Background="Transparent">
         <ScrollViewer x:Name="MainScrollViewer"
                       VerticalScrollBarVisibility="Hidden" 
-                      HorizontalScrollBarVisibility="Disabled"
-                      PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                      HorizontalScrollBarVisibility="Disabled">
             <StackPanel Margin="20">
                 <!-- Page Title -->
 
                 <!-- Cards Container -->
-                <WrapPanel x:Name="LessonsPanel"
-                           Orientation="Horizontal"
-                           HorizontalAlignment="Left"/>
+                <StackPanel x:Name="LessonsPanel"
+                           Orientation="Vertical"
+                           HorizontalAlignment="Stretch"/>
             </StackPanel>
         </ScrollViewer>
-
         <!-- Fixed Create Lesson Button -->
         <Button x:Name="CreateLessonButton"
                 Content="Create Lesson"
