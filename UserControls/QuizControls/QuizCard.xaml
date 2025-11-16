@@ -5,10 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TuteefyWPF.UserControls"
              mc:Ignorable="d" 
-             Height="350" Width="290">
-    <Border CornerRadius="20"
+             Height="365" Width="290">
+    <Border x:Name="MainBorder"
+            CornerRadius="20"
             Background="White"
             Margin="10,10,10,10"
+            BorderThickness="2"
+            BorderBrush="Transparent"
             SnapsToDevicePixels="True"
             RenderTransformOrigin="0.5,0.5"
             Width="270">
@@ -16,8 +19,7 @@
             <ScaleTransform x:Name="CardScale" ScaleX="1" ScaleY="1"/>
         </Border.RenderTransform>
         <Border.Effect>
-            <DropShadowEffect Color="
-#9600ff" BlurRadius="20" ShadowDepth="0" Opacity="0.2"/>
+            <DropShadowEffect Color="#9600ff" BlurRadius="20" ShadowDepth="0" Opacity="0.2"/>
         </Border.Effect>
         <Grid Margin="10">
             <Grid.RowDefinitions>
@@ -29,10 +31,8 @@
             <Border CornerRadius="15">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Color="
-#9600ff" Offset="0"/>
-                        <GradientStop Color="
-#AEBAF8" Offset="1"/>
+                        <GradientStop Color="#9600ff" Offset="0"/>
+                        <GradientStop Color="#AEBAF8" Offset="1"/>
                     </LinearGradientBrush>
                 </Border.Background>
                 <TextBlock Text="📚"
@@ -88,13 +88,11 @@
                             </Border.RenderTransform>
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                    <GradientStop Color="
-#9600ff" Offset="0"/>
+                                    <GradientStop Color="#9600ff" Offset="0"/>
                                 </LinearGradientBrush>
                             </Border.Background>
                             <Border.Effect>
-                                <DropShadowEffect Color="
-#9600ff"
+                                <DropShadowEffect Color="#9600ff"
                                                   BlurRadius="20"
                                                   ShadowDepth="0"
                                                   Opacity="0.05"/>
@@ -167,6 +165,14 @@
                         <DoubleAnimation Storyboard.TargetName="CardScale" 
                                          Storyboard.TargetProperty="ScaleY"
                                          To="1.03" Duration="0:0:0.2"/>
+                        <ColorAnimation Storyboard.TargetName="MainBorder"
+                                        Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                        To="#9600ff"
+                                        Duration="0:0:0.3">
+                            <ColorAnimation.EasingFunction>
+                                <CubicEase EasingMode="EaseOut"/>
+                            </ColorAnimation.EasingFunction>
+                        </ColorAnimation>
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
@@ -179,6 +185,14 @@
                         <DoubleAnimation Storyboard.TargetName="CardScale" 
                                          Storyboard.TargetProperty="ScaleY"
                                          To="1" Duration="0:0:0.2"/>
+                        <ColorAnimation Storyboard.TargetName="MainBorder"
+                                        Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                        To="Transparent"
+                                        Duration="0:0:0.3">
+                            <ColorAnimation.EasingFunction>
+                                <CubicEase EasingMode="EaseOut"/>
+                            </ColorAnimation.EasingFunction>
+                        </ColorAnimation>
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>

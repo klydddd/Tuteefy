@@ -21,7 +21,7 @@ namespace TuteefyWPF.Pages
     {
         private System.Windows.Threading.DispatcherTimer scrollTimer;
         private Database db;
-        private string CurrentTutorID;
+        public static string CurrentTutorID;
         
 
         public LessonsPage(string tutorID)
@@ -75,13 +75,9 @@ namespace TuteefyWPF.Pages
             CreateLessonButton.BeginAnimation(UIElement.OpacityProperty, animation);
         }
 
-        private void LoadLessons()
+        public void LoadLessons()
         {
-
-            //MessageBox.Show(CurrentTutorID);
-            
-
-            using(SqlConnection conn = new SqlConnection(db.connectionString))
+            using (SqlConnection conn = new SqlConnection(db.connectionString))
             {
                 try
                 {
@@ -95,26 +91,24 @@ namespace TuteefyWPF.Pages
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-
-                        while (reader.Read()) 
+                        while (reader.Read())
                         {
-                            
-                            string Title = reader["Title"].ToString();
+                            string title = reader["Title"].ToString();
+                            string content = reader["Content"].ToString();
 
-                            QuizAndLessonCard card = new QuizAndLessonCard();
-
-                            card.Title = Title;
+                            QuizAndLessonCard card = new QuizAndLessonCard
+                            {
+                                Title = title,
+                                LessonContent = content  // Make sure this is LessonContent, not Content
+                            };
 
                             LessonsPanel.Children.Add(card);
                         }
-
                     }
-
-
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
-                        MessageBox.Show("Error: " + ex.Message);
+                    MessageBox.Show("Error: " + ex.Message);
                 }
             }
         }
@@ -133,47 +127,17 @@ namespace TuteefyWPF.Pages
 
         private void CreateLessonButton_Click(object sender, RoutedEventArgs e)
         {
-            // Get the parent window (TuteefyMain)
-            Window mainWindow = Window.GetWindow(this);
+            var addWindow = new TuteefyWPF.WindowsFolder.LessonsWindows.AddLessonsWindow();
 
-            if (mainWindow != null)
+            // Subscribe to the LessonCreated event
+            addWindow.LessonCreated += (s, args) =>
             {
-                // Create overlay to dim the main window
-                Grid overlay = new Grid
-                {
-                    Background = new SolidColorBrush(Color.FromArgb(128, 0, 0, 0)), // Semi-transparent black
-                    Visibility = Visibility.Visible
-                };
+                // Clear existing lessons and reload
+                LessonsPanel.Children.Clear();
+                LoadLessons();
+            };
 
-                // Add overlay to the main window's root grid
-                if (mainWindow.Content is Grid mainGrid)
-                {
-                    mainGrid.Children.Add(overlay);
-                }
-
-                // Alternatively, just reduce the window opacity
-                double originalOpacity = mainWindow.Opacity;
-                mainWindow.Opacity = 0.7; // Dim the main window
-
-                // Create and show the add window
-                TuteefyWPF.WindowsFolder.AddWindow addWindow = new TuteefyWPF.WindowsFolder.AddWindow();
-                addWindow.Owner = mainWindow; // Set owner so it stays on top
-                addWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-
-                // When add window closes, restore main window
-                addWindow.Closed += (s, args) =>
-                {
-                    mainWindow.Opacity = originalOpacity; // Restore opacity
-
-                    // Remove overlay if it was added
-                    if (mainWindow.Content is Grid grid)
-                    {
-                        grid.Children.Remove(overlay);
-                    }
-                };
-
-                addWindow.ShowDialog(); // Use ShowDialog to make it modal
-            }
+            TuteefyWPF.Classes.WindowHelper.ShowDimmedDialog(Window.GetWindow(this), addWindow);
         }
     }
 }

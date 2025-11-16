@@ -1,31 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace TuteefyWPF.UserControls
 {
-    /// <summary>
-    /// Interaction logic for QuizAndLessonCard.xaml
-    /// </summary>
     public partial class QuizAndLessonCard : UserControl
     {
-
+        // Dependency Properties
         public static readonly DependencyProperty TitleProperty =
-       DependencyProperty.Register("Title", typeof(string), typeof(QuizAndLessonCard));
+            DependencyProperty.Register("Title", typeof(string), typeof(QuizAndLessonCard), new PropertyMetadata(string.Empty));
 
         public static readonly DependencyProperty CodeProperty =
-            DependencyProperty.Register("Code", typeof(string), typeof(QuizAndLessonCard));
+            DependencyProperty.Register("Code", typeof(string), typeof(QuizAndLessonCard), new PropertyMetadata(string.Empty));
+
+        public static readonly DependencyProperty LessonContentProperty =
+            DependencyProperty.Register("LessonContent", typeof(string), typeof(QuizAndLessonCard), new PropertyMetadata(string.Empty));
 
         public string Title
         {
@@ -38,6 +27,13 @@ namespace TuteefyWPF.UserControls
             get { return (string)GetValue(CodeProperty); }
             set { SetValue(CodeProperty, value); }
         }
+
+        public string LessonContent
+        {
+            get { return (string)GetValue(LessonContentProperty); }
+            set { SetValue(LessonContentProperty, value); }
+        }
+
         public QuizAndLessonCard()
         {
             InitializeComponent();
@@ -45,7 +41,8 @@ namespace TuteefyWPF.UserControls
 
         private void CardButton_Click(object sender, RoutedEventArgs e)
         {
-            // Your click handler logic here
+            // Handle button click
+            MessageBox.Show($"Opening: {Title}");
         }
     }
 }

@@ -6,9 +6,12 @@
              xmlns:local="clr-namespace:TuteefyWPF.UserControls"
              mc:Ignorable="d" 
              Height="200">
-    <Border CornerRadius="20"
+    <Border x:Name="MainBorder"
+            CornerRadius="20"
             Background="White"
             Margin="5"
+            BorderThickness="2"
+            BorderBrush="Transparent"
             SnapsToDevicePixels="True"
             RenderTransformOrigin="0.5,0.5"
             HorizontalAlignment="Stretch">
@@ -62,7 +65,7 @@
                            FontWeight="Bold"
                            Margin="0,0,0,20"/>
 
-                <TextBlock Text="Click the button to open this lesson and start learning."
+                <TextBlock Text="{Binding LessonContent, RelativeSource={RelativeSource AncestorType=UserControl}}"
                            Foreground="#666"
                            FontSize="14"
                            TextWrapping="Wrap"
@@ -174,6 +177,14 @@
                         <DoubleAnimation Storyboard.TargetName="CardScale" 
                                          Storyboard.TargetProperty="ScaleY"
                                          To="1.01" Duration="0:0:0.2"/>
+                        <ColorAnimation Storyboard.TargetName="MainBorder"
+                                        Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                        To="#9600ff"
+                                        Duration="0:0:0.3">
+                            <ColorAnimation.EasingFunction>
+                                <CubicEase EasingMode="EaseOut"/>
+                            </ColorAnimation.EasingFunction>
+                        </ColorAnimation>
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
@@ -186,6 +197,14 @@
                         <DoubleAnimation Storyboard.TargetName="CardScale" 
                                          Storyboard.TargetProperty="ScaleY"
                                          To="1" Duration="0:0:0.2"/>
+                        <ColorAnimation Storyboard.TargetName="MainBorder"
+                                        Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                        To="Transparent"
+                                        Duration="0:0:0.3">
+                            <ColorAnimation.EasingFunction>
+                                <CubicEase EasingMode="EaseOut"/>
+                            </ColorAnimation.EasingFunction>
+                        </ColorAnimation>
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
