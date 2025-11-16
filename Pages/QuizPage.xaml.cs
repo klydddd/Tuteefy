@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,14 +22,17 @@ namespace TuteefyWPF.Pages
     public partial class QuizPage : Page
     {
         private System.Windows.Threading.DispatcherTimer scrollTimer;
+        private string username = string.Empty;
+        private Database db = new Database();
 
-        public QuizPage(string userRole)
+        public QuizPage(string userRole, string tutorID)
         {
             InitializeComponent();
             if (userRole == "Tutee")
             {
                 CreateQuizButton.Visibility = Visibility.Collapsed;
             }
+            username = tutorID;
             LoadQuizzes();
             InitializeScrollAnimation();
         }
@@ -75,15 +79,29 @@ namespace TuteefyWPF.Pages
 
         private void LoadQuizzes()
         {
-            // Add sample quizzes
-            AddQuizCard("Math Midterm Exam", "MATH-MT");
-            AddQuizCard("Physics Quiz 1", "PHY-Q01");
-            AddQuizCard("Chemistry Final", "CHEM-FE");
-            AddQuizCard("Biology Pop Quiz", "BIO-PQ");
-            AddQuizCard("English Grammar Test", "ENG-GT");
-            AddQuizCard("History Quiz 3", "HIST-Q03");
-            AddQuizCard("Computer Science Quiz", "CS-Q01");
-            AddQuizCard("Math Final Exam", "MATH-FE");
+            QuizzesPanel.Children.Clear();
+
+            string query = @"SELECT QuizID, Title
+                         FROM QuizzesTable
+                         WHERE TutorID = @tutorId";
+
+            using (SqlConnection conn = new SqlConnection(db.connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@tutorId", username);
+                conn.Open();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string title = reader["Title"].ToString();
+                        string quizID = reader["QuizID"].ToString();
+
+                        AddQuizCard(title, quizID);
+                    }
+                }
+            }
         }
 
         private void AddQuizCard(string title, string code)
@@ -110,7 +128,7 @@ namespace TuteefyWPF.Pages
         private void CreateQuizButton_Click(object sender, RoutedEventArgs e)
         {
             TuteefyWPF.Classes.WindowHelper windowHelper = new TuteefyWPF.Classes.WindowHelper();
-            var addWindow = new TuteefyWPF.WindowsFolder.AddQuizWindow();
+            var addWindow = new TuteefyWPF.WindowsFolder.AddQuizWindow(username);
             TuteefyWPF.Classes.WindowHelper.ShowDimmedDialog(Window.GetWindow(this), addWindow);
             // Example navigation:
             // NavigationService?.Navigate(new CreateQuizPage());

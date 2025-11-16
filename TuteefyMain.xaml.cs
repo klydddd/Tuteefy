@@ -57,13 +57,13 @@ namespace TuteefyWPF
                     PageTitle.Content = "Lessons";
                     break;
                 case "Quizzes":
-                    MainFrame.Navigate(new TuteefyWPF.Pages.QuizPage(userRole));
+                    MainFrame.Navigate(new TuteefyWPF.Pages.QuizPage(userRole, CurrentTutorID));
                     PageTitle.Content = "Quizzes";
                     break;
-                case "QuizView":
+                /*case "QuizView":
                     MainFrame.Navigate(new TuteefyWPF.Pages.QuizPages.QuizView());
                     PageTitle.Content = "Quiz View";
-                    break;
+                    break;*/
             }
         }
 

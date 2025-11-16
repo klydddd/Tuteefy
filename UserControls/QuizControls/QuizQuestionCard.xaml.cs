@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,12 @@ namespace TuteefyWPF.UserControls
     /// </summary>
     public partial class QuizQuestionCard : UserControl
     {
-        public QuizQuestionCard()
+        private Database db = new Database();
+        private string quizID = string.Empty; 
+        public QuizQuestionCard(string id)
         {
             InitializeComponent();
+            quizID = id;
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
@@ -70,8 +74,95 @@ namespace TuteefyWPF.UserControls
             // --- BUG FIX ---
             // The "Done" button should only confirm the current card is complete.
             // ALL code that was here to add a new question has been REMOVED.
-            MessageBox.Show($"Question {(int)this.Tag} saved!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            string GetNextQuestionID(SqlConnection conn)
+            {
+                string query = "SELECT TOP 1 QuestionID FROM QuestionsTable " +
+                                "WHERE QuizID = '" + quizID + "' " +
+                                 "ORDER BY QuestionID DESC";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                var lastId = cmd.ExecuteScalar() as string;
+
+                if (string.IsNullOrEmpty(lastId))
+                    return quizID + "-Q001";
+
+                int num = int.Parse(lastId.Substring(12));
+                return quizID + "-Q" + (num + 1).ToString("D3");
+            }
+
+            using (SqlConnection conn = new SqlConnection(db.connectionString))
+            {
+                conn.Open();
+
+                string questionID = GetNextQuestionID(conn);
+
+                try
+                {
+                    string insertQuestion = @"INSERT INTO QuestionsTable (QuestionID, QuizID, QuestionText)
+                                    VALUES (@QuestionID, @QuizID, @QuestionText)";
+
+                    using (SqlCommand cmd = new SqlCommand(insertQuestion, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@QuestionID", questionID);
+                        cmd.Parameters.AddWithValue("@QuizID", quizID);
+                        cmd.Parameters.AddWithValue("@QuestionText", QuestionTextBox.Text);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    string GetNextChoiceID(SqlConnection conn2)
+                    {
+                        string query = "SELECT TOP 1 ChoiceID FROM ChoicesTable " +
+                                        "WHERE QuestionID = '" + questionID + "' " +
+                                         "ORDER BY ChoiceID DESC";
+                        SqlCommand cmd = new SqlCommand(query, conn2);
+                        var lastId = cmd.ExecuteScalar() as string;
+
+                        if (string.IsNullOrEmpty(lastId))
+                            return questionID + "-C1";
+
+                        int num = int.Parse(lastId.Substring(17));
+                        return questionID + "-C" + (num + 1).ToString();
+                    }
+
+                    string insertChoices = @"INSERT INTO ChoicesTable (ChoiceID, QuestionID, ChoiceText)
+                                    VALUES (@ChoiceID, @QuestionID, @ChoiceText)";
+
+                    string[] choiceTexts = new string[]
+                    {
+                        ChoiceATextBox.Text,
+                        ChoiceBTextBox.Text,
+                        ChoiceCTextBox.Text,
+                        ChoiceDTextBox.Text
+                    };
+
+                    foreach (string text in choiceTexts)
+                    {
+                        string choiceID = GetNextChoiceID(conn);
+
+                        using (SqlCommand cmd = new SqlCommand(insertChoices, conn))
+                        {
+                            cmd.Parameters.AddWithValue("@ChoiceID", choiceID);
+                            cmd.Parameters.AddWithValue("@QuestionID", questionID);
+                            cmd.Parameters.AddWithValue("@ChoiceText", text);
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
+                    this.QuestionTextBox.IsEnabled = false;
+                    this.ChoiceATextBox.IsEnabled = false;
+                    this.ChoiceBTextBox.IsEnabled = false;
+                    this.ChoiceCTextBox.IsEnabled = false;
+                    this.ChoiceDTextBox.IsEnabled = false;
+                    this.DoneButton.IsEnabled = false;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+
+            }
         }
+                
 
         // Helper method to find parent control of a specific type
         private T FindParent<T>(DependencyObject child) where T : DependencyObject

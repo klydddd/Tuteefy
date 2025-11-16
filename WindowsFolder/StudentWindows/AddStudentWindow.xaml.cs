@@ -42,7 +42,7 @@ namespace TuteefyWPF.WindowsFolder.StudentWindows
             };
 
             // Add to temporary storage
-            Students.Add(student);
+            //Students.Add(student);
 
             string GetNextTuteeID(SqlConnection conn)
             {

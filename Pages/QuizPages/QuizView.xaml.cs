@@ -22,16 +22,19 @@ namespace TuteefyWPF.Pages.QuizPages
     public partial class QuizView : Page
     {
         private int questionCounter = 1;
+        private Database db = new Database();
+        private string quizID = string.Empty;
 
-        public QuizView()
+        public QuizView(string id)
         {
             InitializeComponent();
+            quizID = id;
         }
 
         private void AddQuestionButton_Click(object sender, RoutedEventArgs e)
         {
             // Create a new QuizQuestionCard
-            QuizQuestionCard newCard = new QuizQuestionCard();
+            QuizQuestionCard newCard = new QuizQuestionCard(quizID);
 
             // Set a name or identifier for the card (optional)
             newCard.Tag = questionCounter;
@@ -92,6 +95,10 @@ namespace TuteefyWPF.Pages.QuizPages
                     card.BringIntoView();
                 }
             }
+        }
+
+        private void FinishButton_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }
