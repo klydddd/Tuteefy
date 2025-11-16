@@ -99,11 +99,38 @@ namespace TuteefyWPF
             }
         }
 
+        private void RefreshStudentCards()
+        {
+            // Clear existing cards
+            StudentCardsPanel.Children.Clear();
+
+            // Reload cards from the static Students list
+            foreach (var student in WindowsFolder.StudentWindows.AddStudentWindow.Students)
+            {
+                AddStudentCard(student.FullName, "Subject", "Grade");
+            }
+        }
+
         private void AddStudentButton_Click(object sender, RoutedEventArgs e)
         {
-            TuteefyWPF.Classes.WindowHelper windowHelper = new TuteefyWPF.Classes.WindowHelper();
+
             var addWindow = new TuteefyWPF.WindowsFolder.StudentWindows.AddStudentWindow();
-            TuteefyWPF.Classes.WindowHelper.ShowDimmedDialog(Window.GetWindow(this), addWindow);
+            bool? result = TuteefyWPF.Classes.WindowHelper.ShowDimmedDialog(Window.GetWindow(this), addWindow);
+            
+
+            if (result == true)
+            {
+                // Add the newly enrolled student to the UI
+                var lastStudent = TuteefyWPF.WindowsFolder.StudentWindows.AddStudentWindow.Students[
+                    TuteefyWPF.WindowsFolder.StudentWindows.AddStudentWindow.Students.Count - 1
+                ];
+                AddStudentCard(lastStudent.FullName, addWindow.SubjectTxtBox.Text, "N/A");
+            }
         }
+
+
+
     }
+
+
 }

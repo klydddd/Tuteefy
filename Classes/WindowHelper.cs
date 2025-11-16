@@ -11,10 +11,10 @@ namespace TuteefyWPF.Classes
 {
     internal class WindowHelper
     {
-        public static void ShowDimmedDialog(Window parentWindow, Window dialog)
+        public static bool? ShowDimmedDialog(Window parentWindow, Window dialog)
         {
             if (parentWindow == null || dialog == null)
-                return;
+                return null;
 
             // Create overlay
             Grid overlay = new Grid
@@ -37,14 +37,16 @@ namespace TuteefyWPF.Classes
             dialog.Closed += (s, args) =>
             {
                 parentWindow.Opacity = originalOpacity;
-
                 if (parentWindow.Content is Grid grid)
                 {
                     grid.Children.Remove(overlay);
                 }
             };
 
-            dialog.ShowDialog();
+            // ShowDialog() returns a bool? (nullable bool)
+            bool? result = dialog.ShowDialog();
+
+            return result;
         }
 
         public static void UndimDialog(Window parentWindow)
