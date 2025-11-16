@@ -101,11 +101,9 @@ namespace TuteefyWPF
 
         private void AddStudentButton_Click(object sender, RoutedEventArgs e)
         {
-            // Navigate to add student page or open a dialog
-            MessageBox.Show("Navigate to Add Student page", "Add Student");
-
-            // Example navigation:
-            // NavigationService?.Navigate(new AddStudentPage());
+            TuteefyWPF.Classes.WindowHelper windowHelper = new TuteefyWPF.Classes.WindowHelper();
+            var addWindow = new TuteefyWPF.WindowsFolder.StudentWindows.AddStudentWindow();
+            TuteefyWPF.Classes.WindowHelper.ShowDimmedDialog(Window.GetWindow(this), addWindow);
         }
     }
 }
