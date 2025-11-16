@@ -21,9 +21,13 @@ namespace TuteefyWPF.Pages
     {
         private System.Windows.Threading.DispatcherTimer scrollTimer;
 
-        public QuizPage()
+        public QuizPage(string userRole)
         {
             InitializeComponent();
+            if (userRole == "Tutee")
+            {
+                CreateQuizButton.Visibility = Visibility.Collapsed;
+            }
             LoadQuizzes();
             InitializeScrollAnimation();
         }
@@ -104,15 +108,11 @@ namespace TuteefyWPF.Pages
 
         private void CreateQuizButton_Click(object sender, RoutedEventArgs e)
         {
-            
-
             TuteefyWPF.Classes.WindowHelper windowHelper = new TuteefyWPF.Classes.WindowHelper();
             var addWindow = new TuteefyWPF.WindowsFolder.AddQuizWindow();
             TuteefyWPF.Classes.WindowHelper.ShowDimmedDialog(Window.GetWindow(this), addWindow);
             // Example navigation:
             // NavigationService?.Navigate(new CreateQuizPage());
-
-            
         }
     }
 }

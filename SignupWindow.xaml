@@ -61,7 +61,7 @@
             IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="32">
 
         </Label>
-        <TextBox
+        <TextBox x:Name="txtFullName"
             Style="{StaticResource RoundedPlaceholderTextBox}"
             Tag="username"  
             Width="330"
@@ -73,7 +73,7 @@
         <Label Content="Full name" HorizontalAlignment="Left" Margin="260,186,0,0" VerticalAlignment="Top"
             IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="14">
         </Label>
-        <TextBox
+        <TextBox x:Name="txtEmail"
             Style="{StaticResource RoundedPlaceholderTextBox}"
             Tag="username"  
             Width="330"
@@ -86,7 +86,7 @@
             IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="14"/>
         <Label Content="Password" HorizontalAlignment="Left" Margin="260,330,0,0" VerticalAlignment="Top"
             IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="14"/>
-        <PasswordBox
+        <PasswordBox x:Name="txtPassword"
     Style="{StaticResource RoundedPlaceholderPasswordBox}"
     Tag="password"
     Width="330"
@@ -94,7 +94,7 @@
     Margin="0,355,0,0"
     HorizontalAlignment="Center"
     VerticalAlignment="Top"/>
-        <PasswordBox
+        <PasswordBox x:Name="txtConfirmPass"
             Style="{StaticResource RoundedPlaceholderPasswordBox}"
             Tag="password"
             Width="330"
@@ -106,7 +106,7 @@
         <Label Content="Confirm Password" HorizontalAlignment="Left" Margin="260,405,0,0" VerticalAlignment="Top"
             IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="14"/>
         
-        <CheckBox HorizontalAlignment="Center"
+        <CheckBox x:Name="checkPriv" HorizontalAlignment="Center"
           VerticalAlignment="Top"
           Margin="0,491,0,0"
           Width="330"

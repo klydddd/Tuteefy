@@ -20,9 +20,11 @@ namespace TuteefyWPF.Pages
     /// </summary>
     public partial class StudentPage : Page
     {
-        public StudentPage()
+        public StudentPage(string name)
         {
             InitializeComponent();
+            txtGreet.Text = "Welcome, " + name + "!";
+
         }
     }
 }

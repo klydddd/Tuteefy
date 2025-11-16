@@ -123,9 +123,9 @@
 
     <Grid>
         <!-- Header -->
-        <TextBlock Text="Welcome, [Student Name]!" 
+        <TextBlock x:Name="txtGreet" Text="Welcome, [Student Name]!" 
                    FontSize="28" FontWeight="Bold" 
-                   Foreground="White" 
+                   Foreground="#9600ff" 
                    Margin="50,30,0,0"/>
 
         <!-- Main Grid -->
@@ -180,7 +180,7 @@
             <!-- Notebook Card -->
             <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource ModernCard}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="15,15,0,0">
                 <StackPanel HorizontalAlignment="Center">
-                    <Border Width="100" Height="100" CornerRadius="50">
+                    <Border Width="63" Height="64" CornerRadius="50">
                         <Border.Background>
                             <ImageBrush ImageSource="/Assets/baby beel.jpg" Stretch="UniformToFill"/>
                         </Border.Background>

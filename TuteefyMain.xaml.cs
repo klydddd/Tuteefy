@@ -1,16 +1,21 @@
-﻿using System.Windows;
+﻿using System;
+using System.Data.SqlClient;
+using System.Windows;
 using System.Windows.Controls;
+using TuteefyWPF.Pages;
 
 namespace TuteefyWPF
 {
     public partial class TuteefyMain : Window
     {
-        public TuteefyMain()
+        private string userRole = string.Empty;
+        private string fullName = string.Empty;
+        public TuteefyMain(string role, string name)
         {
             InitializeComponent();
-
-            // Set initial page
-            MainFrame.Navigate(new Pages.StudentPage());
+            userRole = role;
+            fullName = name;
+            checkRole(role);
 
             // Attach Checked events AFTER initialization to avoid hang
             HomeTab.Checked += (s, e) => NavigateToPage("Home");
@@ -19,13 +24,26 @@ namespace TuteefyWPF
             QuizzesTab.Checked += (s, e) => NavigateToPage("Quizzes");
         }
 
+        private void checkRole(string role)
+        {
+            if (role == "Tutor")
+            { 
+                MainFrame.Navigate(new HomePage());
+            }
+            else if (role == "Tutee")
+            {
+                StudentTab.Visibility = Visibility.Collapsed;
+                MainFrame.Navigate(new StudentPage(fullName));
+            }
+        }
+
         // In TuteefyMain.cs - change from private to public
         public void NavigateToPage(string page)
         {
             switch (page)
             {
                 case "Home":
-                    MainFrame.Navigate(new HomePage());
+                    checkRole(userRole);
                     PageTitle.Content = "Home";
                     break;
                 case "Students":
@@ -37,7 +55,7 @@ namespace TuteefyWPF
                     PageTitle.Content = "Lessons";
                     break;
                 case "Quizzes":
-                    MainFrame.Navigate(new TuteefyWPF.Pages.QuizPage());
+                    MainFrame.Navigate(new TuteefyWPF.Pages.QuizPage(userRole));
                     PageTitle.Content = "Quizzes";
                     break;
                 case "QuizView":
@@ -50,7 +68,9 @@ namespace TuteefyWPF
 
         private void LogOut_Checked(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            MainWindow login = new MainWindow();
+            login.Show();
+            this.Close();
         }
 
         private void Settings_Checked(object sender, RoutedEventArgs e)
