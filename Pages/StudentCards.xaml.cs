@@ -78,27 +78,48 @@ namespace TuteefyWPF
 
         private void LoadStudents()
         {
-            StudentCardsPanel.Children.Clear();
-
-            string query = @"SELECT FullName, Subject
-                         FROM TuteeTable
-                         WHERE TutorID = @tutorId";
-
             using (SqlConnection conn = new SqlConnection(db.connectionString))
-            using (SqlCommand cmd = new SqlCommand(query, conn))
             {
-                cmd.Parameters.AddWithValue("@tutorId", username);
-                conn.Open();
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                try
                 {
-                    while (reader.Read())
-                    {
-                        string subject = reader["Subject"].ToString();
-                        string fullName = reader["FullName"].ToString();
+                    conn.Open();
 
-                        AddStudentCard(fullName, subject, "100");
+                    string query = @"SELECT TuteeID, FullName, Subject, ProfilePhoto 
+                            FROM TuteeTable 
+                            WHERE TutorID = @TutorID";
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@TutorID", username);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string fullName = reader["FullName"].ToString();
+                            string subject = reader["Subject"].ToString();
+
+                            // Read photo bytes (handle null)
+                            byte[] photoBytes = null;
+                            if (!reader.IsDBNull(reader.GetOrdinal("ProfilePhoto")))
+                            {
+                                photoBytes = (byte[])reader["ProfilePhoto"];
+                            }
+
+                            // Create and add card
+                            var card = new StudentCardControl
+                            {
+                                StudentName = fullName,
+                                Subject = subject,
+                                ProfilePhoto = photoBytes  // This will trigger the image loading
+                            };
+
+                            StudentCardsPanel.Children.Add(card);
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading students: " + ex.Message);
                 }
             }
         }

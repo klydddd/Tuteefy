@@ -29,22 +29,30 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Image Placeholder -->
-            <Border CornerRadius="15">
+            <Border x:Name="ImageBorder" CornerRadius="15">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                         <GradientStop Color="#9600ff" Offset="0"/>
                         <GradientStop Color="#AEBAF8" Offset="1"/>
                     </LinearGradientBrush>
                 </Border.Background>
-                <TextBlock Text="📸"
-                           Foreground="AliceBlue"
-                           FontSize="60"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center"/>
+
+                <Grid>
+                    <Border CornerRadius="15" ClipToBounds="True">
+                        <Image x:Name="ProfileImage"
+                               Stretch="UniformToFill"
+                               Visibility="Collapsed"/>
+                    </Border>
+
+                    <TextBlock x:Name="FallbackIcon"
+                               Text="📸"
+                               Foreground="AliceBlue"
+                               FontSize="60"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"/>
+                </Grid>
             </Border>
 
-            <!-- Student Name + Grade -->
             <StackPanel Grid.Row="1" Margin="0,10,0,0">
                 <StackPanel Orientation="Horizontal" 
                             HorizontalAlignment="Center" 
@@ -59,7 +67,6 @@
                 </StackPanel>
             </StackPanel>
 
-            <!-- Subject List -->
             <TextBlock Grid.Row="2"
                        Text="{Binding Subject, RelativeSource={RelativeSource AncestorType=UserControl}}"
                        Foreground="Gray"
@@ -67,7 +74,6 @@
                        TextAlignment="Center"
                        Margin="0,10,0,50"/>
 
-            <!-- Animated “VIEW” Button -->
             <Button Grid.Row="2"
                     Content="VIEW"
                     HorizontalAlignment="Center"
@@ -109,9 +115,7 @@
                                               RecognizesAccessKey="True"/>
                         </Border>
 
-                        <!-- Hover / Pressed Animations -->
                         <ControlTemplate.Triggers>
-                            <!-- Hover -->
                             <EventTrigger RoutedEvent="MouseEnter">
                                 <BeginStoryboard>
                                     <Storyboard>
@@ -134,7 +138,6 @@
                                 </BeginStoryboard>
                             </EventTrigger>
 
-                            <!-- Mouse Leave -->
                             <EventTrigger RoutedEvent="MouseLeave">
                                 <BeginStoryboard>
                                     <Storyboard>
@@ -157,7 +160,6 @@
                                 </BeginStoryboard>
                             </EventTrigger>
 
-                            <!-- Pressed -->
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="border" Property="Opacity" Value="0.85"/>
                                 <Setter TargetName="border" Property="RenderTransform">
@@ -172,7 +174,6 @@
             </Button>
         </Grid>
 
-        <!-- Card Hover Animation -->
         <Border.Triggers>
             <EventTrigger RoutedEvent="MouseEnter">
                 <BeginStoryboard>
