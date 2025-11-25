@@ -72,7 +72,7 @@ namespace TuteefyWPF.WindowsFolder
                         }
 
                         // Create the QuizView page with the data
-                        TuteefyWPF.Pages.QuizPages.QuizView quizViewPage = new TuteefyWPF.Pages.QuizPages.QuizView(quizID);
+                        TuteefyWPF.Pages.QuizPages.QuizView quizViewPage = new TuteefyWPF.Pages.QuizPages.QuizView(quizID, username);
                         quizViewPage.QuizTitle.Content = QuizTitleTextBox.Text;
                         quizViewPage.QuizDesc.Content = QuizDesc.Text;
 

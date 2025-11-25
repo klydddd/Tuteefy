@@ -106,10 +106,11 @@ namespace TuteefyWPF.Pages
 
         private void AddQuizCard(string title, string code)
         {
-            var card = new QuizCard
+            var card = new UserControls.QuizControls.QuizCard
             {
                 Title = title,
-                Code = code
+                Code = code,
+                TutorID = username
             };
 
             QuizzesPanel.Children.Add(card);

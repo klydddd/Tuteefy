@@ -57,12 +57,19 @@
 
         </Grid>
 
-        <!-- Second Column - Question Tracker -->
+        <!-- Second Column - Question Tracker + Assign -->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+
+            <!-- Assign student combo -->
+            <StackPanel Orientation="Vertical" Margin="10,25,10,0" Grid.Row="0">
+                <TextBlock Text="Assign to student" FontWeight="Bold" Foreground="#AEBAF8" Margin="0,0,0,6"/>
+                <ComboBox x:Name="AssignStudentComboBox" Width="220" SelectionChanged="AssignStudentComboBox_SelectionChanged"/>
+            </StackPanel>
 
             <Label x:Name="QuestionsLabel" 
                 Content="Questions" 
@@ -73,10 +80,10 @@
                 HorizontalContentAlignment="Left" 
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
-                Margin="10,53,0,0" Height="28" Width="119" 
-                Grid.Row="0"/>
+                Margin="10,10,0,0" Height="28" Width="119" 
+                Grid.Row="1"/>
 
-            <ScrollViewer Grid.Row="1"
+            <ScrollViewer Grid.Row="2"
                           Padding="5,0,0,0"
                           VerticalScrollBarVisibility="Auto" 
                           Margin="10,0,10,225">
@@ -86,7 +93,7 @@
             </ScrollViewer>
 
             <Button x:Name="FinishButton"
-                    Grid.Row="1"
+                    Grid.Row="2"
                     Content="Finish"
                     Style="{StaticResource AnimatedGradientButton}"
                     Width="140"

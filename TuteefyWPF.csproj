@@ -366,9 +366,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\SQLQuery1.sql" />
-    <Content Include="Database\Migrations\AddFileDataColumn.sql" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Database\Migrations\" />
     <Folder Include="WindowsFolder\QuizWindows\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
