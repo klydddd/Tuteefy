@@ -14,7 +14,34 @@ namespace TuteefyWPF
         public string connectionString;
         public Database()
         {
-            connectionString = ConfigurationManager.ConnectionStrings["TuteefyDB"].ConnectionString;
+            var cs = ConfigurationManager.ConnectionStrings["TuteefyDB"];
+            if (cs == null || string.IsNullOrWhiteSpace(cs.ConnectionString))
+            {
+                throw new InvalidOperationException(
+                    "Connection string 'TuteefyDB' not found in App.config. " +
+                    "Add a <connectionStrings> entry with name='TuteefyDB'.");
+            }
+
+            connectionString = cs.ConnectionString;
+        }
+
+        public bool TestConnection(out string error)
+        {
+            error = null;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    conn.Close();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return false;
+            }
         }
 
         public DataTable LoadUsers()

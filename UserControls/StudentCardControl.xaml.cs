@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using TuteefyWPF.WindowsFolder.StudentWindows;
 
 namespace TuteefyWPF
 {
@@ -24,6 +25,11 @@ namespace TuteefyWPF
         public static readonly DependencyProperty ProfilePhotoProperty =
             DependencyProperty.Register("ProfilePhoto", typeof(byte[]), typeof(StudentCardControl),
                 new PropertyMetadata(null, OnProfilePhotoChanged));
+
+        // New: TuteeID property so the card knows which tutee to view
+        public static readonly DependencyProperty TuteeIDProperty =
+            DependencyProperty.Register("TuteeID", typeof(string), typeof(StudentCardControl),
+                new PropertyMetadata(string.Empty));
 
         public string StudentName
         {
@@ -47,6 +53,13 @@ namespace TuteefyWPF
         {
             get { return (byte[])GetValue(ProfilePhotoProperty); }
             set { SetValue(ProfilePhotoProperty, value); }
+        }
+
+        // CLR wrapper for TuteeID
+        public string TuteeID
+        {
+            get { return (string)GetValue(TuteeIDProperty); }
+            set { SetValue(TuteeIDProperty, value); }
         }
 
         public StudentCardControl()
@@ -103,8 +116,22 @@ namespace TuteefyWPF
 
         private void CardButton_Click(object sender, RoutedEventArgs e)
         {
-            // Handle view button click
-            MessageBox.Show($"Viewing details for: {StudentName}");
+            // Try to get the tutee id from the DP; fallback to Tag if still empty
+            string id = TuteeID;
+            if (string.IsNullOrWhiteSpace(id) && this.Tag is string tagId)
+            {
+                id = tagId;
+            }
+
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                MessageBox.Show($"No student id available for {StudentName}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            var viewWindow = new ViewStudentWindow(id);
+            // Use existing dimmed dialog helper for consistent UX
+            TuteefyWPF.Classes.WindowHelper.ShowDimmedDialog(Window.GetWindow(this), viewWindow);
         }
     }
 }

@@ -105,6 +105,8 @@ namespace TuteefyWPF
                                 photoBytes = (byte[])reader["ProfilePhoto"];
                             }
 
+                            string tuteeId = reader["TuteeID"].ToString();
+
                             // Create and add card
                             var card = new StudentCardControl
                             {
@@ -112,6 +114,8 @@ namespace TuteefyWPF
                                 Subject = subject,
                                 ProfilePhoto = photoBytes  // This will trigger the image loading
                             };
+                            // Store TuteeID in the control property so the control can open the view window
+                            card.TuteeID = tuteeId;
 
                             StudentCardsPanel.Children.Add(card);
                         }

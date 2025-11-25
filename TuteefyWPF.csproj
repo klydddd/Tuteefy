@@ -216,6 +216,9 @@
     <Compile Include="WindowsFolder\StudentWindows\AddStudentWindow.xaml.cs">
       <DependentUpon>AddStudentWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowsFolder\StudentWindows\ViewStudentWindow.xaml.cs">
+      <DependentUpon>ViewStudentWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="AddTaskDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -306,6 +309,9 @@
     </Page>
     <Page Include="WindowsFolder\StudentWindows\AddStudentWindow.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowsFolder\StudentWindows\ViewStudentWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
