@@ -1,11 +1,7 @@
-﻿<Window x:Class="TuteefyWPF.WindowsFolder.LessonsWindows.AddLessonsWindow"
+<Window x:Class="TuteefyWPF.WindowsFolder.LessonsWindows.LessonViewWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TuteefyWPF.WindowsFolder.LessonsWindows"
-        mc:Ignorable="d"
-        Title="AddLessonsWindow"
+        Title="View Lesson"
         Width="850"
         SizeToContent="Height"
         MaxHeight="{x:Static SystemParameters.MaximizedPrimaryScreenHeight}"
@@ -47,14 +43,14 @@
                         <GradientStop Color="#AEBAF8" Offset="1"/>
                     </LinearGradientBrush>
                 </Border.Background>
-                <TextBlock Text="Add Lesson"
+                <TextBlock Text="View Lesson"
                            Foreground="White"
                            FontSize="20"
                            FontWeight="Bold"
                            HorizontalAlignment="Center"/>
             </Border>
 
-            <!-- Form Content wrapped in a ScrollViewer so content (including bottom buttons) is reachable on short screens -->
+            <!-- Content area (read-only, styled like AddLessonsWindow) -->
             <ScrollViewer VerticalScrollBarVisibility="Auto"
                           MaxHeight="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=MaxHeight}">
                 <Grid Margin="20,20,20,20" Height="Auto" Width="Auto">
@@ -71,10 +67,9 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- existing content unchanged (title, code, content, upload button, create button) -->
                     <!-- Lesson Title -->
                     <StackPanel Margin="10" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                        <TextBlock Text="Lesson Title *"
+                        <TextBlock Text="Lesson Title"
                                    FontWeight="Bold"
                                    FontSize="13"
                                    Foreground="#5E35B1"/>
@@ -82,9 +77,8 @@
                                 BorderBrush="#C7B8FF"
                                 BorderThickness="1"
                                 Background="White">
-                            <TextBox x:Name="LessonTitleTextBox"
-                                     Style="{StaticResource RoundedPlaceholderTextBox}"
-                                     Tag="Lesson Title"
+                            <TextBox x:Name="TitleText"
+                                     IsReadOnly="True"
                                      Height="41"
                                      FontSize="13"
                                      Padding="5"
@@ -95,7 +89,7 @@
 
                     <!-- Lesson Code -->
                     <StackPanel Margin="10" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                        <TextBlock Text="Lesson Code *"
+                        <TextBlock Text="Lesson Code"
                                    FontWeight="Bold"
                                    FontSize="13"
                                    Foreground="#5E35B1"/>
@@ -103,9 +97,8 @@
                                 BorderBrush="#C7B8FF"
                                 BorderThickness="1"
                                 Background="White">
-                            <TextBox x:Name="LessonCodeTextBox"
-                                     Style="{StaticResource RoundedPlaceholderTextBox}"
-                                     Tag="Lesson Code"
+                            <TextBox x:Name="CodeText"
+                                     IsReadOnly="True"
                                      Height="41"
                                      FontSize="13"
                                      Padding="5"
@@ -116,7 +109,7 @@
 
                     <!-- Content -->
                     <StackPanel Margin="10" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-                        <TextBlock Text="Lesson Content *"
+                        <TextBlock Text="Lesson Content"
                                    FontWeight="Bold"
                                    FontSize="13"
                                    Foreground="#5E35B1"/>
@@ -124,12 +117,11 @@
                                 BorderBrush="#C7B8FF"
                                 BorderThickness="1"
                                 Background="White">
-                            <TextBox x:Name="ContentTextBox"
-                                     Style="{StaticResource RoundedPlaceholderTextBox}"
-                                     Tag="Lesson Content"
+                            <TextBox x:Name="ContentText"
+                                     IsReadOnly="True"
                                      TextWrapping="Wrap"
                                      AcceptsReturn="True"
-                                     Height="200"
+                                     Height="240"
                                      Margin="0,5,0,0"
                                      FontSize="13"
                                      Padding="5"
@@ -139,32 +131,18 @@
                         </Border>
                     </StackPanel>
 
-                    <!-- File upload -->
+                    <!-- File link / info -->
                     <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center">
-                        <Button x:Name="UploadFileButton"
-                                Content="Upload File..."
-                                Width="150"
-                                Height="38"
-                                Margin="0,0,10,0"
-                                Click="UploadFileButton_Click"
-                                Style="{StaticResource AnimatedGradientButton}"/>
-                        <TextBlock x:Name="SelectedFileTextBlock"
-                                   VerticalAlignment="Center"
-                                   Text="No file selected"
-                                   Foreground="#5E35B1"/>
+                        <TextBlock Text="Attached File:" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,8,0" Foreground="#5E35B1"/>
+                        <TextBlock x:Name="FileSection" VerticalAlignment="Center" TextWrapping="NoWrap"/>
                     </StackPanel>
 
-                    <!-- Create Lesson Button -->
-                    <Button x:Name="CreateLessonButton"
-                            Content="Create Lesson"
-                            Style="{StaticResource AnimatedGradientButton}"
-                            Grid.Row="4"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            Height="45"
-                            Margin="10,20,10,10"
-                            HorizontalAlignment="Stretch" Click="CreateLessonButton_Click"
-                            />
+                    <!-- Action Buttons -->
+                    <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="10,20,10,10">
+                        <Button x:Name="OpenFileButton" Content="Open File" Width="120" Height="38" Margin="0,0,8,0" Click="OpenFileButton_Click" Visibility="Collapsed" Style="{StaticResource AnimatedGradientButton}"/>
+                        <Button x:Name="DownloadButton" Content="Download" Width="120" Height="38" Margin="0,0,8,0" Click="DownloadButton_Click" Visibility="Collapsed" Style="{StaticResource AnimatedGradientButton}"/>
+                        <Button Content="Close" Width="120" Height="38" Click="Close_Click" Style="{StaticResource AnimatedGradientButton}"/>
+                    </StackPanel>
                 </Grid>
             </ScrollViewer>
         </StackPanel>

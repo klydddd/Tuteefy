@@ -83,7 +83,7 @@ namespace TuteefyWPF.Pages
                 {
                     conn.Open();
 
-                    string query = "SELECT Title, Content, Code FROM LessonsTable WHERE TutorID = @CurrentTutorID";
+                    string query = "SELECT LessonID, Title, Content, Code, FileName FROM LessonsTable WHERE TutorID = @CurrentTutorID";
 
                     SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -93,14 +93,19 @@ namespace TuteefyWPF.Pages
                     {
                         while (reader.Read())
                         {
+                            int lessonId = reader["LessonID"] == DBNull.Value ? 0 : Convert.ToInt32(reader["LessonID"]);
                             string title = reader["Title"].ToString();
                             string content = reader["Content"].ToString();
                             string code = reader["Code"].ToString();
+                            string fileName = reader["FileName"] == DBNull.Value ? string.Empty : reader["FileName"].ToString();
+
                             QuizAndLessonCard card = new QuizAndLessonCard
                             {
                                 Title = title,
                                 Code = code,
-                                LessonContent = content  // Make sure this is LessonContent, not Content
+                                LessonContent = content,
+                                LessonId = lessonId,
+                                FileName = fileName
                             };
 
                             LessonsPanel.Children.Add(card);
@@ -128,7 +133,7 @@ namespace TuteefyWPF.Pages
 
         private void CreateLessonButton_Click(object sender, RoutedEventArgs e)
         {
-            var addWindow = new TuteefyWPF.WindowsFolder.LessonsWindows.AddLessonsWindow();
+            var addWindow = new TuteefyWPF.WindowsFolder.LessonsWindows.AddLessonsWindow(CurrentTutorID);
 
             // Subscribe to the LessonCreated event
             addWindow.LessonCreated += (s, args) =>

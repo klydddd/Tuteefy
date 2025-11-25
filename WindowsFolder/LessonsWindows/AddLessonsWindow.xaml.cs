@@ -1,97 +1,122 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using Microsoft.Win32;
+using System;
+using System.Data;
 using System.Data.SqlClient;
-using TuteefyWPF.Pages;
+using System.IO;
+using System.Windows;
 
 namespace TuteefyWPF.WindowsFolder.LessonsWindows
 {
-    /// <summary>
-    /// Interaction logic for AddLessonsWindow.xaml
-    /// </summary>
     public partial class AddLessonsWindow : Window
     {
-        private string lesson;
-        private string code;
-        private string content;
-        private Database db;
+        private readonly TuteefyWPF.Database db = new TuteefyWPF.Database();
+        private string _selectedFilePath;
+        private string _selectedFileName;
+        private byte[] _selectedFileBytes;
 
-        // Event to notify when a lesson is created
-        public event EventHandler LessonCreated;
+        // tutor id should be passed in same way other windows do
+        private readonly string _tutorId;
 
-        public AddLessonsWindow()
+        public AddLessonsWindow(string tutorId)
         {
             InitializeComponent();
-            db = new Database();
+            _tutorId = tutorId;
+        }
+
+        private void UploadFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new OpenFileDialog()
+            {
+                Title = "Select lesson file",
+                Filter = "All supported files|*.pdf;*.pptx;*.ppt;*.docx;*.doc;*.mp4;*.mp3;*.zip;*.rar;*.*",
+                CheckFileExists = true,
+                Multiselect = false
+            };
+
+            if (dlg.ShowDialog() == true)
+            {
+                _selectedFilePath = dlg.FileName;
+                _selectedFileName = Path.GetFileName(_selectedFilePath);
+
+                try
+                {
+                    _selectedFileBytes = File.ReadAllBytes(_selectedFilePath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Failed to read file: " + ex.Message, "File Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    _selectedFileBytes = null;
+                    _selectedFileName = null;
+                    _selectedFilePath = null;
+                    SelectedFileTextBlock.Text = "No file selected";
+                    return;
+                }
+
+                SelectedFileTextBlock.Text = _selectedFileName;
+            }
         }
 
         private void CreateLessonButton_Click(object sender, RoutedEventArgs e)
         {
-            lesson = LessonTitleTextBox.Text.Trim();
-            code = LessonCodeTextBox.Text.Trim();
-            content = ContentTextBox.Text.Trim();
+            string title = LessonTitleTextBox.Text?.Trim() ?? string.Empty;
+            string code = LessonCodeTextBox.Text?.Trim() ?? string.Empty;
+            string content = ContentTextBox.Text?.Trim() ?? string.Empty;
 
-            // Validate inputs
-            if (string.IsNullOrWhiteSpace(lesson))
+            if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(code) || string.IsNullOrWhiteSpace(content))
             {
-                MessageBox.Show("Please enter a lesson title.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please fill in title, code and content.", "Validation", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(code))
+            try
             {
-                MessageBox.Show("Please enter a lesson code.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(content))
-            {
-                MessageBox.Show("Please enter lesson content.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            using (SqlConnection conn = new SqlConnection(db.connectionString))
-            {
-                try
+                using (SqlConnection conn = new SqlConnection(db.connectionString))
                 {
                     conn.Open();
-                    string query = "INSERT INTO LessonsTable (TutorID, Title, Code, Content) VALUES (@TutorID, @Title, @Code, @Content)";
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@TutorID", Pages.LessonsPage.CurrentTutorID);
-                    cmd.Parameters.AddWithValue("@Title", lesson);
-                    cmd.Parameters.AddWithValue("@Code", code);
-                    cmd.Parameters.AddWithValue("@Content", content);
 
-                    int rowsAffected = cmd.ExecuteNonQuery();
+                    string insert = @"
+                        INSERT INTO LessonsTable (TutorID, Title, Content, Code, FileName, FileData, DateCreated)
+                        OUTPUT INSERTED.LessonID
+                        VALUES (@TutorID, @Title, @Content, @Code, @FileName, @FileData, @DateCreated);";
 
-                    if (rowsAffected > 0)
+                    using (SqlCommand cmd = new SqlCommand(insert, conn))
                     {
-                        // Trigger the event to notify the parent page
-                        LessonCreated?.Invoke(this, EventArgs.Empty);
+                        cmd.Parameters.AddWithValue("@TutorID", _tutorId ?? string.Empty);
+                        cmd.Parameters.AddWithValue("@Title", title);
+                        cmd.Parameters.AddWithValue("@Content", content);
+                        cmd.Parameters.AddWithValue("@Code", string.IsNullOrWhiteSpace(code) ? (object)DBNull.Value : code);
+                        cmd.Parameters.AddWithValue("@FileName", string.IsNullOrWhiteSpace(_selectedFileName) ? (object)DBNull.Value : _selectedFileName);
+                        cmd.Parameters.AddWithValue("@FileData", (object)_selectedFileBytes ?? DBNull.Value);
+                        cmd.Parameters.AddWithValue("@DateCreated", DateTime.UtcNow);
 
-                        this.DialogResult = true;
-                        this.Close();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Failed to create lesson. Please try again.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        // ExecuteScalar will return LessonID from OUTPUT
+                        object sid = cmd.ExecuteScalar();
+                        int newLessonId = sid != null ? Convert.ToInt32(sid) : 0;
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: " + ex.Message, "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+
+                MessageBox.Show("Lesson saved successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                OnLessonCreated();
+
+                this.DialogResult = true;
+                this.Close();
             }
+            catch (SqlException sqlex)
+            {
+                MessageBox.Show("Database error saving lesson: " + sqlex.Message, "DB Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error saving lesson: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public event EventHandler LessonCreated;
+
+        private void OnLessonCreated()
+        {
+            LessonCreated?.Invoke(this, EventArgs.Empty);
         }
     }
 }

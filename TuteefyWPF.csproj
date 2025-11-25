@@ -213,6 +213,9 @@
     <Compile Include="WindowsFolder\LessonsWindows\AddLessonsWindow.xaml.cs">
       <DependentUpon>AddLessonsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowsFolder\LessonsWindows\LessonViewWindow.xaml.cs">
+      <DependentUpon>LessonViewWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowsFolder\StudentWindows\AddStudentWindow.xaml.cs">
       <DependentUpon>AddStudentWindow.xaml</DependentUpon>
     </Compile>
@@ -307,6 +310,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="WindowsFolder\LessonsWindows\LessonViewWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WindowsFolder\StudentWindows\AddStudentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -360,6 +366,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\SQLQuery1.sql" />
+    <Content Include="Database\Migrations\AddFileDataColumn.sql" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="WindowsFolder\QuizWindows\" />
