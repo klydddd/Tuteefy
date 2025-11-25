@@ -403,7 +403,147 @@
             </Setter>
         </Style>
 
+        <!-- Checkbox Style -->
+        <Style TargetType="CheckBox">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <!-- Custom checkbox box -->
+                            <Border x:Name="CheckBoxBorder"
+                    Width="18" Height="18"
+                    CornerRadius="4"
+                    BorderThickness="2"
+                    BorderBrush="DarkViolet"
+                    Background="Transparent"
+                    Margin="0,0,10,0"
+                    VerticalAlignment="Center">
+                                <Path x:Name="CheckMark"
+                      Data="M0,4 L3,7 L8,0"
+                      Stroke="Violet"
+                      StrokeThickness="2"
+                      StrokeEndLineCap="Round"
+                      StrokeStartLineCap="Round"
+                      Visibility="Collapsed"
+                      Stretch="Uniform"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"/>
+                            </Border>
 
+                            <!-- Text -->
+                            <TextBlock TextWrapping="Wrap"
+                       Text="I hereby declare that the information provided is true and correct."
+                       VerticalAlignment="Center"
+                       Foreground="White"
+                       Width="290"/>
+                        </StackPanel>
+
+                        <!-- Triggers -->
+                        <ControlTemplate.Triggers>
+                            <!-- Checked state -->
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="CheckBoxBorder" Property="Background" Value="DarkViolet"/>
+                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="CheckMark" Property="Stroke" Value="White"/>
+                            </Trigger>
+
+                            <!-- Hover state -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="CheckBoxBorder" Property="BorderBrush" Value="Violet"/>
+                                <Setter TargetName="CheckBoxBorder" Property="Background" Value="#1AFFFFFF"/>
+                            </Trigger>
+
+                            <!-- Disabled state -->
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="CheckBoxBorder" Property="Opacity" Value="0.5"/>
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Radio Button v2-->
+        <Style TargetType="RadioButton">
+            <Setter Property="Foreground" Value="#9600ff"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid Background="Transparent">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Custom radio button circle -->
+                            <Border x:Name="RadioBorder"
+                            Grid.Column="0"
+                            Width="20" 
+                            Height="20"
+                            CornerRadius="10"
+                            BorderThickness="2"
+                            BorderBrush="#9600ff"
+                            Background="Transparent"
+                            Margin="0,0,8,0"
+                            VerticalAlignment="Center">
+                                <!-- Inner dot when checked -->
+                                <Ellipse x:Name="InnerDot"
+                                 Width="10"
+                                 Height="10"
+                                 Fill="#9600ff"
+                                 Visibility="Collapsed"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"/>
+                            </Border>
+
+                            <!-- Content (text or other elements) -->
+                            <ContentPresenter Grid.Column="1"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Left"
+                                      RecognizesAccessKey="True"/>
+                        </Grid>
+
+                        <!-- Triggers -->
+                        <ControlTemplate.Triggers>
+                            <!-- Checked state -->
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="RadioBorder" Property="Background" Value="#9600ff"/>
+                                <Setter TargetName="RadioBorder" Property="BorderBrush" Value="#9600ff"/>
+                                <Setter TargetName="InnerDot" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="InnerDot" Property="Fill" Value="White"/>
+                            </Trigger>
+
+                            <!-- Hover state -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="RadioBorder" Property="BorderBrush" Value="#AEBAF8"/>
+                                <Setter TargetName="RadioBorder" Property="Background" Value="#1A9600ff"/>
+                            </Trigger>
+
+                            <!-- Hover + Checked state -->
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsChecked" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="RadioBorder" Property="Background" Value="#AEBAF8"/>
+                                <Setter TargetName="RadioBorder" Property="BorderBrush" Value="#AEBAF8"/>
+                            </MultiTrigger>
+
+                            <!-- Disabled state -->
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="RadioBorder" Property="Opacity" Value="0.5"/>
+                                <Setter Property="Foreground" Value="Gray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 
 </Application>

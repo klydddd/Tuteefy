@@ -71,5 +71,8 @@ namespace TuteefyWPF.Classes
                 }
             }
         }
+
+        // Load the lesson cards
+
     }
 }

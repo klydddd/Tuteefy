@@ -32,8 +32,7 @@
                            FontSize="16" 
                            FontWeight="Bold" 
                            Foreground="#9600ff" 
-                           Margin="0,0,0,10"
-                           />
+                           Margin="0,0,0,10"/>
                 <TextBox x:Name="QuestionTextBox"
                          Style="{StaticResource RoundedPlaceholderTextBox}"
                          TextWrapping="Wrap"
@@ -44,7 +43,8 @@
                          Background="#F9F9F9"
                          BorderBrush="#D0D0D0"
                          BorderThickness="1"
-                         VerticalScrollBarVisibility="Auto" TextChanged="QuestionTextBox_TextChanged"/>
+                         VerticalScrollBarVisibility="Auto" 
+                         TextChanged="QuestionTextBox_TextChanged"/>
             </StackPanel>
 
             <!-- Choices Section -->
@@ -55,7 +55,7 @@
                            Foreground="#9600ff" 
                            Margin="0,0,0,15"/>
 
-                <Grid Height="162">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -72,13 +72,25 @@
                                    FontWeight="Medium" 
                                    Foreground="#666" 
                                    Margin="0,0,0,5"/>
-                        <TextBox x:Name="ChoiceATextBox"
-                                 Style="{StaticResource RoundedPlaceholderTextBox}"
-                                 Padding="10"
-                                 FontSize="13"
-                                 Background="#F9F9F9"
-                                 BorderBrush="#D0D0D0"
-                                 BorderThickness="1"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="ChoiceATextBox"
+                                     Grid.Column="0"
+                                     Style="{StaticResource RoundedPlaceholderTextBox}"
+                                     Padding="10"
+                                     FontSize="13"
+                                     Background="#F9F9F9"
+                                     BorderBrush="#D0D0D0"
+                                     BorderThickness="1"
+                                     Margin="0,0,10,0"/>
+                            <RadioButton x:Name="CorrectARadio"
+                                      Grid.Column="1"
+                                      GroupName="CorrectAnswer"
+                                      VerticalAlignment="Center"/>
+                        </Grid>
                     </StackPanel>
 
                     <!-- Choice B -->
@@ -88,13 +100,25 @@
                                    FontWeight="Medium" 
                                    Foreground="#666" 
                                    Margin="0,0,0,5"/>
-                        <TextBox x:Name="ChoiceBTextBox"
-                                 Style="{StaticResource RoundedPlaceholderTextBox}"
-                                 Padding="10"
-                                 FontSize="13"
-                                 Background="#F9F9F9"
-                                 BorderBrush="#D0D0D0"
-                                 BorderThickness="1"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="ChoiceBTextBox"
+                                     Grid.Column="0"
+                                     Style="{StaticResource RoundedPlaceholderTextBox}"
+                                     Padding="10"
+                                     FontSize="13"
+                                     Background="#F9F9F9"
+                                     BorderBrush="#D0D0D0"
+                                     BorderThickness="1"
+                                     Margin="0,0,10,0"/>
+                            <RadioButton x:Name="CorrectBRadio"
+                                      Grid.Column="1"
+                                      GroupName="CorrectAnswer"
+                                      VerticalAlignment="Center"/>
+                        </Grid>
                     </StackPanel>
 
                     <!-- Choice C -->
@@ -104,13 +128,25 @@
                                    FontWeight="Medium" 
                                    Foreground="#666" 
                                    Margin="0,0,0,5"/>
-                        <TextBox x:Name="ChoiceCTextBox"
-                                 Style="{StaticResource RoundedPlaceholderTextBox}"
-                                 Padding="10"
-                                 FontSize="13"
-                                 Background="#F9F9F9"
-                                 BorderBrush="#D0D0D0"
-                                 BorderThickness="1"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="ChoiceCTextBox"
+                                     Grid.Column="0"
+                                     Style="{StaticResource RoundedPlaceholderTextBox}"
+                                     Padding="10"
+                                     FontSize="13"
+                                     Background="#F9F9F9"
+                                     BorderBrush="#D0D0D0"
+                                     BorderThickness="1"
+                                     Margin="0,0,10,0"/>
+                            <RadioButton x:Name="CorrectCRadio"
+                                      Grid.Column="1"
+                                      GroupName="CorrectAnswer"
+                                      VerticalAlignment="Center"/>
+                        </Grid>
                     </StackPanel>
 
                     <!-- Choice D -->
@@ -120,13 +156,25 @@
                                    FontWeight="Medium" 
                                    Foreground="#666" 
                                    Margin="0,0,0,5"/>
-                        <TextBox x:Name="ChoiceDTextBox"
-                                 Style="{StaticResource RoundedPlaceholderTextBox}"
-                                 Padding="10"
-                                 FontSize="13"
-                                 Background="#F9F9F9"
-                                 BorderBrush="#D0D0D0"
-                                 BorderThickness="1"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="ChoiceDTextBox"
+                                     Grid.Column="0"
+                                     Style="{StaticResource RoundedPlaceholderTextBox}"
+                                     Padding="10"
+                                     FontSize="13"
+                                     Background="#F9F9F9"
+                                     BorderBrush="#D0D0D0"
+                                     BorderThickness="1"
+                                     Margin="0,0,10,0"/>
+                            <RadioButton x:Name="CorrectDRadio"
+                                      Grid.Column="1"
+                                      GroupName="CorrectAnswer"
+                                      VerticalAlignment="Center"/>
+                        </Grid>
                     </StackPanel>
                 </Grid>
             </StackPanel>
@@ -145,9 +193,7 @@
                         FontSize="13"
                         BorderThickness="0"
                         Cursor="Hand"
-                        Click="RemoveButton_Click">
-                    
-                </Button>
+                        Click="RemoveButton_Click"/>
 
                 <Button x:Name="DoneButton"
                         Style="{StaticResource AnimatedGradientButton}"
@@ -158,8 +204,7 @@
                         FontSize="13"
                         BorderThickness="0"
                         Cursor="Hand"
-                        Click="DoneButton_Click">
-                </Button>
+                        Click="DoneButton_Click"/>
             </StackPanel>
         </Grid>
     </Border>

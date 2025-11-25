@@ -236,5 +236,10 @@ namespace TuteefyWPF.UserControls
         {
             // You can add logic here if you want
         }
+
+        private void CorrectBCheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

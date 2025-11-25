@@ -37,11 +37,24 @@
                         <GradientStop Color="#AEBAF8" Offset="1"/>
                     </LinearGradientBrush>
                 </Border.Background>
-                <TextBlock Text="📸"
-                           Foreground="AliceBlue"
-                           FontSize="60"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center"/>
+
+                <Grid>
+                    <Border x:Name="ImageBrushContainer"
+                            CornerRadius="15"
+                            Visibility="Collapsed">
+                        <Border.Background>
+                            <ImageBrush x:Name="ProfileImageBrush"
+                                        Stretch="UniformToFill" />
+                        </Border.Background>
+                    </Border>
+
+                    <TextBlock x:Name="FallbackIcon"
+                               Text="📸"
+                               Foreground="AliceBlue"
+                               FontSize="60"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"/>
+                </Grid>
             </Border>
 
             <!-- Student Name + Grade -->
