@@ -79,8 +79,8 @@ namespace TuteefyWPF.Pages
         {
             using (SqlConnection conn = new SqlConnection(db.connectionString))
             {
-                //try
-                //{
+                try
+                {
                     conn.Open();
 
                     string query = "SELECT Title, Content, Code FROM LessonsTable WHERE TutorID = @CurrentTutorID";
@@ -106,11 +106,11 @@ namespace TuteefyWPF.Pages
                             LessonsPanel.Children.Add(card);
                         }
                     }
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show("Error: " + ex.Message);
-                //}
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
             }
         }
 
