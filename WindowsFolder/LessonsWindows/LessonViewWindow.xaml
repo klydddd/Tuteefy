@@ -4,7 +4,7 @@
         Title="View Lesson"
         Width="850"
         SizeToContent="Height"
-        MaxHeight="{x:Static SystemParameters.MaximizedPrimaryScreenHeight}"
+        MaxHeight="750"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         WindowStyle="None"
@@ -12,21 +12,16 @@
         Background="Transparent">
 
     <Window.Resources>
-        <DropShadowEffect x:Key="ShadowEffect"
-                          Color="#888"
-                          BlurRadius="10"
-                          ShadowDepth="2"
-                          Opacity="0.4"/>
+        <DropShadowEffect x:Key="ShadowEffect" Color="#888" BlurRadius="10" ShadowDepth="2" Opacity="0.4"/>
+        <Style x:Key="StudentCheckBoxStyle" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="#333"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
     </Window.Resources>
 
-    <!-- Main Card -->
-    <Border Width="Auto"
-            Effect="{StaticResource ShadowEffect}"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            CornerRadius="20">
-
-        <!-- Gradient background -->
+    <Border Width="Auto" Effect="{StaticResource ShadowEffect}" CornerRadius="20">
         <Border.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                 <GradientStop Color="White" Offset="0"/>
@@ -34,27 +29,21 @@
             </LinearGradientBrush>
         </Border.Background>
 
-        <StackPanel Width="810" Height="Auto">
-            <!-- Header Bar -->
-            <Border Padding="14">
+        <StackPanel Width="850" Height="Auto">
+            <Border Padding="14" CornerRadius="20,20,0,0">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                         <GradientStop Color="#9600ff" Offset="0"/>
                         <GradientStop Color="#AEBAF8" Offset="1"/>
                     </LinearGradientBrush>
                 </Border.Background>
-                <TextBlock Text="View Lesson"
-                           Foreground="White"
-                           FontSize="20"
-                           FontWeight="Bold"
-                           HorizontalAlignment="Center"/>
+                <TextBlock Text="View Lesson" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
             </Border>
 
-            <!-- Content area (read-only, styled like AddLessonsWindow) -->
-            <ScrollViewer VerticalScrollBarVisibility="Auto"
-                          MaxHeight="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=MaxHeight}">
-                <Grid Margin="20,20,20,20" Height="Auto" Width="Auto">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="650" Width="785">
+                <Grid Margin="0">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -62,86 +51,61 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <!-- Lesson Title -->
-                    <StackPanel Margin="10" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                        <TextBlock Text="Lesson Title"
-                                   FontWeight="Bold"
-                                   FontSize="13"
-                                   Foreground="#5E35B1"/>
-                        <Border CornerRadius="6"
-                                BorderBrush="#C7B8FF"
-                                BorderThickness="1"
-                                Background="White">
-                            <TextBox x:Name="TitleText"
-                                     IsReadOnly="True"
-                                     Height="41"
-                                     FontSize="13"
-                                     Padding="5"
-                                     Background="Transparent"
-                                     BorderThickness="0"/>
+                    <StackPanel Margin="10" Grid.Row="0">
+                        <TextBlock Text="Lesson Title" FontWeight="Bold" FontSize="13" Foreground="#5E35B1"/>
+                        <Border CornerRadius="6" BorderBrush="#C7B8FF" BorderThickness="1" Background="White">
+                            <TextBox x:Name="TitleText" IsReadOnly="True" Height="41" FontSize="13" Padding="5" Background="Transparent" BorderThickness="0"/>
                         </Border>
                     </StackPanel>
 
-                    <!-- Lesson Code -->
-                    <StackPanel Margin="10" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                        <TextBlock Text="Lesson Code"
-                                   FontWeight="Bold"
-                                   FontSize="13"
-                                   Foreground="#5E35B1"/>
-                        <Border CornerRadius="6"
-                                BorderBrush="#C7B8FF"
-                                BorderThickness="1"
-                                Background="White">
-                            <TextBox x:Name="CodeText"
-                                     IsReadOnly="True"
-                                     Height="41"
-                                     FontSize="13"
-                                     Padding="5"
-                                     Background="Transparent"
-                                     BorderThickness="0"/>
+                    <StackPanel Margin="10" Grid.Row="1">
+                        <TextBlock Text="Lesson Code" FontWeight="Bold" FontSize="13" Foreground="#5E35B1"/>
+                        <Border CornerRadius="6" BorderBrush="#C7B8FF" BorderThickness="1" Background="White">
+                            <TextBox x:Name="CodeText" IsReadOnly="True" Height="41" FontSize="13" Padding="5" Background="Transparent" BorderThickness="0"/>
                         </Border>
                     </StackPanel>
 
-                    <!-- Content -->
-                    <StackPanel Margin="10" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-                        <TextBlock Text="Lesson Content"
-                                   FontWeight="Bold"
-                                   FontSize="13"
-                                   Foreground="#5E35B1"/>
-                        <Border CornerRadius="6"
-                                BorderBrush="#C7B8FF"
-                                BorderThickness="1"
-                                Background="White">
-                            <TextBox x:Name="ContentText"
-                                     IsReadOnly="True"
-                                     TextWrapping="Wrap"
-                                     AcceptsReturn="True"
-                                     Height="240"
-                                     Margin="0,5,0,0"
-                                     FontSize="13"
-                                     Padding="5"
-                                     Background="Transparent"
-                                     BorderThickness="0"
-                                     VerticalScrollBarVisibility="Auto"/>
+                    <StackPanel Margin="10" Grid.Row="2">
+                        <TextBlock Text="Lesson Content" FontWeight="Bold" FontSize="13" Foreground="#5E35B1"/>
+                        <Border CornerRadius="6" BorderBrush="#C7B8FF" BorderThickness="1" Background="White">
+                            <TextBox x:Name="ContentText" IsReadOnly="True" TextWrapping="Wrap" AcceptsReturn="True" Height="150" FontSize="13" Padding="5" Background="Transparent" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>
                         </Border>
                     </StackPanel>
 
-                    <!-- File link / info -->
-                    <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center">
-                        <TextBlock Text="Attached File:" FontWeight="SemiBold" VerticalAlignment="Center" Margin="0,0,8,0" Foreground="#5E35B1"/>
-                        <TextBlock x:Name="FileSection" VerticalAlignment="Center" TextWrapping="NoWrap"/>
+                    <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="3">
+                        <TextBlock Text="Attached File:" FontWeight="SemiBold" Margin="0,0,8,0" Foreground="#5E35B1"/>
+                        <TextBlock x:Name="FileSection" TextWrapping="NoWrap"/>
                     </StackPanel>
 
-                    <!-- Action Buttons -->
-                    <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="10,20,10,10">
-                        <Button x:Name="OpenFileButton" Content="Open File" Width="120" Height="38" Margin="0,0,8,0" Click="OpenFileButton_Click" Visibility="Collapsed" Style="{StaticResource AnimatedGradientButton}"/>
-                        <Button x:Name="DownloadButton" Content="Download" Width="120" Height="38" Margin="0,0,8,0" Click="DownloadButton_Click" Visibility="Collapsed" Style="{StaticResource AnimatedGradientButton}"/>
-                        <Button Content="Close" Width="120" Height="38" Click="Close_Click" Style="{StaticResource AnimatedGradientButton}"/>
+                    <StackPanel x:Name="StudentSelectionPanel" Grid.Row="4" Margin="10,10,10,10" Visibility="Collapsed">
+                        <TextBlock Text="Assign to Students:" FontWeight="Bold" FontSize="13" Foreground="#5E35B1" Margin="0,0,0,5"/>
+                        <Border BorderBrush="#C7B8FF" BorderThickness="1" CornerRadius="6" Background="White" Height="150">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ListBox x:Name="StudentsListBox" BorderThickness="0" Background="Transparent">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Content="{Binding FullName}" 
+                                                      IsChecked="{Binding IsAssigned}" 
+                                                      Tag="{Binding TuteeID}"
+                                                      Style="{StaticResource StudentCheckBoxStyle}"/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </ScrollViewer>
+                        </Border>
+                        <Button x:Name="SaveAssignmentsButton" Content="Update Assignments" HorizontalAlignment="Right" Margin="0,10,0,0" Width="150" Height="30" Click="SaveAssignmentsButton_Click" Background="#4CAF50" Foreground="White" BorderThickness="0" Cursor="Hand">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="5"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Grid.Row="5" HorizontalAlignment="Right" Margin="10,20,10,10">
+                        <Button x:Name="OpenFileButton" Content="Open File" Width="100" Height="35" Margin="0,0,8,0" Click="OpenFileButton_Click" Visibility="Collapsed" Background="#AEBAF8" BorderThickness="0" Foreground="White"/>
+                        <Button x:Name="DownloadButton" Content="Download" Width="100" Height="35" Margin="0,0,8,0" Click="DownloadButton_Click" Visibility="Collapsed" Background="#AEBAF8" BorderThickness="0" Foreground="White"/>
+                        <Button Content="Close" Width="100" Height="35" Click="Close_Click" Background="#FF5252" BorderThickness="0" Foreground="White"/>
                     </StackPanel>
                 </Grid>
             </ScrollViewer>

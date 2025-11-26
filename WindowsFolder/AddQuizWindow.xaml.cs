@@ -71,8 +71,11 @@ namespace TuteefyWPF.WindowsFolder
                             cmd.ExecuteNonQuery();
                         }
 
-                        // Create the QuizView page with the data
-                        TuteefyWPF.Pages.QuizPages.QuizView quizViewPage = new TuteefyWPF.Pages.QuizPages.QuizView(quizID, username);
+                        // FIXED LINE BELOW:
+                        // We now pass 'username' as the 4th argument (userId)
+                        TuteefyWPF.Pages.QuizPages.QuizView quizViewPage =
+                            new TuteefyWPF.Pages.QuizPages.QuizView(quizID, username, "Tutor", username);
+
                         quizViewPage.QuizTitle.Content = QuizTitleTextBox.Text;
                         quizViewPage.QuizDesc.Content = QuizDesc.Text;
 
@@ -88,9 +91,7 @@ namespace TuteefyWPF.WindowsFolder
                         MessageBox.Show("Error: " + ex.Message);
                     }
                 }
-
             }
-
         }
     }
 }

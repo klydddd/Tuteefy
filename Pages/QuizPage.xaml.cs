@@ -2,19 +2,9 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using TuteefyWPF.UserControls;
 using TuteefyWPF.UserControls.QuizControls;
 
 namespace TuteefyWPF.Pages
@@ -23,23 +13,31 @@ namespace TuteefyWPF.Pages
     {
         private System.Windows.Threading.DispatcherTimer scrollTimer;
         private string username = string.Empty;
+
+        // FIX 1: Add this variable so the whole class can see the role
+        private string userRole = string.Empty;
+
         private Database db = new Database();
 
-        public QuizPage(string userRole, string tutorID)
+        public QuizPage(string role, string userID)
         {
             InitializeComponent();
-            if (userRole == "Tutee")
+
+            // FIX 2: Store the incoming 'role' into our class variable
+            this.userRole = role;
+            this.username = userID;
+
+            if (this.userRole == "Tutee")
             {
                 CreateQuizButton.Visibility = Visibility.Collapsed;
             }
-            username = tutorID;
+
             LoadQuizzes();
             InitializeScrollAnimation();
         }
 
         private void InitializeScrollAnimation()
         {
-            // Timer to restore button opacity after scrolling stops
             scrollTimer = new System.Windows.Threading.DispatcherTimer();
             scrollTimer.Interval = TimeSpan.FromMilliseconds(300);
             scrollTimer.Tick += (s, e) =>
@@ -48,7 +46,6 @@ namespace TuteefyWPF.Pages
                 AnimateButtonOpacity(1.0);
             };
 
-            // Subscribe to scroll changed event
             MainScrollViewer.ScrollChanged += MainScrollViewer_ScrollChanged;
         }
 
@@ -56,10 +53,7 @@ namespace TuteefyWPF.Pages
         {
             if (e.VerticalChange != 0)
             {
-                // User is scrolling - reduce opacity
                 AnimateButtonOpacity(0.3);
-
-                // Reset timer
                 scrollTimer.Stop();
                 scrollTimer.Start();
             }
@@ -79,28 +73,44 @@ namespace TuteefyWPF.Pages
 
         private void LoadQuizzes()
         {
-            QuizzesPanel.Children.Clear();
-
-            string query = @"SELECT QuizID, Title
-                         FROM QuizzesTable
-                         WHERE TutorID = @tutorId";
-
-            using (SqlConnection conn = new SqlConnection(db.connectionString))
-            using (SqlCommand cmd = new SqlCommand(query, conn))
+            try
             {
-                cmd.Parameters.AddWithValue("@tutorId", username);
-                conn.Open();
+                QuizzesPanel.Children.Clear();
 
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                // I kept your simplified query for testing. 
+                // Once it works, remember to switch back to the version with "AND IsAvailable = 1"
+                string query = @"SELECT QuizID, Title
+                                 FROM QuizzesTable
+                                 WHERE TutorID = @userId 
+                                    OR TuteeID = @userId";
+
+                using (SqlConnection conn = new SqlConnection(db.connectionString))
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    while (reader.Read())
-                    {
-                        string title = reader["Title"].ToString();
-                        string quizID = reader["QuizID"].ToString();
+                    cmd.Parameters.AddWithValue("@userId", username);
+                    conn.Open();
 
-                        AddQuizCard(title, quizID);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.HasRows)
+                        {
+                            // MessageBox.Show($"No quizzes found for user: {username}");
+                            return;
+                        }
+
+                        while (reader.Read())
+                        {
+                            string title = reader["Title"].ToString();
+                            string quizID = reader["QuizID"].ToString();
+
+                            AddQuizCard(title, quizID);
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading quizzes: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -110,29 +120,29 @@ namespace TuteefyWPF.Pages
             {
                 Title = title,
                 Code = code,
-                TutorID = username
+                TutorID = username,
+                UserRole = this.userRole,
+                CurrentUserID = this.username // Pass the logged-in user's ID here
             };
 
             QuizzesPanel.Children.Add(card);
         }
 
-        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            if (sender is ScrollViewer scrollViewer)
-            {
-                double scrollAmount = e.Delta > 0 ? -50 : 50;
-                scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + scrollAmount);
-                e.Handled = true;
-            }
-        }
+        //private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        //{
+        //    if (sender is ScrollViewer scrollViewer)
+        //    {
+        //        double scrollAmount = e.Delta > 0 ? -50 : 50;
+        //        scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + scrollAmount);
+        //        e.Handled = true;
+        //    }
+        //}
 
         private void CreateQuizButton_Click(object sender, RoutedEventArgs e)
         {
             TuteefyWPF.Classes.WindowHelper windowHelper = new TuteefyWPF.Classes.WindowHelper();
             var addWindow = new TuteefyWPF.WindowsFolder.AddQuizWindow(username);
             TuteefyWPF.Classes.WindowHelper.ShowDimmedDialog(Window.GetWindow(this), addWindow);
-            // Example navigation:
-            // NavigationService?.Navigate(new CreateQuizPage());
         }
     }
 }

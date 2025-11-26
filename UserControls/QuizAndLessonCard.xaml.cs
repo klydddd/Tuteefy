@@ -26,6 +26,10 @@ namespace TuteefyWPF.UserControls
         public static readonly DependencyProperty FileNameProperty =
             DependencyProperty.Register("FileName", typeof(string), typeof(QuizAndLessonCard), new PropertyMetadata(string.Empty));
 
+        // --- NEW PROPERTIES TO STORE USER INFO ---
+        public string UserRole { get; set; }
+        public string CurrentUserID { get; set; }
+
         public string Title
         {
             get { return (string)GetValue(TitleProperty); }
@@ -69,10 +73,20 @@ namespace TuteefyWPF.UserControls
 
         private void CardButton_Click(object sender, RoutedEventArgs e)
         {
-            // Pass LessonId and FileName; LessonViewWindow will fetch bytes on demand
             if (!string.IsNullOrWhiteSpace(LessonContent) || !string.IsNullOrWhiteSpace(FileName))
             {
-                var win = new LessonViewWindow(LessonId, Title, Code, LessonContent ?? string.Empty, FileName ?? string.Empty);
+                // ERROR WAS HERE: Missing role and userId
+                // FIXED: Passed UserRole and CurrentUserID
+                var win = new LessonViewWindow(
+                    LessonId,
+                    Title,
+                    Code,
+                    LessonContent ?? string.Empty,
+                    FileName ?? string.Empty,
+                    UserRole,
+                    CurrentUserID
+                );
+
                 TuteefyWPF.Classes.WindowHelper.ShowDimmedDialog(Window.GetWindow(this), win);
                 return;
             }

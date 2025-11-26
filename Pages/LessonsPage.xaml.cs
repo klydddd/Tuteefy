@@ -15,29 +15,39 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TuteefyWPF.UserControls;
 using System.Data.SqlClient;
+
 namespace TuteefyWPF.Pages
 {
     public partial class LessonsPage : Page
     {
         private System.Windows.Threading.DispatcherTimer scrollTimer;
         private Database db;
-        public static string CurrentTutorID;
-        
 
-        public LessonsPage(string tutorID)
+        // FIX: Removed 'static'. Now it is a normal instance variable.
+        public string CurrentUserID;
+
+        private string UserRole;
+
+        public LessonsPage(string userID, string role)
         {
-            CurrentTutorID = tutorID;
-
             InitializeComponent();
+
+            CurrentUserID = userID;
+            UserRole = role;
             db = new Database();
+
+            // Hide Create Button for Tutees
+            if (UserRole == "Tutee")
+            {
+                CreateLessonButton.Visibility = Visibility.Collapsed;
+            }
+
             LoadLessons();
             InitializeScrollAnimation();
-            
         }
 
         private void InitializeScrollAnimation()
         {
-            // Timer to restore button opacity after scrolling stops
             scrollTimer = new System.Windows.Threading.DispatcherTimer();
             scrollTimer.Interval = TimeSpan.FromMilliseconds(300);
             scrollTimer.Tick += (s, e) =>
@@ -46,7 +56,6 @@ namespace TuteefyWPF.Pages
                 AnimateButtonOpacity(1.0);
             };
 
-            // Subscribe to scroll changed event
             MainScrollViewer.ScrollChanged += MainScrollViewer_ScrollChanged;
         }
 
@@ -54,10 +63,7 @@ namespace TuteefyWPF.Pages
         {
             if (e.VerticalChange != 0)
             {
-                // User is scrolling - reduce opacity
                 AnimateButtonOpacity(0.3);
-
-                // Reset timer
                 scrollTimer.Stop();
                 scrollTimer.Start();
             }
@@ -77,20 +83,43 @@ namespace TuteefyWPF.Pages
 
         public void LoadLessons()
         {
+            LessonsPanel.Children.Clear();
+
             using (SqlConnection conn = new SqlConnection(db.connectionString))
             {
                 try
                 {
                     conn.Open();
+                    string query = "";
 
-                    string query = "SELECT LessonID, Title, Content, Code, FileName FROM LessonsTable WHERE TutorID = @CurrentTutorID";
+                    // --- LOGIC CHANGE ---
+                    // We now use different queries depending on the role.
+
+                    if (UserRole == "Tutor")
+                    {
+                        // Tutor: Show lessons they CREATED
+                        query = "SELECT LessonID, Title, Content, Code, FileName FROM LessonsTable WHERE TutorID = @userId";
+                    }
+                    else
+                    {
+                        // Tutee: Show lessons ASSIGNED to them (via the join table)
+                        query = @"SELECT L.LessonID, L.Title, L.Content, L.Code, L.FileName 
+                                  FROM LessonsTable L
+                                  INNER JOIN LessonAssignmentsTable A ON L.LessonID = A.LessonID
+                                  WHERE A.TuteeID = @userId";
+                    }
 
                     SqlCommand cmd = new SqlCommand(query, conn);
-
-                    cmd.Parameters.AddWithValue("@CurrentTutorID", CurrentTutorID);
+                    cmd.Parameters.AddWithValue("@userId", CurrentUserID);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
+                        // Debug check (Optional)
+                        if (!reader.HasRows && UserRole == "Tutee")
+                        {
+                            // MessageBox.Show("No lessons found for this student.");
+                        }
+
                         while (reader.Read())
                         {
                             int lessonId = reader["LessonID"] == DBNull.Value ? 0 : Convert.ToInt32(reader["LessonID"]);
@@ -105,7 +134,9 @@ namespace TuteefyWPF.Pages
                                 Code = code,
                                 LessonContent = content,
                                 LessonId = lessonId,
-                                FileName = fileName
+                                FileName = fileName,
+                                UserRole = this.UserRole,
+                                CurrentUserID = this.CurrentUserID
                             };
 
                             LessonsPanel.Children.Add(card);
@@ -114,32 +145,16 @@ namespace TuteefyWPF.Pages
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    MessageBox.Show("Error loading lessons: " + ex.Message);
                 }
             }
         }
-
-        // Old way of adding LessonCard
-        private void AddLessonCard(string title, string code)
-        {
-            var card = new QuizAndLessonCard
-            {
-                Title = title,
-                Code = code
-            };
-
-            LessonsPanel.Children.Add(card);
-        }
-
         private void CreateLessonButton_Click(object sender, RoutedEventArgs e)
         {
-            var addWindow = new TuteefyWPF.WindowsFolder.LessonsWindows.AddLessonsWindow(CurrentTutorID);
+            var addWindow = new TuteefyWPF.WindowsFolder.LessonsWindows.AddLessonsWindow(CurrentUserID);
 
-            // Subscribe to the LessonCreated event
             addWindow.LessonCreated += (s, args) =>
             {
-                // Clear existing lessons and reload
-                LessonsPanel.Children.Clear();
                 LoadLessons();
             };
 

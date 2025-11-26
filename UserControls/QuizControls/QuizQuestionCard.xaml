@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:TuteefyWPF.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
+    
+    
     <Border CornerRadius="15"
             Padding="25"
             Margin="0,0,0,20"
@@ -26,7 +29,6 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Question Section -->
             <StackPanel Grid.Row="0" Margin="0,0,0,20">
                 <TextBlock Text="Question" 
                            FontSize="16" 
@@ -47,7 +49,6 @@
                          TextChanged="QuestionTextBox_TextChanged"/>
             </StackPanel>
 
-            <!-- Choices Section -->
             <StackPanel Grid.Row="1" Margin="0,0,0,20">
                 <TextBlock Text="Answer Choices" 
                            FontSize="16" 
@@ -65,7 +66,6 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Choice A -->
                     <StackPanel Grid.Column="0" Grid.Row="0" Margin="0,0,10,15">
                         <TextBlock Text="A." 
                                    FontSize="13" 
@@ -86,14 +86,13 @@
                                      BorderBrush="#D0D0D0"
                                      BorderThickness="1"
                                      Margin="0,0,10,0"/>
-                            <RadioButton x:Name="CorrectARadio"
-                                      Grid.Column="1"
-                                      GroupName="CorrectAnswer"
-                                      VerticalAlignment="Center"/>
+                            <RadioButton x:Name="CorrectARadioButton"
+                                     Grid.Column="1"
+                                     GroupName="CorrectAnswer"
+                                     VerticalAlignment="Center"/>
                         </Grid>
                     </StackPanel>
 
-                    <!-- Choice B -->
                     <StackPanel Grid.Column="1" Grid.Row="0" Margin="10,0,0,15">
                         <TextBlock Text="B." 
                                    FontSize="13" 
@@ -114,14 +113,13 @@
                                      BorderBrush="#D0D0D0"
                                      BorderThickness="1"
                                      Margin="0,0,10,0"/>
-                            <RadioButton x:Name="CorrectBRadio"
-                                      Grid.Column="1"
-                                      GroupName="CorrectAnswer"
-                                      VerticalAlignment="Center"/>
+                            <RadioButton x:Name="CorrectBRadioButton"
+                                     Grid.Column="1"
+                                     GroupName="CorrectAnswer"
+                                     VerticalAlignment="Center"/>
                         </Grid>
                     </StackPanel>
 
-                    <!-- Choice C -->
                     <StackPanel Grid.Column="0" Grid.Row="1" Margin="0,0,10,0">
                         <TextBlock Text="C." 
                                    FontSize="13" 
@@ -142,14 +140,13 @@
                                      BorderBrush="#D0D0D0"
                                      BorderThickness="1"
                                      Margin="0,0,10,0"/>
-                            <RadioButton x:Name="CorrectCRadio"
-                                      Grid.Column="1"
-                                      GroupName="CorrectAnswer"
-                                      VerticalAlignment="Center"/>
+                            <RadioButton x:Name="CorrectCRadioButton"
+                                     Grid.Column="1"
+                                     GroupName="CorrectAnswer"
+                                     VerticalAlignment="Center"/>
                         </Grid>
                     </StackPanel>
 
-                    <!-- Choice D -->
                     <StackPanel Grid.Column="1" Grid.Row="1" Margin="10,0,0,0">
                         <TextBlock Text="D." 
                                    FontSize="13" 
@@ -170,16 +167,15 @@
                                      BorderBrush="#D0D0D0"
                                      BorderThickness="1"
                                      Margin="0,0,10,0"/>
-                            <RadioButton x:Name="CorrectDRadio"
-                                      Grid.Column="1"
-                                      GroupName="CorrectAnswer"
-                                      VerticalAlignment="Center"/>
+                            <RadioButton x:Name="CorrectDRadioButton"
+                                     Grid.Column="1"
+                                     GroupName="CorrectAnswer"
+                                     VerticalAlignment="Center"/>
                         </Grid>
                     </StackPanel>
                 </Grid>
             </StackPanel>
 
-            <!-- Action Buttons -->
             <StackPanel Grid.Row="2" 
                         Orientation="Horizontal" 
                         HorizontalAlignment="Right">

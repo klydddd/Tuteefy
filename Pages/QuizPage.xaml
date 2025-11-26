@@ -12,7 +12,7 @@
         <ScrollViewer x:Name="MainScrollViewer"
                       VerticalScrollBarVisibility="Hidden" 
                       HorizontalScrollBarVisibility="Disabled"
-                      PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                      >
             <StackPanel Margin="20">
                 <!-- Page Title -->
 

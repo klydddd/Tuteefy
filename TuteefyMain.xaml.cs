@@ -53,7 +53,9 @@ namespace TuteefyWPF
                     PageTitle.Content = "Students";
                     break;
                 case "Lessons":
-                    MainFrame.Navigate(new TuteefyWPF.Pages.LessonsPage(CurrentTutorID));
+                    // ERROR WAS HERE: Missing the second argument 'userRole'
+                    // FIXED: Passed 'userRole'
+                    MainFrame.Navigate(new TuteefyWPF.Pages.LessonsPage(CurrentTutorID, userRole));
                     PageTitle.Content = "Lessons";
                     break;
                 case "Quizzes":
