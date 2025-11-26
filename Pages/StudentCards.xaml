@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:TuteefyWPF"
       mc:Ignorable="d" 
       d:DesignHeight="693" d:DesignWidth="1632"
+      
       Title="StudentCards">
     <Grid>
         <ScrollViewer x:Name="CardScrollViewer"
