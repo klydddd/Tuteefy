@@ -85,6 +85,11 @@ namespace TuteefyWPF
         {
 
         }
+
+        private void MainFrame_Navigated_1(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+
+        }
     }
 
 
