@@ -689,7 +689,7 @@
         Width="330"
         Foreground="White"
         FontWeight="Bold"
-        Cursor="Hand" Click="Button_Click_1">
+        Cursor="Hand" Click="LoginButton_Click">
 
             <Button.Template>
                 <ControlTemplate TargetType="Button">

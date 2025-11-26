@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="TuteefyWPF.WindowsFolder.TakeQuizWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Take Quiz" 
+        Height="700" 
+        Width="900"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        Loaded="Window_Loaded"
+        Closed="Window_Closed">
+
+    <Border Background="White"
+            CornerRadius="15"
+            BorderThickness="1"
+            BorderBrush="#E0E0E0">
+
+        <Border.Effect>
+            <DropShadowEffect Color="Black" BlurRadius="30" ShadowDepth="0" Opacity="0.3"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <Border Grid.Row="0"
+                    Background="#9600ff"
+                    CornerRadius="15,15,0,0"
+                    Padding="20">
+                <Grid>
+                    <StackPanel>
+                        <TextBlock x:Name="QuizTitleText"
+                                   Text="Quiz Title"
+                                   FontFamily="Poppins"
+                                   FontSize="24"
+                                   FontWeight="Bold"
+                                   Foreground="White"/>
+
+                        <TextBlock x:Name="QuizDescriptionText"
+                                   Text="Quiz Description"
+                                   FontFamily="Poppins"
+                                   FontSize="14"
+                                   Foreground="White"
+                                   Opacity="0.9"
+                                   Margin="0,5,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock x:Name="TotalQuestionsText"
+                                       Text="Total Questions: 0"
+                                       FontFamily="Poppins"
+                                       FontSize="12"
+                                       Foreground="White"
+                                       Margin="0,0,20,0"/>
+
+                            <TextBlock x:Name="ProgressText"
+                                       Text="Progress: 0/0 answered"
+                                       FontFamily="Poppins"
+                                       FontSize="12"
+                                       Foreground="White"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Close Button -->
+                    <Button x:Name="CloseButton"
+                            Content="✕"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Width="30"
+                            Height="30"
+                            FontSize="18"
+                            Background="Transparent"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Click="CloseButton_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"
+                                        CornerRadius="15">
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#80FFFFFF"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </Grid>
+            </Border>
+
+            <!-- Questions ScrollViewer -->
+            <ScrollViewer Grid.Row="1"
+                          VerticalScrollBarVisibility="Auto"
+                          Padding="20"
+                          Margin="10">
+                <StackPanel x:Name="QuestionsPanel">
+                    <!-- Questions will be dynamically added here -->
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Footer with Submit Button -->
+            <Border Grid.Row="2"
+                    Background="#F5F5F5"
+                    CornerRadius="0,0,15,15"
+                    Padding="20">
+                <Button x:Name="SubmitButton"
+                        Content="SUBMIT QUIZ"
+                        HorizontalAlignment="Center"
+                        Height="45"
+                        Width="200"
+                        FontFamily="Poppins"
+                        FontSize="14"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        Cursor="Hand"
+                        Click="SubmitButton_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                                    CornerRadius="10"
+                                    Background="#9600ff">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="#9600ff"
+                                                      BlurRadius="20"
+                                                      ShadowDepth="0"
+                                                      Opacity="0.4"/>
+                                </Border.Effect>
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Opacity" Value="0.8"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

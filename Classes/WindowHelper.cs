@@ -1,78 +1,67 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using System.Windows.Media;
 
 namespace TuteefyWPF.Classes
 {
-    internal class WindowHelper
+    public static class WindowHelper
     {
-        public static bool? ShowDimmedDialog(Window parentWindow, Window dialog)
+        private static Window _dimmedWindow;
+        private static Brush _originalBackground;
+
+        // Overload 1: ShowDimmedDialog with parent and dialog windows (for existing code)
+        public static void ShowDimmedDialog(Window parentWindow, Window dialogWindow)
         {
-            if (parentWindow == null || dialog == null)
-                return null;
-
-            // Create overlay
-            Grid overlay = new Grid
+            if (parentWindow != null)
             {
-                Background = new SolidColorBrush(Color.FromArgb(128, 0, 0, 0))
-            };
+                _dimmedWindow = parentWindow;
+                _originalBackground = _dimmedWindow.Background;
 
-            // Add overlay to main window content if it's a Grid
-            if (parentWindow.Content is Grid mainGrid)
-            {
-                mainGrid.Children.Add(overlay);
+                // Create semi-transparent dark overlay
+                _dimmedWindow.Background = new SolidColorBrush(Color.FromArgb(128, 0, 0, 0));
+                _dimmedWindow.IsEnabled = false;
             }
-
-            double originalOpacity = parentWindow.Opacity;
-            parentWindow.Opacity = 0.7;
-
-            dialog.Owner = parentWindow;
-            dialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-
-            dialog.Closed += (s, args) =>
-            {
-                parentWindow.Opacity = originalOpacity;
-                if (parentWindow.Content is Grid grid)
-                {
-                    grid.Children.Remove(overlay);
-                }
-            };
-
-            // ShowDialog() returns a bool? (nullable bool)
-            bool? result = dialog.ShowDialog();
-
-            return result;
         }
 
-        public static void UndimDialog(Window parentWindow)
+        // Overload 2: ShowDimmedDialog with just dialog window (auto-find parent)
+        public static void ShowDimmedDialog(Window dialogWindow)
         {
-            if (parentWindow == null)
-                return;
-
-            // Restore full opacity
-            parentWindow.Opacity = 1.0;
-
-            // Remove any existing dim overlay
-            if (parentWindow.Content is Grid grid)
+            // Find the parent window automatically
+            foreach (Window window in Application.Current.Windows)
             {
-                foreach (var child in grid.Children.OfType<Grid>().ToList())
+                if (window != dialogWindow && window.IsActive)
                 {
-                    if (child.Background is SolidColorBrush brush &&
-                        brush.Color.A == 128 && brush.Color.R == 0 && brush.Color.G == 0 && brush.Color.B == 0)
-                    {
-                        grid.Children.Remove(child);
-                        break;
-                    }
+                    ShowDimmedDialog(window, dialogWindow);
+                    break;
                 }
             }
         }
 
-        // Load the lesson cards
+        // Overload 1: UndimDialog with window parameter (for existing code)
+        public static void UndimDialog(Window window)
+        {
+            UndimDialog();
+        }
 
+        // Overload 2: UndimDialog with no parameters
+        public static void UndimDialog()
+        {
+            if (_dimmedWindow != null)
+            {
+                _dimmedWindow.Background = _originalBackground;
+                _dimmedWindow.IsEnabled = true;
+                _dimmedWindow = null;
+            }
+        }
+
+        // Legacy method names for compatibility
+        public static void DimBackgroundWindow(Window activeWindow)
+        {
+            ShowDimmedDialog(activeWindow);
+        }
+
+        public static void RemoveDimBackgroundWindow()
+        {
+            UndimDialog();
+        }
     }
 }

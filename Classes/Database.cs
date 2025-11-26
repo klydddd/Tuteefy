@@ -11,7 +11,7 @@ namespace TuteefyWPF
 {
     public class Database
     {
-        public string connectionString;
+        public string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=TuteefyDB;User ID=sa;Password=123456";
         public Database()
         {
             var cs = ConfigurationManager.ConnectionStrings["TuteefyDB"];

@@ -1,138 +1,150 @@
-﻿using System;
+﻿// This file should REPLACE your existing QuizPage.xaml.cs code-behind
+// OR you can just update the LoadQuizzes() and AddQuizCard() methods
+
+using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using TuteefyWPF.Classes;
+using TuteefyWPF.Models;
 using TuteefyWPF.UserControls;
-using TuteefyWPF.UserControls.QuizControls;
+using TuteefyWPF.WindowsFolder;
 
 namespace TuteefyWPF.Pages
 {
     public partial class QuizPage : Page
     {
-        private System.Windows.Threading.DispatcherTimer scrollTimer;
-        private string username = string.Empty;
-        private Database db = new Database();
+        // Add overloaded constructor if needed
+        public QuizPage() : this(null, null)
+        {
+        }
 
-        public QuizPage(string userRole, string tutorID)
+        public QuizPage(string tuteeID, string tutorID)
         {
             InitializeComponent();
-            if (userRole == "Tutee")
-            {
-                CreateQuizButton.Visibility = Visibility.Collapsed;
-            }
-            username = tutorID;
             LoadQuizzes();
-            InitializeScrollAnimation();
-        }
-
-        private void InitializeScrollAnimation()
-        {
-            // Timer to restore button opacity after scrolling stops
-            scrollTimer = new System.Windows.Threading.DispatcherTimer();
-            scrollTimer.Interval = TimeSpan.FromMilliseconds(300);
-            scrollTimer.Tick += (s, e) =>
-            {
-                scrollTimer.Stop();
-                AnimateButtonOpacity(1.0);
-            };
-
-            // Subscribe to scroll changed event
-            MainScrollViewer.ScrollChanged += MainScrollViewer_ScrollChanged;
-        }
-
-        private void MainScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            if (e.VerticalChange != 0)
-            {
-                // User is scrolling - reduce opacity
-                AnimateButtonOpacity(0.3);
-
-                // Reset timer
-                scrollTimer.Stop();
-                scrollTimer.Start();
-            }
-        }
-
-        private void AnimateButtonOpacity(double toOpacity)
-        {
-            DoubleAnimation animation = new DoubleAnimation
-            {
-                To = toOpacity,
-                Duration = TimeSpan.FromMilliseconds(200),
-                EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
-            };
-
-            CreateQuizButton.BeginAnimation(UIElement.OpacityProperty, animation);
         }
 
         private void LoadQuizzes()
         {
             QuizzesPanel.Children.Clear();
 
-            string query = @"SELECT QuizID, Title
-                         FROM QuizzesTable
-                         WHERE TutorID = @tutorId";
-
-            using (SqlConnection conn = new SqlConnection(db.connectionString))
-            using (SqlCommand cmd = new SqlCommand(query, conn))
+            try
             {
-                cmd.Parameters.AddWithValue("@tutorId", username);
-                conn.Open();
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                if (UserSession.IsTutee)
                 {
-                    while (reader.Read())
-                    {
-                        string title = reader["Title"].ToString();
-                        string quizID = reader["QuizID"].ToString();
+                    // Load quizzes assigned to this tutee
+                    List<Quiz> assignedQuizzes = QuizService.GetQuizzesForTutee(UserSession.CurrentUser.UserID);
 
-                        AddQuizCard(title, quizID);
+                    if (assignedQuizzes.Count == 0)
+                    {
+                        TextBlock noQuizzesText = new TextBlock
+                        {
+                            Text = "No quizzes assigned to you yet.",
+                            FontSize = 16,
+                            Foreground = Brushes.Gray,
+                            Margin = new Thickness(20),
+                            TextAlignment = TextAlignment.Center
+                        };
+                        QuizzesPanel.Children.Add(noQuizzesText);
+                    }
+                    else
+                    {
+                        foreach (var quiz in assignedQuizzes)
+                        {
+                            AddQuizCard(quiz);
+                        }
+                    }
+
+                    // Hide Create Quiz button for tutees
+                    if (CreateQuizButton != null)
+                    {
+                        CreateQuizButton.Visibility = Visibility.Collapsed;
+                    }
+                }
+                else if (UserSession.IsTutor)
+                {
+                    // For tutors, load all quizzes
+                    List<Quiz> allQuizzes = QuizService.GetAllQuizzes();
+
+                    if (allQuizzes.Count == 0)
+                    {
+                        TextBlock noQuizzesText = new TextBlock
+                        {
+                            Text = "No quizzes created yet.",
+                            FontSize = 16,
+                            Foreground = Brushes.Gray,
+                            Margin = new Thickness(20),
+                            TextAlignment = TextAlignment.Center
+                        };
+                        QuizzesPanel.Children.Add(noQuizzesText);
+                    }
+                    else
+                    {
+                        foreach (var quiz in allQuizzes)
+                        {
+                            AddQuizCard(quiz);
+                        }
+                    }
+
+                    // Show Create Quiz button for tutors
+                    if (CreateQuizButton != null)
+                    {
+                        CreateQuizButton.Visibility = Visibility.Visible;
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading quizzes: {ex.Message}", "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
-        private void AddQuizCard(string title, string code)
+        private void AddQuizCard(Quiz quiz)
         {
-            var card = new UserControls.QuizControls.QuizCard
-            {
-                Title = title,
-                Code = code,
-                TutorID = username
-            };
+            TuteeQuizCard quizCard = new TuteeQuizCard(quiz);
 
-            QuizzesPanel.Children.Add(card);
+            // Subscribe to the TakeQuizClicked event
+            quizCard.TakeQuizClicked += QuizCard_TakeQuizClicked;
+
+            QuizzesPanel.Children.Add(quizCard);
         }
 
-        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        private void QuizCard_TakeQuizClicked(object sender, Quiz quiz)
         {
-            if (sender is ScrollViewer scrollViewer)
+            try
             {
-                double scrollAmount = e.Delta > 0 ? -50 : 50;
-                scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + scrollAmount);
-                e.Handled = true;
+                // Open the TakeQuizWindow
+                TakeQuizWindow takeQuizWindow = new TakeQuizWindow(quiz);
+                bool? result = takeQuizWindow.ShowDialog();
+
+                // If the quiz was completed, refresh the quiz list
+                if (result == true)
+                {
+                    LoadQuizzes();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening quiz: {ex.Message}", "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void CreateQuizButton_Click(object sender, RoutedEventArgs e)
         {
-            TuteefyWPF.Classes.WindowHelper windowHelper = new TuteefyWPF.Classes.WindowHelper();
-            var addWindow = new TuteefyWPF.WindowsFolder.AddQuizWindow(username);
-            TuteefyWPF.Classes.WindowHelper.ShowDimmedDialog(Window.GetWindow(this), addWindow);
-            // Example navigation:
-            // NavigationService?.Navigate(new CreateQuizPage());
+            // TODO: Implement quiz creation window
+            MessageBox.Show("Quiz creation feature coming soon!", "Feature Not Available",
+                MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoadQuizzes();
+        }
+
+        // Add other event handlers as needed
     }
 }

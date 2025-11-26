@@ -165,14 +165,13 @@ namespace TuteefyWPF
 
         private void AddStudentButton_Click(object sender, RoutedEventArgs e)
         {
-
             var addWindow = new TuteefyWPF.WindowsFolder.StudentWindows.AddStudentWindow(username);
-            bool? result = TuteefyWPF.Classes.WindowHelper.ShowDimmedDialog(Window.GetWindow(this), addWindow);
+            TuteefyWPF.Classes.WindowHelper.ShowDimmedDialog(Window.GetWindow(this), addWindow);
 
             StudentCardsPanel.Children.Clear();
             LoadStudents();
-            }
         }
+    }
 
 
 

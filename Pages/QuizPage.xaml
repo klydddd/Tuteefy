@@ -10,9 +10,9 @@
       Title="QuizPage">
     <Grid Background="Transparent">
         <ScrollViewer x:Name="MainScrollViewer"
-                      VerticalScrollBarVisibility="Hidden" 
+                      VerticalScrollBarVisibility="Auto" 
                       HorizontalScrollBarVisibility="Disabled"
-                      PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                      >
             <StackPanel Margin="20">
                 <!-- Page Title -->
 

@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Windows;
 using System.Windows.Controls;
+using TuteefyWPF.Classes;
 using TuteefyWPF.Pages;
 
 namespace TuteefyWPF
@@ -11,25 +12,33 @@ namespace TuteefyWPF
         private string userRole = string.Empty;
         private string fullName = string.Empty;
         private string CurrentTutorID = string.Empty;
-        public TuteefyMain(string tutorID, string role, string name)
+
+        public TuteefyMain()
         {
             InitializeComponent();
-            userRole = role;
-            fullName = name;
-            checkRole(role);
-            CurrentTutorID = tutorID;
 
-            // Attach Checked events AFTER initialization to avoid hang
-            HomeTab.Checked += (s, e) => NavigateToPage("Home");
-            StudentTab.Checked += (s, e) => NavigateToPage("Students");
-            LessonsTab.Checked += (s, e) => NavigateToPage("Lessons");
-            QuizzesTab.Checked += (s, e) => NavigateToPage("Quizzes");
+            if (UserSession.IsLoggedIn && UserSession.CurrentUser != null)
+            {
+                CurrentTutorID = UserSession.CurrentUser.UserID;
+                fullName = UserSession.CurrentUser.FullName;
+                userRole = UserSession.CurrentUser.UserRole;
+                checkRole(userRole);
+            }
+            else
+            {
+                this.Loaded += (s, e) =>  // ← Use Loaded event to avoid window error!
+                {
+                    MessageBox.Show("Please log in first.");
+                    MainWindow login = new MainWindow();
+                    login.Show();
+                    this.Close();
+                };
+            }
         }
-
         private void checkRole(string role)
         {
             if (role == "Tutor")
-            { 
+            {
                 MainFrame.Navigate(new HomePage());
             }
             else if (role == "Tutee")
@@ -57,19 +66,21 @@ namespace TuteefyWPF
                     PageTitle.Content = "Lessons";
                     break;
                 case "Quizzes":
-                    MainFrame.Navigate(new TuteefyWPF.Pages.QuizPage(userRole, CurrentTutorID));
+                    MainFrame.Navigate(new TuteefyWPF.Pages.QuizPage());
                     PageTitle.Content = "Quizzes";
                     break;
-                /*case "QuizView":
-                    MainFrame.Navigate(new TuteefyWPF.Pages.QuizPages.QuizView());
-                    PageTitle.Content = "Quiz View";
-                    break;*/
+                    /*case "QuizView":
+                        MainFrame.Navigate(new TuteefyWPF.Pages.QuizPages.QuizView());
+                        PageTitle.Content = "Quiz View";
+                        break;*/
             }
         }
 
-
         private void LogOut_Checked(object sender, RoutedEventArgs e)
         {
+            // Clear user session
+            UserSession.Logout();
+
             MainWindow login = new MainWindow();
             login.Show();
             this.Close();
@@ -78,19 +89,15 @@ namespace TuteefyWPF
         private void Settings_Checked(object sender, RoutedEventArgs e)
         {
             //Show settings window
-// filler
+            // filler
         }
 
         private void MainFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
-
         }
 
         private void MainFrame_Navigated_1(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
-
         }
     }
-
-
 }
