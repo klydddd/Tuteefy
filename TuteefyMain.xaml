@@ -49,7 +49,7 @@
         <!-- Left Sidebar -->
         <Grid Grid.Column="0">
             <StackPanel>
-                <Label Content="logo" 
+                <Label Content="tuteefy" 
                        HorizontalAlignment="Left" 
                        Margin="30,45,0,0" 
                        IsEnabled="False" 
@@ -127,6 +127,7 @@
             <!-- Settings and Log Out Buttons at Bottom -->
             <StackPanel VerticalAlignment="Bottom" Margin="0,0,0,30">
                 <RadioButton Style="{StaticResource RoundedTabRadioButton}"
+                             Visibility="Hidden"
                          x:Name="SettingsBtn"
                          Height="50"
                          GroupName="Tabs"

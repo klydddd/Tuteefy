@@ -15,15 +15,13 @@
 
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Hidden" 
-                      HorizontalScrollBarVisibility="Disabled"
-                      >
+                      HorizontalScrollBarVisibility="Disabled">
             <Grid Margin="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- 🗓️ Calendar Panel -->
                 <Border Grid.Row="0"
                         CornerRadius="20"
                         Padding="20"
@@ -36,19 +34,11 @@
                         </LinearGradientBrush>
                     </Border.Background>
                     <DockPanel>
-                        <TextBlock Text="Task Calendar"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   Foreground="#5E35B1"
-                                   DockPanel.Dock="Top"
-                                   Margin="0,0,0,15"/>
-                        <local:Calendar Loaded="Calendar_Loaded"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Stretch"/>
+                        <TextBlock Text="Task Calendar" FontSize="20" FontWeight="Bold" Foreground="#5E35B1" DockPanel.Dock="Top" Margin="0,0,0,15"/>
+                        <local:Calendar Loaded="Calendar_Loaded" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </DockPanel>
                 </Border>
 
-                <!-- 📈 Line Chart Panel -->
                 <Border Grid.Row="1"
                         Margin="0,20,0,0"
                         CornerRadius="20"
@@ -62,28 +52,30 @@
                         </LinearGradientBrush>
                     </Border.Background>
                     <DockPanel>
-                        <TextBlock Text="Student Progress Overview"
+                        <TextBlock Text="Student Scores (Per Quiz)"
                                    FontSize="20"
                                    FontWeight="Bold"
                                    Foreground="#5E35B1"
                                    DockPanel.Dock="Top"
                                    Margin="0,0,0,15"/>
+
                         <lvc:CartesianChart DockPanel.Dock="Top"
                                             MinHeight="150"
-                                            Margin="0,5,0,0">
-                            <lvc:CartesianChart.Series>
-                                <lvc:LineSeries Title="Progress"
-                                                Stroke="#7C4DFF"
-                                                Fill="#EDE7F6"
-                                                PointGeometrySize="8"
-                                                Values="{Binding ChartValues}" />
-                            </lvc:CartesianChart.Series>
+                                            Margin="0,5,0,0"
+                                            Series="{Binding SeriesCollection}" 
+                                            LegendLocation="Right">
                             <lvc:CartesianChart.AxisX>
-                                <lvc:Axis Title="Weeks" Labels="{Binding Labels}" />
+                                <lvc:Axis Title="Quizzes" Labels="{Binding Labels}">
+                                    <lvc:Axis.Separator>
+                                        <lvc:Separator Step="1"/>
+                                    </lvc:Axis.Separator>
+                                </lvc:Axis>
                             </lvc:CartesianChart.AxisX>
+
                             <lvc:CartesianChart.AxisY>
-                                <lvc:Axis Title="Scores" />
+                                <lvc:Axis Title="Score" MinValue="0"/>
                             </lvc:CartesianChart.AxisY>
+
                         </lvc:CartesianChart>
                     </DockPanel>
                 </Border>

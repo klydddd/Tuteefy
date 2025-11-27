@@ -136,5 +136,17 @@ namespace TuteefyWPF
         {
 
         }
+
+        // ADD THIS METHOD
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Initializes the Login Window
+            // Ensure you have a file named 'LoginWindow.xaml'
+            MainWindow ss = new MainWindow();
+            ss.Show();
+
+            // Closes the current Signup Window
+            this.Close();
+        }
     }
 }

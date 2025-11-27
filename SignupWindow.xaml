@@ -11,9 +11,9 @@
         WindowStartupLocation="CenterScreen"
         >
 
-    
 
-    <Grid Background="#0f0f0f">
+
+    <Grid Background="#f0f0f0">
 
         <Rectangle Margin="0,45,-939,0" Canvas.Left="0">
             <Rectangle.Fill>
@@ -40,15 +40,11 @@
             </Rectangle.Triggers>
         </Rectangle>
 
-
-        <Label Content="tuteefy" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top"
-            IsEnabled="False" FontWeight="Bold" Foreground="White"/>
-
         <Rectangle Fill="White" Opacity="0.2" RadiusX="20" RadiusY="20" Margin="220,76,220,38" StrokeThickness="3">
             <Rectangle.Stroke>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                       <GradientStop Color="#9600ff" Offset="0"/>
-                       <GradientStop Color="#AEBAF8" Offset="1"/>
+                    <GradientStop Color="#9600ff" Offset="0"/>
+                    <GradientStop Color="#AEBAF8" Offset="1"/>
 
                 </LinearGradientBrush>
             </Rectangle.Stroke>
@@ -105,7 +101,7 @@
 
         <Label Content="Confirm Password" HorizontalAlignment="Left" Margin="260,405,0,0" VerticalAlignment="Top"
             IsEnabled="False" FontWeight="Bold" Foreground="White" FontSize="14"/>
-        
+
         <CheckBox x:Name="checkPriv" HorizontalAlignment="Center"
           VerticalAlignment="Top"
           Margin="0,491,0,0"
@@ -290,7 +286,38 @@
                 </ControlTemplate>
             </Button.Template>
         </Button>
+        <Label Content="tuteefy" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top"
+            IsEnabled="False" FontWeight="Bold" Foreground="#9600ff"/>
 
-
+        <Button Content="X" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Top" 
+                Margin="0,11,20,0" 
+                Foreground="#9600ff" 
+                Background="Transparent"
+                FontSize="20" 
+                FontWeight="Bold" 
+                Cursor="Hand" 
+                BorderThickness="0"
+                Click="CloseButton_Click">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="#AEBAF8"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
     </Grid>
 </Window>

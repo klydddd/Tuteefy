@@ -712,7 +712,7 @@
 
                         <!-- Default glow effect (opacity 0 initially) -->
                         <Border.Effect>
-                            <DropShadowEffect Color="Violet"
+                            <DropShadowEffect Color="#9600ff"
                                       BlurRadius="40"
                                       ShadowDepth="0"
                                       Opacity="0.1"/>
