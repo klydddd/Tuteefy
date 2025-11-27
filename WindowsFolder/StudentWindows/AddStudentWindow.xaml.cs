@@ -3,6 +3,8 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Net;
+using System.Net.Mail;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +20,7 @@ namespace TuteefyWPF.WindowsFolder.StudentWindows
             new System.Collections.Generic.List<StudentData>();
 
         private string username = string.Empty;
+        private string tuteeID = string.Empty;
         private Database db = new Database();
         private string selectedImagePath = null;
         private byte[] imageBytes = null;
@@ -159,7 +162,7 @@ namespace TuteefyWPF.WindowsFolder.StudentWindows
                 }
 
                 // Get next TuteeID using stored procedure
-                string tuteeID = "";
+                tuteeID = "";
 
                 using (SqlCommand cmd = new SqlCommand("sp_GetNextTuteeID", conn))
                 {
@@ -239,6 +242,7 @@ namespace TuteefyWPF.WindowsFolder.StudentWindows
                         MessageBoxImage.Information
                     );
 
+                    SendEmail(student.Email, tuteeID);
                     this.DialogResult = true;
                     this.Close();
                 }
@@ -247,6 +251,33 @@ namespace TuteefyWPF.WindowsFolder.StudentWindows
                     MessageBox.Show("Database Error: " + ex.Message,
                         "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }
+        }
+
+        private void SendEmail(string email, string tutorID)
+        {
+            try
+            {
+                string senderEmail = "tuteefy2025@gmail.com";
+                string senderPassword = "mixo kzfz fids tkdp";
+
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress(senderEmail);
+                mail.To.Add(email);
+                mail.Subject = "Tuteefy Student Registration";
+                mail.IsBodyHtml = true;
+                mail.Body = "Your tutor added you as a student in Tuteefy!<p>Here is your username and password: " + tuteeID;
+
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
+                smtpClient.Port = 587;
+                smtpClient.Credentials = new NetworkCredential(senderEmail, senderPassword);
+                smtpClient.EnableSsl = true;
+
+                smtpClient.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error sending email: " + ex.Message);
             }
         }
 
